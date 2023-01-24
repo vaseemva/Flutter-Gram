@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gram/screens/onboarding_screen/intro_screens/intro_screen1.dart';
 import 'package:flutter_gram/screens/onboarding_screen/intro_screens/intro_screen2.dart';
 import 'package:flutter_gram/screens/onboarding_screen/intro_screens/intro_screen3.dart';
+import 'package:flutter_gram/screens/onboarding_screen/widgets/intro_button.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class OnboardingScreen extends StatefulWidget {
@@ -36,11 +37,11 @@ class OnboardingScreenState extends State<OnboardingScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   //skip button
-                  GestureDetector(
-                    child: const Text('skip'),
-                    onTap: () {
+                  IntroButton(
+                    ontap: () {
                       _controller.jumpToPage(2);
                     },
+                    buttonText: 'skip',
                   ),
                   //page indicator
                   SmoothPageIndicator(
@@ -51,18 +52,14 @@ class OnboardingScreenState extends State<OnboardingScreen> {
 
                   //next button
                   onLastPage
-                      ? GestureDetector(
-                          child: const Text('done'),
-                          onTap: () {},
-                        )
-                      : GestureDetector(
-                          child: const Text('next'),
-                          onTap: () {
+                      ? IntroButton(ontap: () {}, buttonText: 'done')
+                      : IntroButton(
+                          ontap: () {
                             _controller.nextPage(
                                 duration: const Duration(milliseconds: 500),
                                 curve: Curves.easeIn);
                           },
-                        ),
+                          buttonText: 'next')
                 ],
               ))
         ],
