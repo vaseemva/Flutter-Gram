@@ -47,7 +47,9 @@ class OnboardingScreenState extends State<OnboardingScreen> {
                   SmoothPageIndicator(
                     controller: _controller,
                     count: 3,
-                    effect: const WormEffect(),
+                    effect: const WormEffect(
+                      activeDotColor: Colors.blue
+                    ),
                   ),
 
                   //next button
