@@ -64,7 +64,7 @@ class SigninScreen extends StatelessWidget {
                 onPressed: () {},
               ),
               kHeight20,
-              SigningBottomText(
+             const SigningBottomText(
                 longText: "Don't have an account?",
                 buttonText: 'Create One',
               )

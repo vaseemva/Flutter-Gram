@@ -8,16 +8,13 @@ import 'package:flutter_gram/screens/signup_screen/widgets/signup_bottom_text.da
 import 'package:flutter_gram/screens/signup_screen/widgets/signup_button.dart';
 import 'package:flutter_gram/utils/constants.dart';
 import 'package:flutter_gram/utils/strings.dart';
-import 'package:flutter_signin_button/button_list.dart';
-import 'package:flutter_signin_button/button_view.dart';
 
 class SignupScreen extends StatelessWidget {
   SignupScreen({Key? key}) : super(key: key);
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _confirmPasswordController =
-      TextEditingController();
+  final TextEditingController _confirmPasswordController =TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -76,7 +73,8 @@ class SignupScreen extends StatelessWidget {
             kHeight10,
             GoogleSignin(size: size, onPressed: () {}),
             kHeight20,
-           SignUpBottomText(longText: 'Already have an account?', buttonText: 'Sign In')
+            const SignUpBottomText(
+                longText: 'Already have an account?', buttonText: 'Sign In')
           ],
         ),
       ),
