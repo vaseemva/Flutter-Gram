@@ -6,12 +6,13 @@ class PasswordTextField extends StatelessWidget {
   const PasswordTextField({
     Key? key,
     required this.size,
-    required TextEditingController passwordController,
+    required TextEditingController passwordController, required this.inputType,
   })  : _passwordController = passwordController,
         super(key: key);
 
   final Size size;
   final TextEditingController _passwordController;
+  final TextInputType inputType;
 
   @override
   Widget build(BuildContext context) {
@@ -22,6 +23,7 @@ class PasswordTextField extends StatelessWidget {
       child: TextFormField(
         controller: _passwordController,
         obscureText: provider.isPasswordVisible,
+        keyboardType: inputType,
         decoration: InputDecoration(
             border:const OutlineInputBorder(),
             labelText: 'Password',

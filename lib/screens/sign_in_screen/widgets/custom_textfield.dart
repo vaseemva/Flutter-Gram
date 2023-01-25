@@ -4,11 +4,16 @@ class CustomTextField extends StatelessWidget {
   const CustomTextField({
     Key? key,
     required this.size,
-    required TextEditingController emailController,
-  }) : _emailController = emailController, super(key: key);
+    required TextEditingController controller,
+    required this.inputType, required this.labelText,this.obscure=false
+  })  : _controller = controller,
+        super(key: key);
 
   final Size size;
-  final TextEditingController _emailController;
+  final TextEditingController _controller;
+  final TextInputType inputType;
+  final String labelText;
+  final bool obscure;
 
   @override
   Widget build(BuildContext context) {
@@ -16,11 +21,11 @@ class CustomTextField extends StatelessWidget {
       width: size.width * 0.8,
       height: 50,
       child: TextFormField(
-        controller: _emailController,
-        decoration: const InputDecoration(
-            border: OutlineInputBorder(),
-            // hintText: 'Email' ,
-            labelText: 'Email'),
+        controller: _controller,
+        keyboardType: inputType,
+        obscureText: obscure,
+        decoration:  InputDecoration(
+            border:const OutlineInputBorder(), labelText: labelText),
       ),
     );
   }

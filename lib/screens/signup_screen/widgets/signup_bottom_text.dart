@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_gram/screens/signup_screen/signup_screen.dart';
+import 'package:flutter_gram/screens/sign_in_screen/signin_screen.dart';
 import 'package:flutter_gram/utils/constants.dart';
 
-class SigningBottomText extends StatelessWidget {
-  const SigningBottomText({
+class SignUpBottomText extends StatelessWidget {
+  const SignUpBottomText({
     Key? key,
     required this.longText,
     required this.buttonText,
@@ -21,10 +21,10 @@ class SigningBottomText extends StatelessWidget {
         kwidth5,
         GestureDetector(
           onTap: () {
-            Navigator.push(
+            Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => SignupScreen(),
+                  builder: (context) => SigninScreen(),
                 ));
           },
           child: Text(

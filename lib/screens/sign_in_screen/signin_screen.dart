@@ -6,6 +6,7 @@ import 'package:flutter_gram/screens/sign_in_screen/widgets/password_textfield.d
 import 'package:flutter_gram/screens/sign_in_screen/widgets/signing_bottom_text.dart';
 import 'package:flutter_gram/screens/sign_in_screen/widgets/signing_button.dart';
 import 'package:flutter_gram/screens/sign_in_screen/widgets/signing_titles.dart';
+import 'package:flutter_gram/screens/signup_screen/signup_screen.dart';
 import 'package:flutter_gram/utils/constants.dart';
 import 'package:flutter_gram/utils/strings.dart';
 
@@ -35,12 +36,20 @@ class SigninScreen extends StatelessWidget {
               ),
               const Text('Email Address'),
               kHeight10,
-              CustomTextField(size: size, emailController: _emailController),
+              CustomTextField(
+                size: size,
+               controller: _emailController,
+                inputType: TextInputType.emailAddress,
+                labelText: 'Email',
+              ),
               kHeight10,
               const Text('Password'),
               kHeight10,
               PasswordTextField(
-                  size: size, passwordController: _passwordController),
+                size: size,
+                passwordController: _passwordController,
+                inputType: TextInputType.visiblePassword,
+              ),
               kHeight20,
               SigningButton(
                 size: size,
@@ -58,12 +67,17 @@ class SigninScreen extends StatelessWidget {
               SigningBottomText(
                 longText: "Don't have an account?",
                 buttonText: 'Create One',
-                onTap: () {},
               )
             ],
           ),
         ),
       ),
     );
+  }
+
+  navigateToSignup(BuildContext context) {
+    Navigator.of(context).push(MaterialPageRoute(
+      builder: (context) =>  SignupScreen(),
+    ));
   }
 }
