@@ -37,8 +37,14 @@ class SigninScreen extends StatelessWidget {
               const Text('Email Address'),
               kHeight10,
               CustomTextField(
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return 'Please enter some text';
+                  }
+                  return null;
+                },
                 size: size,
-               controller: _emailController,
+                controller: _emailController,
                 inputType: TextInputType.emailAddress,
                 labelText: 'Email',
               ),
@@ -64,7 +70,7 @@ class SigninScreen extends StatelessWidget {
                 onPressed: () {},
               ),
               kHeight20,
-             const SigningBottomText(
+              const SigningBottomText(
                 longText: "Don't have an account?",
                 buttonText: 'Create One',
               )
@@ -77,7 +83,7 @@ class SigninScreen extends StatelessWidget {
 
   navigateToSignup(BuildContext context) {
     Navigator.of(context).push(MaterialPageRoute(
-      builder: (context) =>  SignupScreen(),
+      builder: (context) => SignupScreen(),
     ));
   }
 }
