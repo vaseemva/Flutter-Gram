@@ -1,11 +1,8 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gram/providers/password_provider.dart';
-import 'package:flutter_gram/screens/home_screen/home_screen.dart';
-import 'package:flutter_gram/screens/sign_in_screen/signin_screen.dart';
-import 'package:flutter_gram/screens/splash_screen/splash_screen.dart';
+import 'package:flutter_gram/screens/splash_screen/newsplash.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
@@ -44,24 +41,7 @@ class MyApp extends StatelessWidget {
             textTheme: GoogleFonts.aBeeZeeTextTheme(),
             primarySwatch: Colors.blue,
           ),
-          home: StreamBuilder(
-            stream: FirebaseAuth.instance.authStateChanges(),
-            builder: (context, snapshot) {
-              if(snapshot.connectionState==ConnectionState.active){
-                if(snapshot.hasData){
-                  return  HomeScreen();
-                }else if(snapshot.hasError){
-                   Center(
-                    child: Text('${snapshot.error}'),
-                  );
-                }
-                if(snapshot.connectionState==ConnectionState.waiting){
-                  return const SplashScreen();
-                }
-              }
-              return SigninScreen();
-            },
-          )),
+          home:const NewSplashScreen()),
     );
   }
 }

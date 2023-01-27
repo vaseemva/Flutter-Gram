@@ -4,6 +4,7 @@ import 'package:flutter_gram/screens/onboarding_screen/intro_screens/intro_scree
 import 'package:flutter_gram/screens/onboarding_screen/intro_screens/intro_screen3.dart';
 import 'package:flutter_gram/screens/onboarding_screen/widgets/intro_button.dart';
 import 'package:flutter_gram/screens/sign_in_screen/signin_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class OnboardingScreen extends StatefulWidget {
@@ -56,6 +57,7 @@ class OnboardingScreenState extends State<OnboardingScreen> {
                   //next button
                   onLastPage
                       ? IntroButton(ontap: () {
+                        setpreferences();
                         navigateToSignin(context);
                       }, buttonText: 'done')
                       : IntroButton(
@@ -76,5 +78,10 @@ class OnboardingScreenState extends State<OnboardingScreen> {
       const [IntroScreen1(), IntroScreen2(), IntroScreen3()];
       navigateToSignin(BuildContext context){
       Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => SigninScreen(),));
+      }
+      setpreferences()async{
+        final preferences= await SharedPreferences.getInstance();
+        preferences.setBool('introWatched', true);
+
       }
 }

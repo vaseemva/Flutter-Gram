@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gram/resources/auth_methods.dart';
+import 'package:flutter_gram/screens/sign_in_screen/signin_screen.dart';
 import 'package:flutter_gram/screens/sign_in_screen/widgets/custom_textfield.dart';
 import 'package:flutter_gram/screens/sign_in_screen/widgets/google_signin.dart';
 import 'package:flutter_gram/screens/sign_in_screen/widgets/or_widget.dart';
@@ -8,7 +9,6 @@ import 'package:flutter_gram/screens/sign_in_screen/widgets/signing_titles.dart'
 import 'package:flutter_gram/screens/signup_screen/widgets/signup_bottom_text.dart';
 import 'package:flutter_gram/utils/constants.dart';
 import 'package:flutter_gram/utils/strings.dart';
-
 
 class SignupScreen extends StatelessWidget {
   SignupScreen({Key? key}) : super(key: key);
@@ -86,7 +86,10 @@ class SignupScreen extends StatelessWidget {
                 width: size.width * 0.8,
                 height: 50,
                 child: ElevatedButton(
-                    onPressed: signupUser, child: const Text("Sign Up")),
+                    onPressed: () {
+                      signupUser(context);
+                    },
+                    child: const Text("Sign Up")),
               ),
               kHeight10,
               OrWidget(size: size),
@@ -102,13 +105,20 @@ class SignupScreen extends StatelessWidget {
     );
   }
 
-  signupUser() async {
+  signupUser(BuildContext context) async {
     if (_formKey.currentState!.validate()) {
       String res = await AuthMethods().signupUser(
           fullName: _nameController.text.trim(),
           emailAddress: _emailController.text.trim(),
           password: _passwordController.text.trim());
       print(res);
+      if (res == 'success') {
+        ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(content: Text('Success')));
+        Navigator.of(context).pushReplacement(MaterialPageRoute(
+          builder: (context) => SigninScreen(),
+        ));
+      }
     }
   }
 

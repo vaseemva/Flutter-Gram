@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gram/screens/onboarding_screen/onboarding_screen.dart';
 
 import 'package:flutter_gram/utils/constants.dart';
 import 'package:flutter_gram/utils/strings.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -12,19 +14,24 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-  // navigateToOnBoarding() async {
-  //   await Future.delayed(const Duration(seconds: 2));
-  //   // ignore: use_build_context_synchronously
-  //   Navigator.pushReplacement(
-  //       context,
-  //       MaterialPageRoute(
-  //         builder: (context) => const OnboardingScreen(),
-  //       ));
-  // }
+  navigateToOnBoarding() async {
+    await Future.delayed(const Duration(seconds: 1));
+    final preferences=await SharedPreferences.getInstance();
+    bool introWatch=preferences.getBool('introWatched')??false;
+    // ignore: use_build_context_synchronously
+    if(introWatch==false){
+      // ignore: use_build_context_synchronously
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const OnboardingScreen(),
+        ));
+    }
+  }
 
   @override
   void initState() {
-    // navigateToOnBoarding();
+    navigateToOnBoarding();
     super.initState();
   }
 
