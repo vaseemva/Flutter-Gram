@@ -1,4 +1,6 @@
+import 'package:animated_snack_bar/animated_snack_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gram/providers/signin_provider.dart';
 import 'package:flutter_gram/resources/auth_methods.dart';
 import 'package:flutter_gram/screens/home_screen/home_screen.dart';
 import 'package:flutter_gram/screens/sign_in_screen/widgets/custom_textfield.dart';
@@ -9,8 +11,10 @@ import 'package:flutter_gram/screens/sign_in_screen/widgets/signing_bottom_text.
 
 import 'package:flutter_gram/screens/sign_in_screen/widgets/signing_titles.dart';
 import 'package:flutter_gram/screens/signup_screen/signup_screen.dart';
+import 'package:flutter_gram/utils/colors.dart';
 import 'package:flutter_gram/utils/constants.dart';
 import 'package:flutter_gram/utils/strings.dart';
+import 'package:provider/provider.dart';
 
 class SigninScreen extends StatelessWidget {
   SigninScreen({Key? key}) : super(key: key);
@@ -60,11 +64,17 @@ class SigninScreen extends StatelessWidget {
                 SizedBox(
                   width: size.width * 0.8,
                   height: 50,
-                  child: ElevatedButton(
-                      onPressed: () {
-                        signinUser(context);
-                      },
-                      child: const Text('Sign In')),
+                  child: Consumer<SigninProvider>(
+                    builder: (context, provider, child) => ElevatedButton(
+                        onPressed: () {
+                          signinUser(context);
+                        },
+                        child: provider.isLoading
+                            ? const CircularProgressIndicator(
+                                color: signinloadingcolor,
+                              )
+                            : const Text('Sign In')),
+                  ),
                 ),
                 kHeight10,
                 OrWidget(size: size),
@@ -87,19 +97,26 @@ class SigninScreen extends StatelessWidget {
   }
 
   signinUser(BuildContext context) async {
+    final provider = Provider.of<SigninProvider>(context, listen: false);
     if (_formKey.currentState!.validate()) {
+      provider.changeisLoading = true;
       String res = await AuthMethods().loginUser(
           email: _emailController.text.trim(),
           password: _passwordController.text.trim());
       if (res == 'success') {
-        Navigator.of(context).pushReplacement(MaterialPageRoute(
-          builder: (context) =>  HomeScreen(),
-        ));
+        provider.changeisLoading = false;
+        Navigator.of(context).pushReplacement(
+            MaterialPageRoute(builder: (context) => HomeScreen()));
       } else {
+        provider.changeisLoading = false;
+        // ignore: use_build_context_synchronously
+        AnimatedSnackBar.material('Invalid Credentials',
+                type: AnimatedSnackBarType.error,duration:const Duration(seconds: 4))
+            .show(context);
         print(res);
       }
     }
-  }
+  } 
 
   navigateToSignup(BuildContext context) {
     Navigator.of(context).push(MaterialPageRoute(

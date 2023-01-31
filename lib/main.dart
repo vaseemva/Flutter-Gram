@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gram/providers/password_provider.dart';
+import 'package:flutter_gram/providers/signin_provider.dart';
 import 'package:flutter_gram/screens/splash_screen/newsplash.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -32,6 +33,9 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(
           create: (context) => PasswordProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => SigninProvider(),
         )
       ],
       child: MaterialApp(
@@ -41,7 +45,7 @@ class MyApp extends StatelessWidget {
             textTheme: GoogleFonts.aBeeZeeTextTheme(),
             primarySwatch: Colors.blue,
           ),
-          home:const NewSplashScreen()),
+          home: const NewSplashScreen()),
     );
   }
 }

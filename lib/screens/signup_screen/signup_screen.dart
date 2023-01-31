@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gram/providers/signin_provider.dart';
 import 'package:flutter_gram/resources/auth_methods.dart';
 import 'package:flutter_gram/screens/sign_in_screen/signin_screen.dart';
 import 'package:flutter_gram/screens/sign_in_screen/widgets/custom_textfield.dart';
@@ -7,8 +8,10 @@ import 'package:flutter_gram/screens/sign_in_screen/widgets/or_widget.dart';
 import 'package:flutter_gram/screens/sign_in_screen/widgets/password_textfield.dart';
 import 'package:flutter_gram/screens/sign_in_screen/widgets/signing_titles.dart';
 import 'package:flutter_gram/screens/signup_screen/widgets/signup_bottom_text.dart';
+import 'package:flutter_gram/utils/colors.dart';
 import 'package:flutter_gram/utils/constants.dart';
 import 'package:flutter_gram/utils/strings.dart';
+import 'package:provider/provider.dart';
 
 class SignupScreen extends StatelessWidget {
   SignupScreen({Key? key}) : super(key: key);
@@ -85,11 +88,17 @@ class SignupScreen extends StatelessWidget {
               SizedBox(
                 width: size.width * 0.8,
                 height: 50,
-                child: ElevatedButton(
-                    onPressed: () {
-                      signupUser(context);
-                    },
-                    child: const Text("Sign Up")),
+                child: Consumer<SigninProvider>(
+                  builder: (context, provider, child) => ElevatedButton(
+                      onPressed: () {
+                        signupUser(context);
+                      },
+                      child: provider.isLoading
+                          ? const CircularProgressIndicator(
+                              color: signinloadingcolor,
+                            )
+                          : const Text("Sign Up")),
+                ),
               ),
               kHeight10,
               OrWidget(size: size),
@@ -107,17 +116,25 @@ class SignupScreen extends StatelessWidget {
 
   signupUser(BuildContext context) async {
     if (_formKey.currentState!.validate()) {
+      final provider = Provider.of<SigninProvider>(context, listen: false);
+      provider.changeisLoading = true;
       String res = await AuthMethods().signupUser(
           fullName: _nameController.text.trim(),
           emailAddress: _emailController.text.trim(),
           password: _passwordController.text.trim());
       print(res);
       if (res == 'success') {
+        provider.changeisLoading = false;
+        // ignore: use_build_context_synchronously
         ScaffoldMessenger.of(context)
-            .showSnackBar(SnackBar(content: Text('Success')));
+            .showSnackBar(const SnackBar(content: Text('Signed up successfully')));
+        // ignore: use_build_context_synchronously
         Navigator.of(context).pushReplacement(MaterialPageRoute(
           builder: (context) => SigninScreen(),
         ));
+      } else {
+        print(res);
+        provider.changeisLoading = false;
       }
     }
   }
