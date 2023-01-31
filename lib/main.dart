@@ -1,8 +1,10 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gram/providers/bottomnav_provider.dart';
 import 'package:flutter_gram/providers/password_provider.dart';
 import 'package:flutter_gram/providers/signin_provider.dart';
+import 'package:flutter_gram/providers/userprovider.dart';
 import 'package:flutter_gram/screens/splash_screen/newsplash.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -36,7 +38,9 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (context) => SigninProvider(),
-        )
+        ),
+        ChangeNotifierProvider(create: (context) => UserProvider()),
+        ChangeNotifierProvider(create: (context) => BottomNavProvider())
       ],
       child: MaterialApp(
           title: 'Flutter Demo',
