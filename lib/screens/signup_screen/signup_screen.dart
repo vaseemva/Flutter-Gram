@@ -103,7 +103,9 @@ class SignupScreen extends StatelessWidget {
               kHeight10,
               OrWidget(size: size),
               kHeight10,
-              GoogleSignin(size: size, onPressed: () {}),
+              GoogleSignin(
+                size: size,
+              ),
               kHeight20,
               const SignUpBottomText(
                   longText: 'Already have an account?', buttonText: 'Sign In')
@@ -126,8 +128,8 @@ class SignupScreen extends StatelessWidget {
       if (res == 'success') {
         provider.changeisLoading = false;
         // ignore: use_build_context_synchronously
-        ScaffoldMessenger.of(context)
-            .showSnackBar(const SnackBar(content: Text('Signed up successfully')));
+        ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Signed up successfully')));
         // ignore: use_build_context_synchronously
         Navigator.of(context).pushReplacement(MaterialPageRoute(
           builder: (context) => SigninScreen(),

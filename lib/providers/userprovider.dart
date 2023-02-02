@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_gram/models/user.dart';
 import 'package:flutter_gram/resources/auth_methods.dart';

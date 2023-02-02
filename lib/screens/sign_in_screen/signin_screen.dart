@@ -81,7 +81,6 @@ class SigninScreen extends StatelessWidget {
                 kHeight10,
                 GoogleSignin(
                   size: size,
-                  onPressed: () {},
                 ),
                 kHeight20,
                 const SigningBottomText(
@@ -111,12 +110,13 @@ class SigninScreen extends StatelessWidget {
         provider.changeisLoading = false;
         // ignore: use_build_context_synchronously
         AnimatedSnackBar.material('Invalid Credentials',
-                type: AnimatedSnackBarType.error,duration:const Duration(seconds: 4))
+                type: AnimatedSnackBarType.error,
+                duration: const Duration(seconds: 4))
             .show(context);
         print(res);
       }
     }
-  } 
+  }
 
   navigateToSignup(BuildContext context) {
     Navigator.of(context).push(MaterialPageRoute(

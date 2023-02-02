@@ -24,6 +24,7 @@ class HomeScreen extends StatelessWidget {
     final provider = Provider.of<BottomNavProvider>(context);
 
     return Scaffold(
+      appBar: AppBar(toolbarHeight: 0,),
       body: pages[provider.selectedIndex],
       bottomNavigationBar: CustomNavBar(provider: provider),
     );
