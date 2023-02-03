@@ -8,7 +8,6 @@ import 'package:flutter_gram/screens/sign_in_screen/widgets/google_signin.dart';
 import 'package:flutter_gram/screens/sign_in_screen/widgets/or_widget.dart';
 import 'package:flutter_gram/screens/sign_in_screen/widgets/password_textfield.dart';
 import 'package:flutter_gram/screens/sign_in_screen/widgets/signing_bottom_text.dart';
-
 import 'package:flutter_gram/screens/sign_in_screen/widgets/signing_titles.dart';
 import 'package:flutter_gram/screens/signup_screen/signup_screen.dart';
 import 'package:flutter_gram/utils/colors.dart';
@@ -26,6 +25,9 @@ class SigninScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     return Scaffold(
+      appBar: AppBar(
+        toolbarHeight: 0.0,
+      ),
       resizeToAvoidBottomInset: false,
       body: SafeArea(
         child: Padding(

@@ -6,7 +6,20 @@ class UserProvider with ChangeNotifier {
   UserModel? _user;
   final AuthMethods _authMethods = AuthMethods();
   UserModel get getUser {
+    // //  refreshUser();
+    // // return _user!;
+    // if (_user == null) {
+    //   // handle the case where the user is null
+    //   refreshUser();
+    // }
     return _user!;
+  }
+  set setUser(UserModel userModel){
+    _user=userModel;
+  }
+
+  UserProvider() {
+    refreshUser();
   }
 
   Future<void> refreshUser() async {

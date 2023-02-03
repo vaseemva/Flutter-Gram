@@ -1,8 +1,8 @@
-import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_gram/screens/add_post_screen/add_post_screen.dart';
 import 'package:flutter_gram/screens/add_screen/widgets/add_post.dart';
-import 'package:flutter_gram/utils/constants.dart';
+
 
 class AddScreen extends StatelessWidget {
   const AddScreen({Key? key}) : super(key: key);
@@ -37,9 +37,9 @@ class AddScreen extends StatelessWidget {
     );
   }
 
-  void _toAddPost(BuildContext context) {
-    Navigator.of(context).push(MaterialPageRoute(
-      builder: (context) => AddPostScreen(),
-    ));
-  }
+  // void _toAddPost(BuildContext context) {
+  //   Navigator.of(context).push(MaterialPageRoute(
+  //     builder: (context) => AddPostScreen(),
+  //   ));
+  // }
 }

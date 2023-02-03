@@ -7,7 +7,7 @@ const Feedscreen({ Key? key }) : super(key: key);
 
   @override
   Widget build(BuildContext context){
-    final FirebaseAuth _auth = FirebaseAuth.instance;
+    final FirebaseAuth auth = FirebaseAuth.instance;
     return Scaffold(
       body: Center(
         child: Column(
@@ -16,7 +16,7 @@ const Feedscreen({ Key? key }) : super(key: key);
             const Text('Home Screen'),
             ElevatedButton(
                 onPressed: () {
-                  _auth.signOut();
+                  auth.signOut();
                 },
                 child: const Text('signout')),
             ElevatedButton(

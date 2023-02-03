@@ -9,11 +9,18 @@ class AuthMethods {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
-Future<UserModel>getUserDetails()async{
-User currentUser=_auth.currentUser!;
-DocumentSnapshot snap=await _firestore.collection('users').doc(currentUser.uid).get();
-return UserModel.fromSnap(snap);
-}
+  Future<UserModel> getUserDetails() async {
+    User currentUser = _auth.currentUser!;
+    DocumentSnapshot snap =
+        await _firestore.collection('users').doc(currentUser.uid).get();
+    var snapshot = snap.data() as Map<String, dynamic>;
+    return UserModel(
+        emailAddress: snapshot["emailAddress"],
+        uid: snapshot["uid"],
+        fullName: snapshot["fullName"],
+        followers: snapshot["followers"],
+        following: snapshot["following"]);
+  }
 
   //signing up user
   Future<String> signupUser(
@@ -50,7 +57,6 @@ return UserModel.fromSnap(snap);
   }
 
   Future<void> signInWithGoogle(BuildContext context) async {
-    
     try {
       if (kIsWeb) {
         GoogleAuthProvider googleProvider = GoogleAuthProvider();
@@ -74,23 +80,29 @@ return UserModel.fromSnap(snap);
           UserCredential userCredential =
               await _auth.signInWithCredential(credential);
 
-          // if you want to do specific task like storing information in firestore
-          // only for new users using google sign in (since there are no two options
-          // for google sign in and google sign up, only one as of now),
-          // do the following:
-
-          // if (userCredential.user != null) {
-          //   if (userCredential.additionalUserInfo!.isNewUser) {}
-          // }
+          if (userCredential.user != null) {
+            if (userCredential.additionalUserInfo!.isNewUser) {
+              UserModel userModel = UserModel(
+                  emailAddress: userCredential.user!.email!,
+                  uid: userCredential.user!.uid,
+                  fullName: userCredential.user!.displayName!,
+                  followers: [],
+                  following: []);
+              await _firestore
+                  .collection('users')
+                  .doc(userCredential.user!.uid)
+                  .set(userModel.toJson());
+            }
+          }
         }
       }
     } on FirebaseAuthException catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.toString())));
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text(e.toString())));
       print(e.toString());
       // Displaying the error message
     }
   }
-
 
   //  signInWithGoogle() async {
   //   // Trigger the authentication flow

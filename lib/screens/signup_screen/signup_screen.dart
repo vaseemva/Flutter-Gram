@@ -26,6 +26,9 @@ class SignupScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     return Scaffold(
+      appBar: AppBar(
+        toolbarHeight: 0.0,
+      ),
       resizeToAvoidBottomInset: false,
       body: Padding(
         padding: const EdgeInsets.only(left: 30),
