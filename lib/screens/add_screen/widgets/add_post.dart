@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gram/screens/add_post_screen/add_post_screen.dart';
+import 'package:flutter_gram/utils/colors.dart';
 
 class AddPost extends StatelessWidget {
   const AddPost({
@@ -42,20 +43,20 @@ class AddPost extends StatelessWidget {
             height: size.height * 0.1,
             width: size.width * 0.30,
            
-            decoration: const BoxDecoration(
-              color: Colors.blue,
+            decoration: const BoxDecoration( 
+              color: postoptioncolor,
               borderRadius: BorderRadius.only(
                   bottomLeft: Radius.circular(45),
                   bottomRight: Radius.circular(45)),
             ),
           ),
           Positioned(
-            top: 12,
-            left: 35,  
+            top: size.height*0.03, 
+            left: size.width*0.08,    
             child: Icon(iconData,color: Colors.white,size: 40 ,)),
             Positioned(
-              top: 85, 
-              left: 15,
+              top: size.height*0.116, 
+            left: size.width*0.06, 
               child: Text(label,
               
               ))

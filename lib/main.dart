@@ -49,7 +49,7 @@ class MyApp extends StatelessWidget {
           debugShowCheckedModeBanner: false,
           theme: ThemeData(
             textTheme: GoogleFonts.aBeeZeeTextTheme(),
-            primarySwatch: Colors.blue,
+            primarySwatch: Colors.blueGrey,
           ),
           home: const NewSplashScreen()),
     );

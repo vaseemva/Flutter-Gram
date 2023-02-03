@@ -5,4 +5,5 @@ const bottomnavSelectedcolor=Colors.black;
 const bottomNavUnselectedcolor=Colors.grey;
 
 //addPostScreen
-const sideBoxColor=Colors.blue;
+const sideBoxColor=Colors.blueGrey; 
+const postoptioncolor=Colors.blueGrey;
