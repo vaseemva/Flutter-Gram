@@ -50,6 +50,7 @@ class MyApp extends StatelessWidget {
           theme: ThemeData(
             textTheme: GoogleFonts.aBeeZeeTextTheme(),
             primarySwatch: Colors.blueGrey,
+            useMaterial3: true
           ),
           home: const NewSplashScreen()),
     );

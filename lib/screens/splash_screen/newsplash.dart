@@ -28,7 +28,7 @@ Widget _handleAuthState(BuildContext context) {
     builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.active) {
                 if (snapshot.hasData) {
-                  return HomeScreen();
+                  return const HomeScreen();
                 } else if (snapshot.hasError) {
                   Center(
                     child: Text('${snapshot.error}'),

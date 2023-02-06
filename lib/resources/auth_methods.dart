@@ -17,19 +17,19 @@ class AuthMethods {
     return UserModel(
         emailAddress: snapshot["emailAddress"],
         uid: snapshot["uid"],
-        fullName: snapshot["fullName"],
+        username: snapshot["username"],
         followers: snapshot["followers"],
         following: snapshot["following"]);
   }
 
   //signing up user
   Future<String> signupUser(
-      {required String fullName,
+      {required String username,
       required String emailAddress,
       required String password}) async {
     String res = 'some error occured';
     try {
-      if (fullName.isNotEmpty &&
+      if (username.isNotEmpty &&
           password.isNotEmpty &&
           emailAddress.isNotEmpty) {
         UserCredential credential = await _auth.createUserWithEmailAndPassword(
@@ -37,7 +37,7 @@ class AuthMethods {
         UserModel userModel = UserModel(
             emailAddress: emailAddress,
             uid: credential.user!.uid,
-            fullName: fullName,
+            username: username,
             followers: [],
             following: []);
         await _firestore
@@ -85,7 +85,7 @@ class AuthMethods {
               UserModel userModel = UserModel(
                   emailAddress: userCredential.user!.email!,
                   uid: userCredential.user!.uid,
-                  fullName: userCredential.user!.displayName!,
+                  username: userCredential.user!.displayName!,
                   followers: [],
                   following: []);
               await _firestore
@@ -103,24 +103,6 @@ class AuthMethods {
       // Displaying the error message
     }
   }
-
-  //  signInWithGoogle() async {
-  //   // Trigger the authentication flow
-  //   final GoogleSignInAccount? googleUser = await GoogleSignIn(
-  //       scopes: <String>["email"]).signIn();
-
-  //   // Obtain the auth details from the request
-  //   final GoogleSignInAuthentication googleAuth = await googleUser!.authentication;
-
-  //   // Create a new credential
-  //   final credential = GoogleAuthProvider.credential(
-  //     accessToken: googleAuth.accessToken,
-  //     idToken: googleAuth.idToken,
-  //   );
-
-  //   // Once signed in, return the UserCredential
-  //   return await FirebaseAuth.instance.signInWithCredential(credential);
-  // }
 
   //signin user
   Future<String> loginUser(

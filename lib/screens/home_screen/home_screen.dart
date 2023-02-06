@@ -1,20 +1,19 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_gram/models/user.dart';
 import 'package:flutter_gram/providers/bottomnav_provider.dart';
 import 'package:flutter_gram/providers/userprovider.dart';
 import 'package:flutter_gram/screens/add_screen/add_screen.dart';
 import 'package:flutter_gram/screens/eventscreen/event_screen.dart';
 import 'package:flutter_gram/screens/feedscreen/feedscreen.dart';
-import 'package:flutter_gram/screens/home_screen/widgets/customNavBar.dart';
+import 'package:flutter_gram/screens/home_screen/widgets/customnavbar.dart';
 import 'package:flutter_gram/screens/profile_screen/profile_screen.dart';
 import 'package:flutter_gram/screens/search_screen/search_screen.dart';
 import 'package:flutter_gram/utils/global.dart';
 import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
-  HomeScreen({Key? key}) : super(key: key);
+  const HomeScreen({Key? key}) : super(key: key);
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -34,7 +33,6 @@ class _HomeScreenState extends State<HomeScreen> {
     userpro.refreshUser();
   }
 
- 
   getname(User user) async {
     final FirebaseFirestore firestore = FirebaseFirestore.instance;
     DocumentSnapshot snapshot =
@@ -42,15 +40,15 @@ class _HomeScreenState extends State<HomeScreen> {
 
     print(snapshot.data());
 
-    currentUserName = (snapshot.data() as Map<String, dynamic>)["username"];
+    currentUserName = (snapshot.data() as Map<String, dynamic>)["username"]; 
     currentUserEmail = (snapshot.data() as Map<String, dynamic>)["email"];
     currentUserUid = (snapshot.data() as Map<String, dynamic>)["uid"];
   }
 
   @override
   void initState() {
-    // addData();
     FirebaseAuth.instance.authStateChanges().listen((User? user) async {
+     
       if (user == null) {
         print('User is currently signed out!');
       } else {
@@ -72,6 +70,7 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       body: pages[provider.selectedIndex],
       bottomNavigationBar: CustomNavBar(provider: provider),
+      
     );
   }
 }

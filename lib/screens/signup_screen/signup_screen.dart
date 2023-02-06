@@ -124,7 +124,7 @@ class SignupScreen extends StatelessWidget {
       final provider = Provider.of<SigninProvider>(context, listen: false);
       provider.changeisLoading = true;
       String res = await AuthMethods().signupUser(
-          fullName: _nameController.text.trim(),
+          username: _nameController.text.trim(),
           emailAddress: _emailController.text.trim(),
           password: _passwordController.text.trim());
       print(res);

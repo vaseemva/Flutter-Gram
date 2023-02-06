@@ -4,21 +4,21 @@ class UserModel {
   final String emailAddress;
   final String uid;
 
-  final String fullName;
+  final String username;
   final List followers;
   final List following;
 
   UserModel(
       {required this.emailAddress,
       required this.uid,
-      required this.fullName,
+      required this.username,
       required this.followers,
       required this.following});
 
   Map<String, dynamic> toJson() => {
         "emailAddress": emailAddress,
         "uid": uid,
-        "fullName": fullName,
+        "username": username,
         "followers": followers,
         "following": following
       };
@@ -28,7 +28,7 @@ class UserModel {
     return UserModel(
         emailAddress: snapshot['emailAddress'],
         uid: snapshot['uid'],
-        fullName: snapshot['fullName'],
+        username: snapshot['fullName'],
         followers: snapshot['followers'],
         following: snapshot['following']);
   }

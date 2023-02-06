@@ -37,6 +37,7 @@ class SigninScreen extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.center,
+            
               children: [
                 SigningTitles(
                   title: 'Sign In',
@@ -107,7 +108,7 @@ class SigninScreen extends StatelessWidget {
       if (res == 'success') {
         provider.changeisLoading = false;
         Navigator.of(context).pushReplacement(
-            MaterialPageRoute(builder: (context) => HomeScreen()));
+            MaterialPageRoute(builder: (context) => const HomeScreen()));
       } else {
         provider.changeisLoading = false;
         // ignore: use_build_context_synchronously

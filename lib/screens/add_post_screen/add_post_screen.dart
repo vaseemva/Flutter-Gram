@@ -4,8 +4,10 @@ import 'package:flutter/services.dart';
 import 'package:flutter_gram/providers/add_post_provider.dart';
 import 'package:flutter_gram/resources/firestore_methods.dart';
 import 'package:flutter_gram/screens/add_post_screen/widgets/add_thumbnail_container.dart';
+import 'package:flutter_gram/screens/add_post_screen/widgets/body_text_field.dart';
 import 'package:flutter_gram/screens/add_post_screen/widgets/post_image_container.dart';
 import 'package:flutter_gram/screens/add_post_screen/widgets/side_box.dart';
+import 'package:flutter_gram/screens/add_post_screen/widgets/title_text_field.dart';
 import 'package:flutter_gram/utils/constants.dart';
 import 'package:flutter_gram/utils/global.dart';
 import 'package:flutter_gram/utils/utils.dart';
@@ -21,7 +23,9 @@ class AddPostScreen extends StatelessWidget {
     final size = MediaQuery.of(context).size;
     //  UserModel user=Provider.of<UserProvider>(context).getUser;
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        title: const Text("Post an Article"),
+      ),
       body: Consumer<AddPostProvider>(
         builder: (context, provider, child) => ListView(
           children: [
@@ -39,32 +43,10 @@ class AddPostScreen extends StatelessWidget {
               size: size,
               title: 'Title',
             ),
-            Container(
-                height: 60,
-                decoration: const BoxDecoration(),
-                padding:
-                    const EdgeInsets.symmetric(vertical: 8.0, horizontal: 24.0),
-                child: TextFormField(
-                  controller: _titleController,
-                  decoration: const InputDecoration(
-                    border: OutlineInputBorder(),
-                  ),
-                )),
+            TitleTextField(titleController: _titleController),
             kHeight20,
             SideBox(size: size, title: 'Body'),
-            Padding(
-              padding:
-                  const EdgeInsets.symmetric(vertical: 8.0, horizontal: 24.0),
-              child: TextFormField(
-                controller: _bodyController,
-                minLines: 13,
-                maxLines: null,
-                keyboardType: TextInputType.multiline,
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
-                ),
-              ),
-            ),
+            BodyTextField(bodyController: _bodyController),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: ElevatedButton(
@@ -108,10 +90,12 @@ class AddPostScreen extends StatelessWidget {
           // ignore: use_build_context_synchronously
           showSnackBar('posted successfully', context);
           provider.isLoading = false;
+          // ignore: use_build_context_synchronously
           Navigator.of(context).pop();
         } else {
           // ignore: use_build_context_synchronously
           provider.isLoading = false;
+          // ignore: use_build_context_synchronously
           showSnackBar('Failed Posting', context);
         }
       } catch (e) {
@@ -119,7 +103,7 @@ class AddPostScreen extends StatelessWidget {
         print(e.toString());
       }
     } else {
-      showSnackBar('Please fill all the fields', context);
+      showSnackBar('Please fill all the field', context);
     }
   }
 }
