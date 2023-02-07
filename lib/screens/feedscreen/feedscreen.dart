@@ -15,12 +15,16 @@ class Feedscreen extends StatelessWidget {
       builder: (context,
           AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return const Center(child:  CircularProgressIndicator());
+          return const Center(child: CircularProgressIndicator());
         }
-        return ListView.builder(
-          itemCount: snapshot.data!.docs.length,
-          itemBuilder: (context, index) =>
-              PostCard(snap: snapshot.data!.docs[index].data()),
+        return SingleChildScrollView(
+          child: ListView.builder(
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            itemCount: snapshot.data!.docs.length,
+            itemBuilder: (context, index) =>
+                PostCard(snap: snapshot.data!.docs[index].data()),
+          ),
         );
       },
     );

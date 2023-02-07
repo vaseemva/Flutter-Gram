@@ -42,7 +42,7 @@ class FirestoreMethods {
   Future<void> likePost(String postId, String uid, List likes) async {
     try {
       if (likes.contains(uid)) {
-       _firestore.collection('posts').doc(postId).update({
+        _firestore.collection('posts').doc(postId).update({
           'likes': FieldValue.arrayRemove([uid])
         });
       } else {
@@ -54,23 +54,38 @@ class FirestoreMethods {
       print(e.toString());
     }
   }
-  //post comments
-  Future<void> postComment(String postId, String uid,String name,String profileImage,String comment) async {
-    try {
-     if(comment.isNotEmpty){
-      String commentId=const Uuid().v1();
-      _firestore.collection('posts').doc(postId).collection('comments').doc(commentId).set({
-        'commentId':commentId,
-        'uid':uid,
-        'name':name,
-        'profileImage':profileImage,
-        'comment':comment,
-        'datePublished':DateTime.now() 
-      });
-     }else{
-       print('comment is empty');
-     }
 
+  //post comments
+  Future<void> postComment(String postId, String uid, String name,
+      String profileImage, String comment) async {
+    try {
+      if (comment.isNotEmpty) {
+        String commentId = const Uuid().v1();
+        _firestore
+            .collection('posts')
+            .doc(postId)
+            .collection('comments')
+            .doc(commentId)
+            .set({
+          'commentId': commentId,
+          'uid': uid,
+          'name': name,
+          'profileImage': profileImage,
+          'comment': comment,
+          'datePublished': DateTime.now()
+        });
+      } else {
+        print('comment is empty');
+      }
+    } catch (e) {
+      print(e.toString());
+    }
+  }
+
+  //delete post if the user is the owner
+  Future<void> deletePost(String postId) async {
+    try {
+      _firestore.collection('posts').doc(postId).delete();
     } catch (e) {
       print(e.toString());
     }
