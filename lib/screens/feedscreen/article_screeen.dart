@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gram/resources/firestore_methods.dart';
 import 'package:flutter_gram/screens/feedscreen/widgets.dart/name_and_date.dart';
 import 'package:flutter_gram/screens/feedscreen/widgets.dart/thumbnail_widget.dart';
 import 'package:flutter_gram/utils/constants.dart';
-import 'package:intl/intl.dart';
+import 'package:flutter_gram/utils/global.dart';
+
 
 class ArticleScreeen extends StatelessWidget {
   const ArticleScreeen({Key? key, this.snap}) : super(key: key);
@@ -44,10 +46,14 @@ class ArticleScreeen extends StatelessWidget {
               SizedBox(
                 width: size.width * 0.09,
               ),
-              const Icon(
-                Icons.arrow_circle_up_sharp,
-                size: 25,
-              ),
+              IconButton(
+                  onPressed: () async {
+                    await FirestoreMethods().likePost(
+                        snap['postId'], currentUserUid!, snap['likes']);
+                  },
+                  icon: snap['likes'].contains(currentUserUid)
+                      ? const Icon(Icons.arrow_circle_down)
+                      : const Icon(Icons.arrow_circle_up)),
               Text('${snap['likes'].length}'),
               kwidth15,
               const Icon(Icons.comment_outlined),
@@ -93,7 +99,7 @@ class BodyText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(left: 8.0, right: 8.0), 
+      padding: const EdgeInsets.only(left: 8.0, right: 8.0),
       child: Text(
         snap['body'],
         style: const TextStyle(fontSize: 16),
@@ -101,4 +107,3 @@ class BodyText extends StatelessWidget {
     );
   }
 }
-

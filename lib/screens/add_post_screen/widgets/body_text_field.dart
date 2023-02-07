@@ -15,7 +15,7 @@ class BodyTextField extends StatelessWidget {
           const EdgeInsets.symmetric(vertical: 8.0, horizontal: 24.0),
       child: TextFormField(
         controller: _bodyController,
-        minLines: 13,
+        minLines: 10, 
         maxLines: null,
         keyboardType: TextInputType.multiline,
         decoration: const InputDecoration(

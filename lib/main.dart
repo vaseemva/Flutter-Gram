@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gram/providers/add_post_provider.dart';
 import 'package:flutter_gram/providers/bottomnav_provider.dart';
+import 'package:flutter_gram/providers/field_provider.dart';
 import 'package:flutter_gram/providers/password_provider.dart';
 import 'package:flutter_gram/providers/signin_provider.dart';
 import 'package:flutter_gram/providers/userprovider.dart';
@@ -42,7 +43,8 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(create: (context) => UserProvider()),
         ChangeNotifierProvider(create: (context) => BottomNavProvider()),
-        ChangeNotifierProvider(create: (context) => AddPostProvider(),)
+        ChangeNotifierProvider(create: (context) => AddPostProvider(),),
+        ChangeNotifierProvider(create: (context) => FieldProvider(),)
       ],
       child: MaterialApp(
           title: 'Flutter Demo',
