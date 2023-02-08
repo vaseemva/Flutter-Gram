@@ -5,6 +5,7 @@ import 'package:flutter_gram/screens/comment_screen/comment_screen.dart';
 import 'package:flutter_gram/screens/feedscreen/article_screeen.dart';
 import 'package:flutter_gram/utils/constants.dart';
 import 'package:flutter_gram/utils/global.dart';
+import 'package:share_plus/share_plus.dart';
 
 class PostCard extends StatelessWidget {
   const PostCard({Key? key, this.snap}) : super(key: key);
@@ -137,7 +138,12 @@ class PostCard extends StatelessWidget {
                             icon: const Icon(Icons.comment_outlined)),
                         Text(snapshot.data!.docs.length.toString()),
                         kwidth15,
-                        const Icon(Icons.share_outlined),
+                        IconButton(
+                            onPressed: () async {
+                              await Share.share(
+                                  "${snap['title']}\n${snap['body']}");
+                            },
+                            icon: const Icon(Icons.share_outlined)),
                         const Expanded(
                             child: Align(
                                 alignment: Alignment.bottomRight,

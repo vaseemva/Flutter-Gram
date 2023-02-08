@@ -1,30 +1,59 @@
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_gram/providers/field_provider.dart';
+import 'package:provider/provider.dart';
+
 class SearchScreen extends StatelessWidget {
-const SearchScreen({ Key? key }) : super(key: key);
+  SearchScreen({Key? key}) : super(key: key);
+  final TextEditingController _searchController = TextEditingController();
 
   @override
-  Widget build(BuildContext context){
-    final FirebaseAuth auth = FirebaseAuth.instance;
-    return Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Text('Home Screen'),
-            ElevatedButton(
-                onPressed: () {
-                  auth.signOut();
-                },
-                child: const Text('signout')),
-            ElevatedButton(
-                onPressed: () async {
-                  final preferences = await SharedPreferences.getInstance();
-                  preferences.clear();
-                },
-                child: const Text('clear'))
-          ],
+  Widget build(BuildContext context) {
+    final provider = Provider.of<FieldProvider>(context);
+    return Scaffold(
+        appBar: AppBar(
+          title: TextFormField(
+            controller: _searchController,
+            decoration: InputDecoration(
+              icon:const Icon(Icons.search),
+              fillColor: Colors.grey[100],
+              filled: true,
+              hintText: '  Search',
+              border: InputBorder.none,
+            ),
+            onFieldSubmitted: (value) {
+              provider.setIsShowUsers = true;
+            },
+          ),
         ),
-      );
+        body: provider.getIsShowUsers
+            ? FutureBuilder(
+                future: FirebaseFirestore.instance
+                    .collection('users')
+                    .where('username',
+                        isGreaterThanOrEqualTo: _searchController.text)
+                    .get(),
+                builder: (context,
+                    AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>>
+                        snapshot) {
+                  if (!snapshot.hasData) {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  }
+                  return ListView.builder(
+                    itemCount: snapshot.data!.docs.length,
+                    itemBuilder: (context, index) {
+                      return ListTile(
+                        leading: const CircleAvatar(
+                            // backgroundImage: NetworkImage(snapshot.data!.docs[index]['profilePic']),
+                            ),
+                        title: Text(snapshot.data!.docs[index]['username']),
+                      );
+                    },
+                  );
+                },
+              )
+            : Container());
   }
 }

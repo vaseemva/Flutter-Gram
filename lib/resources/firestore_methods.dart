@@ -90,4 +90,16 @@ class FirestoreMethods {
       print(e.toString());
     }
   }
+  //change profile image
+  Future<void> changeProfileImage(String uid, Uint8List file) async {
+    try {
+      String photoUrl =
+          await StorageMethods().uploadImagetoStorage('profile', file, false);
+      _firestore.collection('users').doc(uid).update({
+        'profileImage': photoUrl,
+      });
+    } catch (e) {
+      print(e.toString());
+    }
+  }
 }

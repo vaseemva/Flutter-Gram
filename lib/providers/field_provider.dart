@@ -1,15 +1,11 @@
 import 'package:flutter/material.dart';
 
 class FieldProvider with ChangeNotifier{
-  String _comment = "";
-  String get comment => _comment;
-  set comment(String value){
-    _comment = value;
-    notifyListeners();
-  }
-  refreshCommenttextfield(){
-    _comment = "";
-    notifyListeners();
-  }
+ bool _isShowUsers = false;
+ bool get getIsShowUsers => _isShowUsers;
+ set setIsShowUsers(bool isShowUsers){
+   _isShowUsers = isShowUsers;
+   notifyListeners();
+ }
   
 }

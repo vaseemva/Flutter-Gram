@@ -22,7 +22,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   final pages = [
     const Feedscreen(),
-    const SearchScreen(),
+     SearchScreen(),
     const AddScreen(),
     const EventScreen(),
     const ProfileScreen()
