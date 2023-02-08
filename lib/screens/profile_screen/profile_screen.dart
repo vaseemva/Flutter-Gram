@@ -1,12 +1,17 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gram/screens/profile_screen/widgets/articles_text.dart';
+import 'package:flutter_gram/screens/profile_screen/widgets/other_user_pro_sec.dart';
 import 'package:flutter_gram/screens/profile_screen/widgets/profile_post_card.dart';
 import 'package:flutter_gram/screens/profile_screen/widgets/profile_section.dart';
-import 'package:flutter_gram/utils/global.dart';
 
 class ProfileScreen extends StatelessWidget {
-  const ProfileScreen({Key? key}) : super(key: key);
+  const ProfileScreen({
+    Key? key,
+    required this.uid,
+  }) : super(key: key);
+  final String uid;
 
   @override
   Widget build(BuildContext context) {
@@ -17,10 +22,7 @@ class ProfileScreen extends StatelessWidget {
         toolbarHeight: 0.0,
       ),
       body: FutureBuilder(
-          future: FirebaseFirestore.instance
-              .collection('users')
-              .doc(currentUserUid)
-              .get(),
+          future: FirebaseFirestore.instance.collection('users').doc(uid).get(),
           builder: (context,
               AsyncSnapshot<DocumentSnapshot<Map<String, dynamic>>> snapshot) {
             if (!snapshot.hasData) {
@@ -31,28 +33,34 @@ class ProfileScreen extends StatelessWidget {
             return StreamBuilder(
                 stream: FirebaseFirestore.instance
                     .collection('posts')
-                    .where('uid', isEqualTo: currentUserUid)
+                    .where('uid', isEqualTo: uid)
                     .snapshots(),
                 builder: (context,
                     AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>>
                         asyncsnapshot) {
                   if (!asyncsnapshot.hasData) {
-                    return  Center(child: Container());
+                    return Center(child: Container());
                   }
 
                   return ListView(
                     children: [
-                      ProfileSection(
-                          screensize: screensize, snap: snapshot.data!),
+                      uid == FirebaseAuth.instance.currentUser!.uid
+                          ? ProfileSection(
+                              screensize: screensize, snap: snapshot.data!)
+                          : OtherProfileSection(
+                              screensize: screensize, snap: snapshot.data!),
                       const ArticlesText(),
                       ListView.builder(
                           shrinkWrap: true,
                           physics: const ScrollPhysics(),
                           itemCount: asyncsnapshot.data!.docs.length,
                           itemBuilder: (context, index) {
-                           final data=asyncsnapshot.data!.docs[index].data();
-                            return ProfilePostCard(snap: data,);
-                          } ),
+                            final data = asyncsnapshot.data!.docs[index].data();
+
+                            return ProfilePostCard(
+                              snap: data,
+                            );
+                          }),
                     ],
                   );
                 });

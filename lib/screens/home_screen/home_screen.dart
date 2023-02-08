@@ -25,7 +25,7 @@ class _HomeScreenState extends State<HomeScreen> {
      SearchScreen(),
     const AddScreen(),
     const EventScreen(),
-    const ProfileScreen()
+     ProfileScreen(uid: FirebaseAuth.instance.currentUser!.uid,) 
   ];
   addData() async {
     final UserProvider userpro =
