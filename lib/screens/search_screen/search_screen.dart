@@ -53,9 +53,10 @@ class SearchScreen extends StatelessWidget {
                           ));
                         },
                         child: ListTile(
-                          leading: const CircleAvatar(
-                              // backgroundImage: NetworkImage(snapshot.data!.docs[index]['profilePic']),
-                              ),
+                          leading: CircleAvatar(
+                            backgroundImage: NetworkImage(
+                                snapshot.data!.docs[index]['profileImage']),
+                          ),
                           title: Text(snapshot.data!.docs[index]['username']),
                         ),
                       );

@@ -5,7 +5,6 @@ import 'package:flutter_gram/screens/feedscreen/widgets.dart/thumbnail_widget.da
 import 'package:flutter_gram/utils/constants.dart';
 import 'package:flutter_gram/utils/global.dart';
 
-
 class ArticleScreeen extends StatelessWidget {
   const ArticleScreeen({Key? key, this.snap}) : super(key: key);
   // ignore: prefer_typing_uninitialized_variables
@@ -26,9 +25,10 @@ class ArticleScreeen extends StatelessWidget {
             SizedBox(
               width: size.width * 0.03,
             ),
-            const CircleAvatar(
+            CircleAvatar(
               backgroundImage: NetworkImage(
-                  "https://th.bing.com/th/id/OIP.GlIuUj-GYrRL_G8WvZ3YagHaHw?w=189&h=197&c=7&r=0&o=5&dpr=1.3&pid=1.7"),
+                snap['profileImage'],
+              ),
             ),
             SizedBox(
               width: size.width * 0.03,

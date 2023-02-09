@@ -22,10 +22,12 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   final pages = [
     const Feedscreen(),
-     SearchScreen(),
+    SearchScreen(),
     const AddScreen(),
     const EventScreen(),
-     ProfileScreen(uid: FirebaseAuth.instance.currentUser!.uid,) 
+    ProfileScreen(
+      uid: FirebaseAuth.instance.currentUser!.uid,
+    )
   ];
   addData() async {
     final UserProvider userpro =
@@ -40,7 +42,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
     print(snapshot.data());
 
-    currentUserName = (snapshot.data() as Map<String, dynamic>)["username"]; 
+    currentUserName = (snapshot.data() as Map<String, dynamic>)["username"];
     currentUserEmail = (snapshot.data() as Map<String, dynamic>)["email"];
     currentUserUid = (snapshot.data() as Map<String, dynamic>)["uid"];
   }
@@ -48,7 +50,11 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     FirebaseAuth.instance.authStateChanges().listen((User? user) async {
-     
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        final provider = Provider.of<UserProvider>(context, listen: false);
+        provider.refreshUser();
+      });
+
       if (user == null) {
         print('User is currently signed out!');
       } else {
@@ -70,7 +76,6 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       body: pages[provider.selectedIndex],
       bottomNavigationBar: CustomNavBar(provider: provider),
-      
     );
   }
 }

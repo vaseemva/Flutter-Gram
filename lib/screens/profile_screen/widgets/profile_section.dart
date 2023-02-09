@@ -1,11 +1,17 @@
+import 'dart:typed_data';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gram/resources/firestore_methods.dart';
 import 'package:flutter_gram/screens/profile_screen/widgets/count_text.dart';
 import 'package:flutter_gram/screens/profile_screen/widgets/title_text.dart';
 import 'package:flutter_gram/utils/colors.dart';
+import 'package:flutter_gram/utils/utils.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class ProfileSection extends StatelessWidget {
-  const ProfileSection({
+  ProfileSection({
     super.key,
     required this.screensize,
     required this.snap,
@@ -13,6 +19,7 @@ class ProfileSection extends StatelessWidget {
 
   final Size screensize;
   final DocumentSnapshot snap;
+  Uint8List? profilePic;
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +37,7 @@ class ProfileSection extends StatelessWidget {
           return Stack(
             children: [
               SizedBox(
-                height: screensize.height * 0.5,
+                height: screensize.height * 0.4, 
                 width: double.infinity,
               ),
               Container(
@@ -45,11 +52,11 @@ class ProfileSection extends StatelessWidget {
                 ),
               ),
               Positioned(
-                left: screensize.width * 0.075,
-                top: screensize.height * 0.08,
+                left: screensize.width /2/2/1.45,          
+                top: screensize.height * 0.07, 
                 child: Container(
-                  height: 300,
-                  width: 300,
+                  height: screensize.height * 0.290,  
+                  width: screensize.width * 0.7,
                   decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(40)),
@@ -57,20 +64,20 @@ class ProfileSection extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       SizedBox(
-                        height: screensize.height * 0.02,
+                        height: screensize.height * 0.01,
                       ),
                       Container(
-                        width: 130,
-                        height: 130,
-                        decoration: const BoxDecoration(
+                        width: screensize.width * 0.2, 
+                        height: screensize.height * 0.1,
+                        decoration: BoxDecoration(
                           shape: BoxShape.circle,
                           image: DecorationImage(
                               image: NetworkImage(
-                                  "https://th.bing.com/th/id/OIP.GlIuUj-GYrRL_G8WvZ3YagHaHw?w=189&h=197&c=7&r=0&o=5&dpr=1.3&pid=1.7")),
+                                  snap['profileImage'])), 
                         ),
                       ),
                       SizedBox(
-                        height: screensize.height * 0.01,
+                        height: screensize.height * 0.005,
                       ),
                       Text(
                         snap['username'],
@@ -81,7 +88,7 @@ class ProfileSection extends StatelessWidget {
                       ),
                       const Divider(
                         color: Colors.grey,
-                        height: 25,
+                        height: 20,
                         thickness: 2,
                         indent: 15,
                         endIndent: 15,
@@ -122,13 +129,61 @@ class ProfileSection extends StatelessWidget {
                 ),
               ),
               Positioned(
-                top: screensize.height * 0.2,
+                top: screensize.height * 0.125, 
                 left: screensize.width * 0.55,
                 child: IconButton(
-                    onPressed: () {}, icon: const Icon(Icons.add_a_photo)),
+                    onPressed: () async {
+                      await selectImage(context);
+                      if (profilePic != null) {
+                        FirestoreMethods()
+                            .changeProfileImage(snap['uid'], profilePic!);
+                      }
+                    },
+                    icon: const Icon(Icons.add_a_photo)),
               )
             ],
           );
         });
+  }
+
+  selectImage(BuildContext parentContext) async {
+    return showDialog(
+      context: parentContext,
+      builder: (BuildContext context) {
+        return SimpleDialog(
+          title: const Text('Change Profile Picture'),
+          children: <Widget>[
+            SimpleDialogOption(
+                padding: const EdgeInsets.all(20),
+                child: const Text('Take a photo'),
+                onPressed: () async {
+                  
+                  Uint8List file = await pickImage(ImageSource.camera);
+                  profilePic = file;
+                  Navigator.pop(context);
+                }),
+            SimpleDialogOption(
+                padding: const EdgeInsets.all(20),
+                child: const Text('Choose from Gallery'),
+                onPressed: () async {
+                  try {
+                    Uint8List file = await pickImage(ImageSource.gallery);
+                    profilePic = file;
+                    Navigator.of(context).pop();
+                  } catch (e) {
+                    print(e.toString());
+                  }
+                }),
+            SimpleDialogOption(
+              padding: const EdgeInsets.all(20),
+              child: const Text("Cancel"),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+            )
+          ],
+        );
+      },
+    );
   }
 }

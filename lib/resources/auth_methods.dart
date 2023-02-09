@@ -19,7 +19,8 @@ class AuthMethods {
         uid: snapshot["uid"],
         username: snapshot["username"],
         followers: snapshot["followers"],
-        following: snapshot["following"]);
+        following: snapshot["following"],
+        profileImage: snapshot["profileImage"]);
   }
 
   //signing up user
@@ -39,7 +40,9 @@ class AuthMethods {
             uid: credential.user!.uid,
             username: username,
             followers: [],
-            following: []);
+            following: [],
+            profileImage:
+                "https://www.seekpng.com/png/detail/966-9665493_my-profile-icon-blank-profile-image-circle.png");
         await _firestore
             .collection('users')
             .doc(credential.user!.uid)
@@ -87,7 +90,8 @@ class AuthMethods {
                   uid: userCredential.user!.uid,
                   username: userCredential.user!.displayName!,
                   followers: [],
-                  following: []);
+                  following: [],
+                  profileImage: userCredential.user!.photoURL!);
               await _firestore
                   .collection('users')
                   .doc(userCredential.user!.uid)

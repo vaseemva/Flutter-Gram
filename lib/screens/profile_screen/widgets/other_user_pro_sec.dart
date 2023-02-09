@@ -31,7 +31,7 @@ class OtherProfileSection extends StatelessWidget {
           return Stack(
             children: [
               SizedBox(
-                height: screensize.height * 0.5,
+                height: screensize.height * 0.4,
                 width: double.infinity,
               ),
               Container(
@@ -46,11 +46,11 @@ class OtherProfileSection extends StatelessWidget {
                 ),
               ),
               Positioned(
-                left: screensize.width * 0.075,
-                top: screensize.height * 0.08,
+                left: screensize.width / 2 / 2 / 1.45,
+                top: screensize.height * 0.07,
                 child: Container(
-                  height: 300,
-                  width: 300,
+                  height: screensize.height * 0.290,
+                  width: screensize.width * 0.7,
                   decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(40)),
@@ -58,20 +58,27 @@ class OtherProfileSection extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       SizedBox(
-                        height: screensize.height * 0.02,
+                        height: screensize.height * 0.01,
                       ),
                       Container(
-                        width: 130,
-                        height: 130,
-                        decoration: const BoxDecoration(
-                          shape: BoxShape.circle,
-                          image: DecorationImage(
+                        width: screensize.width * 0.2,
+                        height: screensize.height * 0.1,
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                            color: const Color.fromARGB(255, 139, 136, 136),
+                          ),
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(180)),
+                          // shape: BoxShape.circle,
+                          image:  DecorationImage(
                               image: NetworkImage(
-                                  "https://th.bing.com/th/id/OIP.GlIuUj-GYrRL_G8WvZ3YagHaHw?w=189&h=197&c=7&r=0&o=5&dpr=1.3&pid=1.7")),
+                                snap['profileImage'],
+                              ),
+                              fit: BoxFit.cover),
                         ),
                       ),
                       SizedBox(
-                        height: screensize.height * 0.01,
+                        height: screensize.height * 0.005,
                       ),
                       Text(
                         snap['username'],
@@ -121,12 +128,6 @@ class OtherProfileSection extends StatelessWidget {
                   ),
                 ),
               ),
-              Positioned(
-                top: screensize.height * 0.2,
-                left: screensize.width * 0.55,
-                child: IconButton(
-                    onPressed: () {}, icon: const Icon(Icons.add_a_photo)),
-              )
             ],
           );
         });

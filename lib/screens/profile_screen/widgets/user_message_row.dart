@@ -23,7 +23,10 @@ class UserMessageRow extends StatelessWidget {
               Icons.message,
               size: 30,
               color: Colors.blueGrey,
-            ))
+            )),
+            ElevatedButton.icon(onPressed: () {
+              
+            }, icon:const Icon( Icons.person_add), label:const Text('Follow'))
       ],
     );
   }

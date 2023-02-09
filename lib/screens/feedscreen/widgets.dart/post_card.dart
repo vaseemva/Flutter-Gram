@@ -44,10 +44,9 @@ class PostCard extends StatelessWidget {
                             .copyWith(right: 0),
                     child: Row(
                       children: [
-                        const CircleAvatar(
+                        CircleAvatar(
                           radius: 16,
-                          backgroundImage: NetworkImage(
-                              "https://th.bing.com/th/id/OIP.GlIuUj-GYrRL_G8WvZ3YagHaHw?w=189&h=197&c=7&r=0&o=5&dpr=1.3&pid=1.7"),
+                          backgroundImage: NetworkImage(snap['profileImage']),
                         ),
                         Expanded(
                             child: Padding(
@@ -141,7 +140,7 @@ class PostCard extends StatelessWidget {
                         IconButton(
                             onPressed: () async {
                               await Share.share(
-                                  "${snap['title']}\n${snap['body']}");
+                                  "*${snap['title']}*\n${snap['body']}");
                             },
                             icon: const Icon(Icons.share_outlined)),
                         const Expanded(

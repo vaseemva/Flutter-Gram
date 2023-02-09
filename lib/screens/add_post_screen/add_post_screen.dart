@@ -1,7 +1,9 @@
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_gram/models/user.dart';
 import 'package:flutter_gram/providers/add_post_provider.dart';
+import 'package:flutter_gram/providers/userprovider.dart';
 import 'package:flutter_gram/resources/firestore_methods.dart';
 import 'package:flutter_gram/screens/add_post_screen/widgets/add_thumbnail_container.dart';
 import 'package:flutter_gram/screens/add_post_screen/widgets/body_text_field.dart';
@@ -9,7 +11,7 @@ import 'package:flutter_gram/screens/add_post_screen/widgets/post_image_containe
 import 'package:flutter_gram/screens/add_post_screen/widgets/side_box.dart';
 import 'package:flutter_gram/screens/add_post_screen/widgets/title_text_field.dart';
 import 'package:flutter_gram/utils/constants.dart';
-import 'package:flutter_gram/utils/global.dart';
+
 import 'package:flutter_gram/utils/utils.dart';
 import 'package:provider/provider.dart';
 
@@ -21,7 +23,7 @@ class AddPostScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    //  UserModel user=Provider.of<UserProvider>(context).getUser;
+     UserModel user=Provider.of<UserProvider>(context).getUser;
     return Scaffold(
       appBar: AppBar(
         title: const Text("Post an Article"),
@@ -51,10 +53,10 @@ class AddPostScreen extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: ElevatedButton(
                   onPressed: () => postArticle(
-                      currentUserUid!,
+                      user.uid,
                       provider.getFile,
-                      currentUserName!,
-                      "profileImage",
+                      user.username,
+                      user.profileImage,
                       context,
                       _titleController.text,
                       _bodyController.text),
