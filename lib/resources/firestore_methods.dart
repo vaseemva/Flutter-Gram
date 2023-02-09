@@ -90,6 +90,7 @@ class FirestoreMethods {
       print(e.toString());
     }
   }
+
   //change profile image
   Future<void> changeProfileImage(String uid, Uint8List file) async {
     try {
@@ -101,5 +102,68 @@ class FirestoreMethods {
     } catch (e) {
       print(e.toString());
     }
+  }
+
+  //follow user and unfollow user
+  Future<void> followUser(String uid, String followingId) async {
+    try {
+      DocumentSnapshot snap =
+          await _firestore.collection('users').doc(uid).get();
+      List following = (snap.data()! as dynamic)['following'];
+      if (following.contains(followingId)) {
+        await _firestore.collection('users').doc(uid).update({
+          'following': FieldValue.arrayRemove([followingId])
+        });
+        await _firestore.collection('users').doc(followingId).update({
+          'followers': FieldValue.arrayRemove([uid])
+        });
+      } else {
+        await _firestore.collection('users').doc(uid).update({
+          'following': FieldValue.arrayUnion([followingId])
+        });
+        await _firestore.collection('users').doc(followingId).update({
+          'followers': FieldValue.arrayUnion([uid])
+        });
+      }
+    } catch (e) {
+      print(e.toString());
+    }
+  }
+
+  Stream<bool> isFollowedStream(String userId, String currentUserId) {
+    return FirebaseFirestore.instance
+        .collection('users')
+        .doc(currentUserId)
+        .snapshots()
+        .map((snapshot) =>
+            List<String>.from((snapshot.data()! as dynamic)['following'])
+                .contains(userId));
+  }
+  //get followers stream
+  Stream<List<String>> getFollowersStream(String userId) {
+    return FirebaseFirestore.instance
+        .collection('users')
+        .doc(userId)
+        .snapshots()
+        .map((snapshot) =>
+            List<String>.from((snapshot.data()! as dynamic)['followers']));
+  }
+  //get following stream
+  Stream<List<String>> getFollowingStream(String userId) {
+    return FirebaseFirestore.instance
+        .collection('users')
+        .doc(userId)
+        .snapshots()
+        .map((snapshot) =>
+            List<String>.from((snapshot.data()! as dynamic)['following']));
+  }
+  //get following count stream
+  Stream<int> getFollowingCountStream(String userId) {
+    return FirebaseFirestore.instance
+        .collection('users')
+        .doc(userId)
+        .snapshots()
+        .map((snapshot) =>
+            List<String>.from((snapshot.data()! as dynamic)['followers']).length);
   }
 }

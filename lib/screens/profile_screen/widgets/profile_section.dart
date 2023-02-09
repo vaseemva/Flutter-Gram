@@ -3,12 +3,13 @@ import 'dart:typed_data';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gram/resources/firestore_methods.dart';
+import 'package:flutter_gram/screens/followers_page/followers_page.dart';
 import 'package:flutter_gram/screens/profile_screen/widgets/count_text.dart';
 import 'package:flutter_gram/screens/profile_screen/widgets/title_text.dart';
 import 'package:flutter_gram/utils/colors.dart';
 import 'package:flutter_gram/utils/utils.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:permission_handler/permission_handler.dart';
+
 
 class ProfileSection extends StatelessWidget {
   ProfileSection({
@@ -37,7 +38,7 @@ class ProfileSection extends StatelessWidget {
           return Stack(
             children: [
               SizedBox(
-                height: screensize.height * 0.4, 
+                height: screensize.height * 0.4,
                 width: double.infinity,
               ),
               Container(
@@ -52,10 +53,10 @@ class ProfileSection extends StatelessWidget {
                 ),
               ),
               Positioned(
-                left: screensize.width /2/2/1.45,          
-                top: screensize.height * 0.07, 
+                left: screensize.width / 2 / 2 / 1.45,
+                top: screensize.height * 0.07,
                 child: Container(
-                  height: screensize.height * 0.290,  
+                  height: screensize.height * 0.290,
                   width: screensize.width * 0.7,
                   decoration: BoxDecoration(
                       color: Colors.white,
@@ -67,13 +68,12 @@ class ProfileSection extends StatelessWidget {
                         height: screensize.height * 0.01,
                       ),
                       Container(
-                        width: screensize.width * 0.2, 
+                        width: screensize.width * 0.2,
                         height: screensize.height * 0.1,
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
                           image: DecorationImage(
-                              image: NetworkImage(
-                                  snap['profileImage'])), 
+                              image: NetworkImage(snap['profileImage'])),
                         ),
                       ),
                       SizedBox(
@@ -104,21 +104,39 @@ class ProfileSection extends StatelessWidget {
                               const TitleText(title: "Articles"),
                             ],
                           ),
-                          Column(
-                            children: [
-                              CountText(
-                                count: "${snap['followers'].length}",
-                              ),
-                              const TitleText(title: "Followers"),
-                            ],
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) =>
+                                    FollowersPage(userId: snap['uid']),
+                              ));
+                            },
+                            child: Column(
+                              children: [
+                                CountText(
+                                  count: "${snap['followers'].length}",
+                                ),
+                                const TitleText(title: "Followers"),
+                              ],
+                            ),
                           ),
-                          Column(
-                            children: [
-                              CountText(
-                                count: "${snap['following'].length}",
-                              ),
-                              const TitleText(title: "Following"),
-                            ],
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) => FollowersPage(
+                                  userId: snap['uid'],
+                                  isFollowing: true,
+                                ),
+                              ));
+                            },
+                            child: Column(
+                              children: [
+                                CountText(
+                                  count: "${snap['following'].length}",
+                                ),
+                                const TitleText(title: "Following"),
+                              ],
+                            ),
                           ),
                         ],
                       ),
@@ -129,7 +147,7 @@ class ProfileSection extends StatelessWidget {
                 ),
               ),
               Positioned(
-                top: screensize.height * 0.125, 
+                top: screensize.height * 0.125,
                 left: screensize.width * 0.55,
                 child: IconButton(
                     onPressed: () async {
@@ -157,7 +175,6 @@ class ProfileSection extends StatelessWidget {
                 padding: const EdgeInsets.all(20),
                 child: const Text('Take a photo'),
                 onPressed: () async {
-                  
                   Uint8List file = await pickImage(ImageSource.camera);
                   profilePic = file;
                   Navigator.pop(context);
