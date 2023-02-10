@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get_time_ago/get_time_ago.dart';
 import 'package:intl/intl.dart';
 
 class CommentCard extends StatelessWidget {
@@ -35,8 +36,7 @@ class CommentCard extends StatelessWidget {
                               color: Colors.black)),
                     ])),
                     Text(
-                        DateFormat.yMMMMd()
-                            .format(snap['datePublished'].toDate()),
+                       GetTimeAgo.parse (snap['datePublished'].toDate()),
                         style: const TextStyle(color: Colors.grey))
                   ],
                 ),

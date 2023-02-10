@@ -166,6 +166,15 @@ class FirestoreMethods {
         .map((snapshot) =>
             List<String>.from((snapshot.data()! as dynamic)['followers']).length);
   }
+  //delete post
+  Future<void> deletePostFromFirestore(String postId) async {
+    try {
+      await _firestore.collection('posts').doc(postId).delete();
+    } catch (e) {
+      print(e.toString());
+    }
+  }
+
   
-   
+ 
 }

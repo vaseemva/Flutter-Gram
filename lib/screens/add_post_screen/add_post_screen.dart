@@ -11,7 +11,6 @@ import 'package:flutter_gram/screens/add_post_screen/widgets/post_image_containe
 import 'package:flutter_gram/screens/add_post_screen/widgets/side_box.dart';
 import 'package:flutter_gram/screens/add_post_screen/widgets/title_text_field.dart';
 import 'package:flutter_gram/utils/constants.dart';
-
 import 'package:flutter_gram/utils/utils.dart';
 import 'package:provider/provider.dart';
 
@@ -23,7 +22,7 @@ class AddPostScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-     UserModel user=Provider.of<UserProvider>(context).getUser;
+    UserModel user = Provider.of<UserProvider>(context).getUser;
     return Scaffold(
       appBar: AppBar(
         title: const Text("Post an Article"),
@@ -92,6 +91,7 @@ class AddPostScreen extends StatelessWidget {
           // ignore: use_build_context_synchronously
           showSnackBar('posted successfully', context);
           provider.isLoading = false;
+
           // ignore: use_build_context_synchronously
           Navigator.of(context).pop();
         } else {

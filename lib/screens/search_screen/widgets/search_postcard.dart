@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gram/screens/feedscreen/article_screeen.dart';
+import 'package:flutter_gram/utils/colors.dart';
 import 'package:get_time_ago/get_time_ago.dart';
 
 class SearchPostCard extends StatelessWidget {
@@ -25,7 +26,7 @@ class SearchPostCard extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.only(left: 8.0, right: 8.0),
         child: Container(
-          color: Colors.grey[100],
+          color: templateTheme,
           child: ListTile(
             leading: Container(
               height: screenSize.height * 0.1,

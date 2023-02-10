@@ -10,3 +10,5 @@ const postoptioncolor=Colors.blueGrey;
 
 //profile page
 const backgroundBoxcolor=Colors.blue;
+//search page
+final templateTheme= Colors.grey[100];

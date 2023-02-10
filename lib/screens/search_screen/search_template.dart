@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gram/screens/search_screen/search_screen.dart';
 import 'package:flutter_gram/screens/search_screen/widgets/search_postcard.dart';
 import 'package:flutter_gram/screens/search_screen/widgets/trending_text.dart';
+import 'package:flutter_gram/utils/colors.dart';
 
 class SearchTemplate extends StatelessWidget {
   const SearchTemplate({Key? key}) : super(key: key);
@@ -17,7 +18,7 @@ class SearchTemplate extends StatelessWidget {
           child: TextFormField(
             decoration: InputDecoration(
               icon: const Icon(Icons.search),
-              fillColor: Colors.grey[100],
+              fillColor: templateTheme,
               filled: true,
               hintText: '  Search',
               border: InputBorder.none,
