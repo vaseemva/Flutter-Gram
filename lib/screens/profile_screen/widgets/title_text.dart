@@ -11,7 +11,7 @@ class TitleText extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       title,
-      style: TextStyle(
+      style:const TextStyle(
           fontSize: 15, color: Colors.black, fontWeight: FontWeight.w500),
     );
   }

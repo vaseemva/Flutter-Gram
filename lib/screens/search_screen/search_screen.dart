@@ -13,7 +13,9 @@ class SearchScreen extends StatelessWidget {
     final provider = Provider.of<FieldProvider>(context);
     return Scaffold(
         appBar: AppBar(
+          automaticallyImplyLeading: false,
           title: TextFormField(
+            autofocus: true, 
             controller: _searchController,
             decoration: InputDecoration(
               icon: const Icon(Icons.search),

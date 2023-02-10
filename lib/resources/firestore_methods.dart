@@ -166,4 +166,6 @@ class FirestoreMethods {
         .map((snapshot) =>
             List<String>.from((snapshot.data()! as dynamic)['followers']).length);
   }
+  
+   
 }
