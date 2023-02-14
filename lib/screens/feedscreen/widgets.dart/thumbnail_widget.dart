@@ -12,7 +12,7 @@ class ThumbnailWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
         height: size.height * 0.2,
         width: size.width * 0.7,
         child: Image.network(snap['postUrl']));

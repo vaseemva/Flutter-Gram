@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gram/screens/feedscreen/widgets.dart/body_text.dart';
-import 'package:flutter_gram/screens/feedscreen/widgets.dart/more_options.dart';
 import 'package:flutter_gram/screens/feedscreen/widgets.dart/name_and_date.dart';
 import 'package:flutter_gram/screens/feedscreen/widgets.dart/post_action_row.dart';
 import 'package:flutter_gram/screens/feedscreen/widgets.dart/thumbnail_widget.dart';

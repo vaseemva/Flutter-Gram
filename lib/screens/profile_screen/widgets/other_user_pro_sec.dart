@@ -153,7 +153,7 @@ class OtherProfileSection extends StatelessWidget {
                                 ),
                               ],
                             ),
-                            UserMessageRow(uid: snap['uid'])
+                            UserMessageRow(uid: snap['uid'],email: snap['emailAddress'],)
                           ],
                         ),
                       ),

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get_time_ago/get_time_ago.dart';
-import 'package:intl/intl.dart';
+
 
 class CommentCard extends StatelessWidget {
   const CommentCard({Key? key, required this.snap}) : super(key: key);

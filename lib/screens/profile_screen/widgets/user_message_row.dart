@@ -1,13 +1,15 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gram/resources/firestore_methods.dart';
+import 'package:flutter_gram/utils/utils.dart';
 
 class UserMessageRow extends StatelessWidget {
   const UserMessageRow({
     super.key,
-    required this.uid,
+    required this.uid, required this.email,
   });
   final String uid;
+  final String email;
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +26,9 @@ class UserMessageRow extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               IconButton(
-                  onPressed: () {},
+                  onPressed: () {
+                   sendMail(email);
+                  },
                   icon: const Icon(
                     Icons.mail,
                     size: 30,

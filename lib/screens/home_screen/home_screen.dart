@@ -8,7 +8,6 @@ import 'package:flutter_gram/screens/eventscreen/event_screen.dart';
 import 'package:flutter_gram/screens/feedscreen/feedscreen.dart';
 import 'package:flutter_gram/screens/home_screen/widgets/customnavbar.dart';
 import 'package:flutter_gram/screens/profile_screen/profile_screen.dart';
-import 'package:flutter_gram/screens/search_screen/search_screen.dart';
 import 'package:flutter_gram/screens/search_screen/search_template.dart';
 import 'package:flutter_gram/utils/global.dart';
 import 'package:provider/provider.dart';
@@ -25,7 +24,7 @@ class _HomeScreenState extends State<HomeScreen> {
     const Feedscreen(),
     const SearchTemplate(),
     const AddScreen(),
-    const EventScreen(),
+    EventScreen(),
     ProfileScreen(
       uid: FirebaseAuth.instance.currentUser!.uid,
     )

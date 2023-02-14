@@ -92,16 +92,20 @@ class FirestoreMethods {
   }
 
   //change profile image
-  Future<void> changeProfileImage(String uid, Uint8List file) async {
+  Future<String> changeProfileImage(String uid, Uint8List file) async {
+    String res = 'some error occured';
     try {
       String photoUrl =
           await StorageMethods().uploadImagetoStorage('profile', file, false);
       _firestore.collection('users').doc(uid).update({
         'profileImage': photoUrl,
       });
+      res = 'success';
     } catch (e) {
+      res = e.toString();
       print(e.toString());
     }
+    return res;
   }
 
   //follow user and unfollow user
@@ -157,6 +161,13 @@ class FirestoreMethods {
         .map((snapshot) =>
             List<String>.from((snapshot.data()! as dynamic)['following']));
   }
+  Stream<List<String>> getFollowers(String userId) {
+    return FirebaseFirestore.instance
+        .collection('users')
+        .doc(userId)
+        .snapshots()
+        .map((documentSnapshot) => List<String>.from(documentSnapshot.get('following')));
+  }
   //get following count stream
   Stream<int> getFollowingCountStream(String userId) {
     return FirebaseFirestore.instance
@@ -175,6 +186,17 @@ class FirestoreMethods {
     }
   }
 
-  
- 
+  //get user data from uid
+  Future<Map<String, dynamic>> getUserDataF(String uid) async {
+    Map<String, dynamic> userData = {};
+    try {
+      DocumentSnapshot snap = await _firestore.collection('users').doc(uid).get();
+      userData = snap.data()! as dynamic;
+    } catch (e) {
+      print(e.toString());
+    }
+    return userData;
+  }
 }
+ 
+

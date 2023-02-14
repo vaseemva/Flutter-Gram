@@ -6,11 +6,13 @@ import 'package:flutter_gram/resources/firestore_methods.dart';
 import 'package:flutter_gram/screens/followers_page/followers_page.dart';
 import 'package:flutter_gram/screens/profile_screen/widgets/count_text.dart';
 import 'package:flutter_gram/screens/profile_screen/widgets/title_text.dart';
+import 'package:flutter_gram/screens/settings_page/settings_page.dart';
 import 'package:flutter_gram/utils/colors.dart';
 import 'package:flutter_gram/utils/utils.dart';
 import 'package:image_picker/image_picker.dart';
 
 
+// ignore: must_be_immutable
 class ProfileSection extends StatelessWidget {
   ProfileSection({
     super.key,
@@ -150,20 +152,41 @@ class ProfileSection extends StatelessWidget {
                 top: screensize.height * 0.125,
                 left: screensize.width * 0.55,
                 child: IconButton(
-                    onPressed: () async {
-                      await selectImage(context);
-                      if (profilePic != null) {
-                        FirestoreMethods()
-                            .changeProfileImage(snap['uid'], profilePic!);
-                      }
+                    onPressed: () {
+                      changeProfile(context);
                     },
                     icon: const Icon(Icons.add_a_photo)),
+              ),
+              Positioned(
+                top: screensize.height * 0.010, 
+                left: screensize.width * 0.80,
+                child: IconButton(
+                    onPressed: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) =>  SettingsPage(),
+                      ));
+                    },
+                    icon: const Icon(Icons.settings,color: Colors.white,)), 
               )
             ],
           );
         });
   }
-
+changeProfile (BuildContext context) async {
+                      await selectImage(context);
+                      if (profilePic != null) {
+                      String res=await  FirestoreMethods()
+                            .changeProfileImage(snap['uid'], profilePic!);
+                            if(res=="success"){
+                              // ignore: use_build_context_synchronously
+                              ScaffoldMessenger.of(context).showSnackBar(
+                              const  SnackBar(
+                                  content:  Text("Profile Image Changed"),
+                                ),
+                              );
+                            }
+                      }
+                    }
   selectImage(BuildContext parentContext) async {
     return showDialog(
       context: parentContext,
@@ -177,6 +200,7 @@ class ProfileSection extends StatelessWidget {
                 onPressed: () async {
                   Uint8List file = await pickImage(ImageSource.camera);
                   profilePic = file;
+                  // ignore: use_build_context_synchronously
                   Navigator.pop(context);
                 }),
             SimpleDialogOption(
@@ -186,6 +210,7 @@ class ProfileSection extends StatelessWidget {
                   try {
                     Uint8List file = await pickImage(ImageSource.gallery);
                     profilePic = file;
+                    // ignore: use_build_context_synchronously
                     Navigator.of(context).pop();
                   } catch (e) {
                     print(e.toString());

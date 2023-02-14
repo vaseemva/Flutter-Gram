@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gram/resources/firestore_methods.dart';
 import 'package:flutter_gram/screens/profile_screen/profile_screen.dart';
@@ -14,7 +13,8 @@ class FollowersPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: const Text('Followers'),
+          title:
+              isFollowing ? const Text('Following') : const Text('Followers'),
         ),
         body: StreamBuilder(
           stream: isFollowing
@@ -33,43 +33,41 @@ class FollowersPage extends StatelessWidget {
                     : const Text('No Followers'),
               );
             }
+            if (snapshot.hasError) {
+              return Center(
+                child: Text(snapshot.error.toString()),
+              );
+            }
             return ListView.builder(
-              itemCount: snapshot.data!.length,
-              itemBuilder: (context, index) {
-                return StreamBuilder(
-                    stream: FirebaseFirestore.instance
-                        .collection('users')
-                        .where('uid', isEqualTo: snapshot.data![index])
-                        .snapshots(),
-                    builder: (context,
-                        AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>>
-                            asyncsnapshot) {
-                      if (!asyncsnapshot.hasData) {
-                        return Center(
-                          child: Container(),
+                itemCount: snapshot.data!.length,
+                itemBuilder: (context, index) {
+                  return FutureBuilder(
+                      future: FirestoreMethods()
+                          .getUserDataF(snapshot.data![index]),
+                      builder: (context, snapshot) {
+                        if (!snapshot.hasData) {
+                          return const Center(
+                            child: SizedBox(),
+                          );
+                        }
+                        return GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => ProfileScreen(
+                                          uid: snapshot.data!['uid'],
+                                        )));
+                          },
+                          child: ListTile(
+                              leading: CircleAvatar(
+                                backgroundImage: NetworkImage(
+                                    snapshot.data!['profileImage']),
+                              ),
+                              title: Text(snapshot.data!['username'])),
                         );
-                      }
-                      return GestureDetector(
-                        onTap: () {
-                          Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => ProfileScreen(
-                                uid: asyncsnapshot.data!.docs[index]
-                                    .data()['uid']),
-                          ));
-                        },
-                        child: ListTile(
-                          leading: CircleAvatar(
-                            backgroundImage: NetworkImage(asyncsnapshot
-                                .data!.docs[index]
-                                .data()['profileImage']),
-                          ),
-                          title: Text(asyncsnapshot.data!.docs[index]
-                              .data()['username']),
-                        ),
-                      );
-                    });
-              },
-            );
+                      });
+                });
           },
         ));
   }
