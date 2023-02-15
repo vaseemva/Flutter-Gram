@@ -50,7 +50,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (context) => FieldProvider(),
         ),
-        ChangeNotifierProvider(create: (context) => AddEventProvider())
+        ChangeNotifierProvider(create: (_) => AddEventProvider())
       ],
       child: MaterialApp(
           title: 'Flutter Demo',

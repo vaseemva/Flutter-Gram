@@ -1,6 +1,8 @@
 import 'dart:typed_data';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_gram/models/event.dart';
 import 'package:flutter_gram/models/post.dart';
 import 'package:flutter_gram/resources/storage_methods.dart';
 import 'package:uuid/uuid.dart';
@@ -31,6 +33,44 @@ class FirestoreMethods {
           profileImage: profileImage,
           likes: []);
       _firestore.collection('posts').doc(postId).set(post.toJson());
+      res = 'success';
+    } catch (e) {
+      res = e.toString();
+    }
+    return res;
+  }
+
+  //add event
+  Future<String> uploadEvent(
+    String title,
+    String description,
+    String location,
+    DateTime dateTime,
+    String eventType,
+    Uint8List file,
+    TimeOfDay eventTime,
+    String uid,
+  ) async {
+    String res = 'some error occured';
+    try {
+      String imageUrl =
+          await StorageMethods().uploadImagetoStorage('events', file, true);
+      String eventId = const Uuid().v1();
+      final DateTime now = DateTime.now();
+      final DateTime timestamp = DateTime(
+          now.year, now.month, now.day, eventTime.hour, eventTime.minute);
+      EventModel event = EventModel(
+        title: title,
+        description: description,
+        location: location,
+        dateTime: dateTime,
+        eventType: eventType,
+        imageUrl: imageUrl,
+        eventTime: Timestamp.fromDate(timestamp),
+        uid: uid,
+        eventId: eventId,
+      );
+      _firestore.collection('events').doc(eventId).set(event.toJson());
       res = 'success';
     } catch (e) {
       res = e.toString();
@@ -143,6 +183,7 @@ class FirestoreMethods {
             List<String>.from((snapshot.data()! as dynamic)['following'])
                 .contains(userId));
   }
+
   //get followers stream
   Stream<List<String>> getFollowersStream(String userId) {
     return FirebaseFirestore.instance
@@ -152,6 +193,7 @@ class FirestoreMethods {
         .map((snapshot) =>
             List<String>.from((snapshot.data()! as dynamic)['followers']));
   }
+
   //get following stream
   Stream<List<String>> getFollowingStream(String userId) {
     return FirebaseFirestore.instance
@@ -161,13 +203,16 @@ class FirestoreMethods {
         .map((snapshot) =>
             List<String>.from((snapshot.data()! as dynamic)['following']));
   }
+
   Stream<List<String>> getFollowers(String userId) {
     return FirebaseFirestore.instance
         .collection('users')
         .doc(userId)
         .snapshots()
-        .map((documentSnapshot) => List<String>.from(documentSnapshot.get('following')));
+        .map((documentSnapshot) =>
+            List<String>.from(documentSnapshot.get('following')));
   }
+
   //get following count stream
   Stream<int> getFollowingCountStream(String userId) {
     return FirebaseFirestore.instance
@@ -175,8 +220,10 @@ class FirestoreMethods {
         .doc(userId)
         .snapshots()
         .map((snapshot) =>
-            List<String>.from((snapshot.data()! as dynamic)['followers']).length);
+            List<String>.from((snapshot.data()! as dynamic)['followers'])
+                .length);
   }
+
   //delete post
   Future<void> deletePostFromFirestore(String postId) async {
     try {
@@ -190,13 +237,15 @@ class FirestoreMethods {
   Future<Map<String, dynamic>> getUserDataF(String uid) async {
     Map<String, dynamic> userData = {};
     try {
-      DocumentSnapshot snap = await _firestore.collection('users').doc(uid).get();
+      DocumentSnapshot snap =
+          await _firestore.collection('users').doc(uid).get();
       userData = snap.data()! as dynamic;
     } catch (e) {
       print(e.toString());
     }
     return userData;
   }
+
   //premiun user
   Future<void> premiumUser(String uid) async {
     try {
@@ -207,7 +256,5 @@ class FirestoreMethods {
       print(e.toString());
     }
   }
-
+//add event to firebase
 }
- 
-

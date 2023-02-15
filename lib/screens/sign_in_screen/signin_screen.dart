@@ -107,6 +107,7 @@ class SigninScreen extends StatelessWidget {
           password: _passwordController.text.trim());
       if (res == 'success') {
         provider.changeisLoading = false;
+        // ignore: use_build_context_synchronously
         Navigator.of(context).pushReplacement(
             MaterialPageRoute(builder: (context) => const HomeScreen()));
       } else {

@@ -4,12 +4,18 @@ import 'package:flutter/material.dart';
 
 class AddEventProvider with ChangeNotifier {
   Uint8List? _file;
-  bool _isloading = false;
+  bool _isloading = false; 
   int _currentStep = 0;
   bool _isLaststep = false;
   DateTime _dateTime = DateTime.now();
   TimeOfDay _timeOfDay = TimeOfDay.now();
   String _eventType = 'Online';
+  String _loading='no';
+  String get loading => _loading;
+  set loading(String loading) {
+    _loading = loading;
+    notifyListeners();
+  }
 
   String get eventType => _eventType;
   set eventType(String eventType) {
@@ -63,8 +69,9 @@ class AddEventProvider with ChangeNotifier {
     return _isloading;
   }
 
-  set isLoading(bool isLoading) {
+  set changeIsLoading(bool isLoading) {
     _isloading = isloading;
     notifyListeners();
   }
+  
 }
