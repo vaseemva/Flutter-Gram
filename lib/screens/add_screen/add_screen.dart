@@ -28,6 +28,7 @@ class AddScreen extends StatelessWidget {
               size: size,
               label: 'Add Event',
               iconData: Icons.event,
+              isEvent: true,
             ),
           )
         ],

@@ -27,3 +27,7 @@ String signUpSubtitle =
 String intro1Image = 'assets/images/intro_1.png';
 String intro2Image = 'assets/images/intro_2e.png';
 String intro3Image = 'assets/images/intro_3.png';
+
+//premium screen
+String premiumTagLine = 'Subscribe to Flutter Gram Premium to explore more features';
+String premiumTagLine2 = 'subscribe now for just\n       ₹99 per year';

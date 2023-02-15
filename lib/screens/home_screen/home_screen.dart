@@ -24,7 +24,7 @@ class _HomeScreenState extends State<HomeScreen> {
     const Feedscreen(),
     const SearchTemplate(),
     const AddScreen(),
-    EventScreen(),
+    const EventScreen(),
     ProfileScreen(
       uid: FirebaseAuth.instance.currentUser!.uid,
     )

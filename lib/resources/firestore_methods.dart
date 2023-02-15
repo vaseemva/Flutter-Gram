@@ -197,6 +197,17 @@ class FirestoreMethods {
     }
     return userData;
   }
+  //premiun user
+  Future<void> premiumUser(String uid) async {
+    try {
+      await _firestore.collection('users').doc(uid).update({
+        'isPremium': true,
+      });
+    } catch (e) {
+      print(e.toString());
+    }
+  }
+
 }
  
 

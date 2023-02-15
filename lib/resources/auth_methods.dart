@@ -91,7 +91,8 @@ class AuthMethods {
                   username: userCredential.user!.displayName!,
                   followers: [],
                   following: [],
-                  profileImage: userCredential.user!.photoURL!);
+                  profileImage: userCredential.user!.photoURL!,
+                  isPremium: false);
               await _firestore
                   .collection('users')
                   .doc(userCredential.user!.uid)
