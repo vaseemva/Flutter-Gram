@@ -49,4 +49,18 @@ class EventModel {
       eventId: snapshot["eventId"],
     );
   }
+  //from json
+  factory EventModel.fromJson(Map<String, dynamic> json) {
+    return EventModel(
+      title: json['title'],
+      description: json['description'],
+      location: json['location'],
+      dateTime: json['dateTime'],
+      eventType: json['eventType'],
+      imageUrl: json['imageUrl'],
+      eventTime: json['eventTime'],
+      uid: json['uid'],
+      eventId: json['eventId'],
+    );
+  }
 }

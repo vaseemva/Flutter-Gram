@@ -256,5 +256,39 @@ class FirestoreMethods {
       print(e.toString());
     }
   }
-//add event to firebase
+
+//get events stream
+  Stream<List<EventModel>> getEventsStream() {
+    return _firestore
+        .collection('events')
+        .orderBy('dateTime', descending: true) 
+        .snapshots()
+        .map((snapshot) => snapshot.docs
+            .map((doc) => EventModel.fromJson(doc.data()))
+            .toList());
+  }
+
+  //get events stream
+  Stream<List<EventModel>> getEventsStreamByType(String eventType) {
+    return _firestore
+        .collection('events')
+        .where('eventType', isEqualTo: eventType)
+        .orderBy('dateTime', descending: true)  
+        .snapshots()
+        .map((snapshot) => snapshot.docs
+            .map((doc) => EventModel.fromJson(doc.data()))
+            .toList());
+  }
+
+  //get events stream
+  Stream<List<EventModel>> getEventsStreamByUid(String uid) {
+    return _firestore
+        .collection('events')
+        .where('uid', isEqualTo: uid)
+        .orderBy('eventTime', descending: true)
+        .snapshots()
+        .map((snapshot) => snapshot.docs
+            .map((doc) => EventModel.fromJson(doc.data()))
+            .toList());
+  }
 }
