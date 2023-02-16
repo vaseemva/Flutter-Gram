@@ -5,6 +5,15 @@ import 'package:flutter/material.dart';
 class AddPostProvider with ChangeNotifier {
   Uint8List? _file;
   bool _isloading = false;
+  String _loading='No';
+
+  String get getLoading {
+    return _loading;
+  }
+  set setLoading(String loading) {
+    _loading = loading;
+    notifyListeners();
+  }
 
   Uint8List? get getFile {
     if (_file == null) {

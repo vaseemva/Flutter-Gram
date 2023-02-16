@@ -21,6 +21,7 @@ class AddPostScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final acprovider = Provider.of<AddPostProvider>(context);
     final size = MediaQuery.of(context).size;
     UserModel user = Provider.of<UserProvider>(context).getUser;
     return Scaffold(
@@ -50,18 +51,18 @@ class AddPostScreen extends StatelessWidget {
             BodyTextField(bodyController: _bodyController),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: ElevatedButton(
-                  onPressed: () => postArticle(
-                      user.uid,
-                      provider.getFile,
-                      user.username,
-                      user.profileImage,
-                      context,
-                      _titleController.text,
-                      _bodyController.text),
-                  child: provider.isloading
-                      ? const CircularProgressIndicator()
-                      : const Text('Post')),
+              child: acprovider.getLoading == 'Yes'
+                  ? const Center(child: CircularProgressIndicator())
+                  : ElevatedButton(
+                      onPressed: () => postArticle(
+                          user.uid,
+                          provider.getFile,
+                          user.username,
+                          user.profileImage,
+                          context,
+                          _titleController.text,
+                          _bodyController.text),
+                      child: const Text('Post')),
             )
           ],
         ),
@@ -78,30 +79,30 @@ class AddPostScreen extends StatelessWidget {
       String title,
       String body) async {
     final provider = Provider.of<AddPostProvider>(context, listen: false);
-    provider.isLoading = true;
 
     if (provider.getFile != null &&
         _bodyController.text.isNotEmpty &&
         _titleController.text.isNotEmpty) {
       try {
+        provider.setLoading = 'Yes';
         String res = await FirestoreMethods()
             .uploadPost(title, body, uid, thumbnail!, fullName, profileImage);
 
         if (res == 'success') {
+          provider.setLoading = 'No';
           // ignore: use_build_context_synchronously
           showSnackBar('posted successfully', context);
-          provider.isLoading = false;
 
           // ignore: use_build_context_synchronously
           Navigator.of(context).pop();
         } else {
           // ignore: use_build_context_synchronously
-          provider.isLoading = false;
+          provider.setLoading = 'No';
           // ignore: use_build_context_synchronously
           showSnackBar('Failed Posting', context);
         }
       } catch (e) {
-        provider.isLoading = false;
+        provider.setLoading = 'No';
         print(e.toString());
       }
     } else {
