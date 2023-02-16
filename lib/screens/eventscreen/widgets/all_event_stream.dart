@@ -19,13 +19,16 @@ class AllEventsStream extends StatelessWidget {
           if (snapshot.data!.isEmpty) {
             return const Center(child: Text('No Events'));
           }
-          return Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: ListView.builder(
-              itemBuilder: (context, index) {
-                return EventCard(model: snapshot.data![index],);
-              },
-              itemCount: snapshot.data!.length,
+          return Container(
+            color: Colors.white,
+            child: Padding(
+              padding: const EdgeInsets.only(right: 20.0, left: 20.0),
+              child: ListView.builder(
+                itemBuilder: (context, index) {
+                  return EventCard(model: snapshot.data![index],);
+                },
+                itemCount: snapshot.data!.length,
+              ),
             ),
           );
         });

@@ -291,4 +291,49 @@ class FirestoreMethods {
             .map((doc) => EventModel.fromJson(doc.data()))
             .toList());
   }
+  //join event
+  Future<String> joinEvent(String eventId, String uid) async {
+    String res = 'some error occured';
+    try {
+      await _firestore.collection('events').doc(eventId).update({
+        'joinedUsers': FieldValue.arrayUnion([uid])
+      });
+      res = 'success';
+    } catch (e) {
+      print(e.toString());
+    }
+    return res;
+  }
+  //leave event
+  Future<String> leaveEvent(String eventId, String uid) async {
+    String res = 'some error occured';
+    try {
+      await _firestore.collection('events').doc(eventId).update({
+        'joinedUsers': FieldValue.arrayRemove([uid])
+      });
+      res = 'success';
+    } catch (e) {
+      print(e.toString());
+    }
+    return res;
+  }
+  //get event participants
+  Stream<List<String>> getEventParticipants(String eventId) {
+    return FirebaseFirestore.instance
+        .collection('events')
+        .doc(eventId)
+        .snapshots()
+        .map((documentSnapshot) =>
+            List<String>.from(documentSnapshot.get('joinedUsers')));
+  }
+  //check if user joined event
+  Stream<bool> isJoinedEvent(String eventId, String uid) {
+    return FirebaseFirestore.instance
+        .collection('events')
+        .doc(eventId)
+        .snapshots()
+        .map((snapshot) =>
+            List<String>.from((snapshot.data()! as dynamic)['joinedUsers'])
+                .contains(uid));
+  }
 }

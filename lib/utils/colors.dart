@@ -12,3 +12,5 @@ const postoptioncolor=Colors.blueGrey;
 const backgroundBoxcolor=Colors.blue;
 //search page
 final templateTheme= Colors.grey[100];
+//event detail page
+const stepOutColor=Colors.blue;
