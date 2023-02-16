@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gram/models/event.dart';
 import 'package:flutter_gram/models/user.dart';
 import 'package:flutter_gram/providers/userprovider.dart';
-import 'package:flutter_gram/resources/firestore_methods.dart';
-import 'package:flutter_gram/screens/eventscreen/event_participants_screen.dart';
+import 'package:flutter_gram/screens/eventscreen/widgets/event_actions.dart';
 import 'package:flutter_gram/screens/eventscreen/widgets/event_detail_column.dart';
+import 'package:flutter_gram/screens/eventscreen/widgets/pop_up_button.dart';
 import 'package:flutter_gram/utils/constants.dart';
 import 'package:provider/provider.dart';
 
@@ -19,6 +19,9 @@ class EventDetailScreen extends StatelessWidget {
     return Scaffold(
         appBar: AppBar(
           title: Text(model.title),
+          actions: [
+            model.uid == user.uid ? PopUpButton(model: model) : const SizedBox()
+          ],
           backgroundColor: Colors.white,
         ),
         body: ListView(
@@ -65,67 +68,7 @@ class EventDetailScreen extends StatelessWidget {
             ),
           ],
         ),
-        bottomNavigationBar: StreamBuilder<bool>(
-            stream: FirestoreMethods().isJoinedEvent(model.eventId, user.uid),
-            builder: (context, snapshot) {
-              if (!snapshot.hasData) {
-                return const SizedBox();
-              }
-              return Container(
-                height: screenSize.height * 0.075,
-                width: screenSize.width,
-                color: Colors.grey[100],
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    (snapshot.data!)
-                        ? ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.blue,
-                              foregroundColor: Colors.white,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10.0),
-                              ),
-                            ),
-                            onPressed: () {
-                              FirestoreMethods()
-                                  .leaveEvent(model.eventId, user.uid);
-                            },
-                            child: const Text('Leave Event'),
-                          )
-                        : ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.blue,
-                              foregroundColor: Colors.white,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10.0),
-                              ),
-                            ),
-                            onPressed: () {
-                              FirestoreMethods()
-                                  .joinEvent(model.eventId, user.uid);
-                            },
-                            child: const Text('Join Event'),
-                          ),
-                    ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.blue,
-                        foregroundColor: Colors.white,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10.0),
-                        ),
-                      ),
-                      onPressed: () {
-                        Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) =>
-                              EventParticipantsScreen(model: model),
-                        ));
-                      },
-                      child: const Text('View Participants'),
-                    ),
-                  ],
-                ),
-              );
-            }));
+        bottomNavigationBar:
+            EventActions(model: model, user: user, screenSize: screenSize));
   }
 }

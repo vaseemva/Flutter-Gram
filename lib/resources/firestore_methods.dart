@@ -336,4 +336,12 @@ class FirestoreMethods {
             List<String>.from((snapshot.data()! as dynamic)['joinedUsers'])
                 .contains(uid));
   }
+  //delete event
+  Future<void> deleteEventFromFirestore(String eventId) async {
+    try {
+      await _firestore.collection('events').doc(eventId).delete();
+    } catch (e) {
+      print(e.toString());
+    }
+  }
 }
