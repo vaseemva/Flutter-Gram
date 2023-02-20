@@ -120,7 +120,7 @@ class AddEventScreen extends StatelessWidget {
         if (res == 'success') {
           provider.loading = 'no';
           provider.currentStep = 0;
-          provider.isLaststep=false;
+          provider.isLaststep = false;
 
           // ignore: use_build_context_synchronously
           showSnackBar("Event Created", context);

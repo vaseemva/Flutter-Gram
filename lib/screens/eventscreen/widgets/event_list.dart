@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_gram/screens/eventscreen/widgets/all_event_stream.dart';
+import 'package:flutter_gram/screens/eventscreen/widgets/my_event_stream.dart';
 import 'package:flutter_gram/screens/eventscreen/widgets/event_tabbar.dart';
 import 'package:flutter_gram/screens/eventscreen/widgets/inperson_event_stream.dart';
 import 'package:flutter_gram/screens/eventscreen/widgets/online_event_stream.dart';
@@ -20,9 +20,9 @@ class EventsList extends StatelessWidget {
           flexibleSpace: const EventTabBar(),
         ),
         body: const TabBarView(children: [
-          AllEventsStream(),
           OnlineEventStream(),
           InpersonEventStream(),
+          MyEventsStream(),
         ]),
       ),
     );

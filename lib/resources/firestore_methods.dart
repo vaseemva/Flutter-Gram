@@ -77,7 +77,81 @@ class FirestoreMethods {
     }
     return res;
   }
-
+  //edit event without image
+  Future<String> editEvent(
+    String title,
+    String description,
+    String location,
+    DateTime dateTime,
+    String eventType,
+    // Uint8List file,
+    String imageUrl,
+    TimeOfDay eventTime,
+    String uid,
+    String eventId,
+  ) async {
+    String res = 'some error occured';
+    try {
+      // String imageUrl =
+      //     await StorageMethods().uploadImagetoStorage('events', file, true);
+      final DateTime now = DateTime.now();
+      final DateTime timestamp = DateTime(
+          now.year, now.month, now.day, eventTime.hour, eventTime.minute);
+      EventModel event = EventModel(
+        title: title,
+        description: description,
+        location: location,
+        dateTime: dateTime,
+        eventType: eventType,
+        imageUrl: imageUrl,
+        eventTime: Timestamp.fromDate(timestamp),
+        uid: uid,
+        eventId: eventId,
+      );
+      _firestore.collection('events').doc(eventId).update(event.toJson());
+      res = 'success';
+    } catch (e) {
+      res = e.toString();
+    }
+    return res;
+  }
+  //edit event with image
+  Future<String> editEventWithImage(
+    String title,
+    String description,
+    String location,
+    DateTime dateTime,
+    String eventType,
+    Uint8List file,
+    TimeOfDay eventTime,
+    String uid,
+    String eventId,
+  ) async {
+    String res = 'some error occured';
+    try {
+      String imageUrl =
+          await StorageMethods().uploadImagetoStorage('events', file, true);
+      final DateTime now = DateTime.now();
+      final DateTime timestamp = DateTime(
+          now.year, now.month, now.day, eventTime.hour, eventTime.minute);
+      EventModel event = EventModel(
+        title: title,
+        description: description,
+        location: location,
+        dateTime: dateTime,
+        eventType: eventType,
+        imageUrl: imageUrl,
+        eventTime: Timestamp.fromDate(timestamp),
+        uid: uid,
+        eventId: eventId,
+      );
+      _firestore.collection('events').doc(eventId).update(event.toJson());
+      res = 'success';
+    } catch (e) {
+      res = e.toString();
+    }
+    return res;
+  }
   //like post
   Future<void> likePost(String postId, String uid, List likes) async {
     try {

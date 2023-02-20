@@ -1,20 +1,20 @@
+
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
-
-import 'package:flutter_gram/providers/edit_post_provider.dart';
+import 'package:flutter_gram/providers/edit_event_provider.dart';
 import 'package:flutter_gram/utils/utils.dart';
 import 'package:image_picker/image_picker.dart';
 
-class EditImageContainer extends StatelessWidget {
-  const EditImageContainer({
+class EditFileContainer extends StatelessWidget {
+  const EditFileContainer({
     super.key,
     required this.size,
     required this.provider,
   });
 
   final Size size;
-  final EditPostProvider provider;
+  final EditEventProvider provider;
 
   @override
   Widget build(BuildContext context) {

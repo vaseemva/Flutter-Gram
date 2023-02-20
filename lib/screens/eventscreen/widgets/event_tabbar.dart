@@ -10,17 +10,17 @@ class EventTabBar extends StatelessWidget {
     return const TabBar(tabs: [
       Tab(
         child: Text(
-          'All',
-        ),
-      ),
-      Tab(
-        child: Text(
           'Online',
         ),
       ),
       Tab(
         child: Text(
           'In Person',
+        ),
+      ),
+      Tab(
+        child: Text(
+          'My Events',
         ),
       ),
     ]);
