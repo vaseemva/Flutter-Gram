@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gram/providers/userprovider.dart';
 import 'package:get_time_ago/get_time_ago.dart';
+import 'package:provider/provider.dart';
 
 
 class CommentCard extends StatelessWidget {
@@ -9,9 +11,11 @@ class CommentCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final user= Provider.of<UserProvider>(context,listen: false).getUser;
     final screensize = MediaQuery.of(context).size;
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 18),
+      color: snap['uid']==user.uid?Colors.grey[200]:null,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

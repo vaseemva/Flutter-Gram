@@ -15,7 +15,7 @@ class EventsList extends StatelessWidget {
       length: 3,
       child: Scaffold(
         appBar: AppBar(
-          backgroundColor: Colors.white,
+          // backgroundColor: Colors.transparent,
           elevation: 0.0,
           flexibleSpace: const EventTabBar(),
         ),

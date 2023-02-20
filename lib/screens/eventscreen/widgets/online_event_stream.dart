@@ -15,9 +15,9 @@ const OnlineEventStream({ Key? key }) : super(key: key);
         return const Center(child: Text('No Online Events'),);
       }
       return Container(
-        color: Colors.white,
+        color: Colors.grey[100],
         child: Padding(
-          padding: const EdgeInsets.only(right: 20.0, left: 20.0),
+          padding: const EdgeInsets.only(top: 5,right: 20.0, left: 20.0), 
           child: ListView.builder(
             itemBuilder: (context, index) {
               return EventCard(model: snapshot.data![index],);

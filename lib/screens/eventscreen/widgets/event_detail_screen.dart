@@ -22,7 +22,6 @@ class EventDetailScreen extends StatelessWidget {
           actions: [
             model.uid == user.uid ? PopUpButton(model: model) : const SizedBox()
           ],
-          backgroundColor: Colors.white,
         ),
         body: ListView(
           children: [

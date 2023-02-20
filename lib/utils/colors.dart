@@ -6,7 +6,8 @@ const bottomNavUnselectedcolor=Colors.grey;
 
 //addPostScreen
 const sideBoxColor=Colors.blueGrey; 
-const postoptioncolor=Colors.blueGrey;
+const postoptioncolor=Colors.blue;
+const curveIcon=Colors.white;
 
 //profile page
 const backgroundBoxcolor=Colors.blue;

@@ -61,7 +61,7 @@ class AddPost extends StatelessWidget {
               left: size.width * 0.08,
               child: Icon(
                 iconData,
-                color: Colors.white,
+                color: curveIcon,
                 size: 40,
               )),
           Positioned(

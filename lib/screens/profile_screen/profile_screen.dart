@@ -19,7 +19,8 @@ class ProfileScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.grey[150], 
       appBar: AppBar(
-        toolbarHeight: 0.0,
+        toolbarHeight:0.0, 
+        elevation: 0.0,
       ),
       body: FutureBuilder(
           future: FirebaseFirestore.instance.collection('users').doc(uid).get(),

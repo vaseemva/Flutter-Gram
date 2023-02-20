@@ -53,16 +53,18 @@ class MyApp extends StatelessWidget {
           create: (context) => FieldProvider(),
         ),
         ChangeNotifierProvider(create: (_) => AddEventProvider()),
-        ChangeNotifierProvider(create: (_) => EditPostProvider()), 
-        ChangeNotifierProvider(create:(_) => EditEventProvider(), ) 
+        ChangeNotifierProvider(create: (_) => EditPostProvider()),
+        ChangeNotifierProvider(
+          create: (_) => EditEventProvider(),
+        )
       ],
       child: MaterialApp(
           title: 'Flutter Demo',
           debugShowCheckedModeBanner: false,
           theme: ThemeData(
-              textTheme: GoogleFonts.aBeeZeeTextTheme(),
-              primarySwatch: Colors.deepPurple, 
-              useMaterial3: true),
+            textTheme: GoogleFonts.aBeeZeeTextTheme(),
+            primarySwatch: Colors.blue,
+          ),
           home: const NewSplashScreen()),
     );
   }
