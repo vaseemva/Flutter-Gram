@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gram/providers/field_provider.dart';
+import 'package:flutter_gram/providers/userprovider.dart';
 import 'package:flutter_gram/resources/firestore_methods.dart';
 import 'package:flutter_gram/screens/comment_screen/widgets/comment_card.dart';
 import 'package:flutter_gram/utils/global.dart';
@@ -14,6 +15,7 @@ class CommentScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final user = Provider.of<UserProvider>(context, listen: false).getUser;
     return Scaffold(
       appBar: AppBar(
         title: const Text("Comments"),
@@ -23,7 +25,8 @@ class CommentScreen extends StatelessWidget {
         stream: FirebaseFirestore.instance
             .collection("posts")
             .doc(snap['postId'])
-            .collection("comments").orderBy("datePublished",descending: true)
+            .collection("comments")
+            .orderBy("datePublished", descending: true)
             .snapshots(),
         builder: (context,
             AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
@@ -35,7 +38,9 @@ class CommentScreen extends StatelessWidget {
           return ListView.builder(
             itemCount: snapshot.data!.docs.length,
             itemBuilder: (context, index) {
-              return CommentCard(snap: (snapshot.data!as dynamic).docs[index],);
+              return CommentCard(
+                snap: (snapshot.data! as dynamic).docs[index],
+              );
             },
           );
         },
@@ -49,11 +54,9 @@ class CommentScreen extends StatelessWidget {
               padding: const EdgeInsets.only(left: 16, right: 8),
               child: Row(
                 children: [
-                  const CircleAvatar(
+                  CircleAvatar(
                     radius: 16,
-                    backgroundImage: NetworkImage(
-                      "https://th.bing.com/th?id=OIP.0VtFarqAxKUjzx9tMdzn6AHaFj&w=288&h=216&c=8&rs=1&qlt=90&o=6&dpr=1.3&pid=3.1&rm=2",
-                    ),
+                    backgroundImage: NetworkImage(user.profileImage),
                   ),
                   Expanded(
                     child: Padding(
@@ -78,7 +81,7 @@ class CommentScreen extends StatelessWidget {
                           snap['postId'],
                           currentUserUid!,
                           currentUserName!,
-                          'https://picsum.photos/200', 
+                          user.profileImage,
                           _commentController.text);
                       _commentController.text = "";
                     },

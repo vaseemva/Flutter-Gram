@@ -11,11 +11,10 @@ class BodyTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding:
-          const EdgeInsets.symmetric(vertical: 8.0, horizontal: 24.0),
+      padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 24.0),
       child: TextFormField(
         controller: _bodyController,
-        minLines: 10, 
+        minLines: 10,
         maxLines: null,
         keyboardType: TextInputType.multiline,
         decoration: const InputDecoration(
@@ -25,4 +24,3 @@ class BodyTextField extends StatelessWidget {
     );
   }
 }
-

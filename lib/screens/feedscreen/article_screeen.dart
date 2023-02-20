@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gram/models/user.dart';
 import 'package:flutter_gram/providers/userprovider.dart';
 import 'package:flutter_gram/resources/firestore_methods.dart';
+import 'package:flutter_gram/screens/edit_post_screen/edit_post_screen.dart';
 import 'package:flutter_gram/screens/feedscreen/widgets.dart/body_text.dart';
 import 'package:flutter_gram/screens/feedscreen/widgets.dart/name_and_date.dart';
 import 'package:flutter_gram/screens/feedscreen/widgets.dart/post_action_row.dart';
 import 'package:flutter_gram/screens/feedscreen/widgets.dart/thumbnail_widget.dart';
-import 'package:flutter_gram/utils/global.dart';
 import 'package:provider/provider.dart';
 
 class ArticleScreeen extends StatelessWidget {
@@ -59,10 +59,18 @@ class ArticleScreeen extends StatelessWidget {
                                 switch (value) {
                                   case 'option1':
                                     // do something for option 1
-                                  deletePost(context);
+                                    deletePost(context);
                                     break;
                                   case 'option2':
-                                    deletePost(context);
+                                    // final provider =
+                                    //     Provider.of<EditPostProvider>(context,listen: false) ;
+                                    //        provider.setImage = snap['postUrl'];
+                                    Navigator.of(context)
+                                        .push(MaterialPageRoute(
+                                      builder: (context) => EditPostScreen(
+                                        snap: snap,
+                                      ),
+                                    ));
                                     break;
                                 }
                               },
@@ -106,25 +114,32 @@ class ArticleScreeen extends StatelessWidget {
   }
 
   Future<dynamic> deletePost(BuildContext context) {
-    return showDialog(context: context, builder:(context) => Dialog(
-                                  child: ListView(
-                                    shrinkWrap: true,
-                                    padding: const EdgeInsets.symmetric(vertical: 16),  
-                                    children: [
-                                     const Padding(
-                                        padding:  EdgeInsets.all(8.0),
-                                        child:Text('Are you sure you want to delete this event?'),
-                                      ), 
-                                      TextButton(onPressed: () {
-                                        Navigator.of(context).pop();
-                                        FirestoreMethods().deletePost(snap['postId']);
-                                        Navigator.of(context).pop();
-                                      }, child:const Text('Yes')),
-                                      TextButton(onPressed: () {
-                                        Navigator.pop(context);
-                                      }, child:const Text('No')),
-                                    ],
-                                  ),
-                                ),);
+    return showDialog(
+      context: context,
+      builder: (context) => Dialog(
+        child: ListView(
+          shrinkWrap: true,
+          padding: const EdgeInsets.symmetric(vertical: 16),
+          children: [
+            const Padding(
+              padding: EdgeInsets.all(8.0),
+              child: Text('Are you sure you want to delete this event?'),
+            ),
+            TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                  FirestoreMethods().deletePost(snap['postId']);
+                  Navigator.of(context).pop();
+                },
+                child: const Text('Yes')),
+            TextButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: const Text('No')),
+          ],
+        ),
+      ),
+    );
   }
 }

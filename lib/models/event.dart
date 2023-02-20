@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-
 class EventModel {
   final String title;
   final String description;
@@ -8,9 +7,10 @@ class EventModel {
   final dateTime;
   final String eventType;
   final String imageUrl;
-  final  eventTime;
+  final eventTime;
   final String uid;
   final String eventId;
+  final List joinedUsers;
 
   EventModel({
     required this.title,
@@ -22,6 +22,7 @@ class EventModel {
     required this.eventTime,
     required this.uid,
     required this.eventId,
+    this.joinedUsers = const [],
   });
   Map<String, dynamic> toJson() => {
         "title": title,
@@ -33,6 +34,7 @@ class EventModel {
         "eventTime": eventTime,
         "uid": uid,
         "eventId": eventId,
+        "joinedUsers": joinedUsers,
       };
 
   static EventModel fromSnap(DocumentSnapshot snap) {
@@ -47,8 +49,10 @@ class EventModel {
       eventTime: snapshot["eventTime"],
       uid: snapshot["uid"],
       eventId: snapshot["eventId"],
+      joinedUsers: snapshot["joinedUsers"],
     );
   }
+
   //from json
   factory EventModel.fromJson(Map<String, dynamic> json) {
     return EventModel(

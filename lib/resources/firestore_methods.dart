@@ -94,8 +94,40 @@ class FirestoreMethods {
       print(e.toString());
     }
   }
-  //edit post
+  //edit post without image
   Future<String> editPost(
+    String title,
+    String body,
+    String uid,
+    // Uint8List file,
+    String photoUrl,
+    String fullName,
+    String profileImage,
+    String postId,
+  ) async {
+    String res = 'some error occured';
+    try {
+      // String photoUrl =
+      //     await StorageMethods().uploadImagetoStorage('posts', file, true);
+      Post post = Post(
+          fullName: fullName,
+          uid: uid,
+          title: title,
+          body: body,
+          postUrl: photoUrl,
+          datePublished: DateTime.now(),
+          postId: postId,
+          profileImage: profileImage,
+          likes: []);
+      _firestore.collection('posts').doc(postId).update(post.toJson());
+      res = 'success';
+    } catch (e) {
+      res = e.toString();
+    }
+    return res;
+  }
+  //edit post with image
+  Future<String> editPostWithImage(
     String title,
     String body,
     String uid,

@@ -17,7 +17,7 @@ class ProfileScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final screensize = MediaQuery.of(context).size;
     return Scaffold(
-      backgroundColor: Colors.grey[150],
+      backgroundColor: Colors.grey[150], 
       appBar: AppBar(
         toolbarHeight: 0.0,
       ),

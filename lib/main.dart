@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gram/providers/add_event_provider.dart';
 import 'package:flutter_gram/providers/add_post_provider.dart';
 import 'package:flutter_gram/providers/bottomnav_provider.dart';
+import 'package:flutter_gram/providers/edit_post_provider.dart';
 import 'package:flutter_gram/providers/field_provider.dart';
 import 'package:flutter_gram/providers/password_provider.dart';
 import 'package:flutter_gram/providers/signin_provider.dart';
@@ -50,14 +51,15 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (context) => FieldProvider(),
         ),
-        ChangeNotifierProvider(create: (_) => AddEventProvider())
+        ChangeNotifierProvider(create: (_) => AddEventProvider()),
+        ChangeNotifierProvider(create: (_) => EditPostProvider()),  
       ],
       child: MaterialApp(
           title: 'Flutter Demo',
           debugShowCheckedModeBanner: false,
           theme: ThemeData(
               textTheme: GoogleFonts.aBeeZeeTextTheme(),
-              primarySwatch: Colors.blueGrey,
+              primarySwatch: Colors.deepPurple, 
               useMaterial3: true),
           home: const NewSplashScreen()),
     );

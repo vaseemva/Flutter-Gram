@@ -19,6 +19,7 @@ class TitleTextField extends StatelessWidget {
           controller: _titleController,
           decoration: const InputDecoration(
             border: OutlineInputBorder(),
+            contentPadding: EdgeInsets.all(8.0),
           ),
         ));
   }

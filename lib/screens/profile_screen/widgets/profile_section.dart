@@ -81,12 +81,23 @@ class ProfileSection extends StatelessWidget {
                       SizedBox(
                         height: screensize.height * 0.005,
                       ),
-                      Text(
-                        snap['username'],
-                        style: const TextStyle(
-                            fontSize: 15,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            snap['username'],
+                            style: const TextStyle(
+                                fontSize: 15,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black),
+                          ),
+                          snap['isPremium']
+                              ? const Icon(
+                                  Icons.verified,
+                                  color: Colors.blue,
+                                )
+                              : Container(),
+                        ],
                       ),
                       const Divider(
                         color: Colors.grey,

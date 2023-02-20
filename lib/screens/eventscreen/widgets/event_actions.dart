@@ -18,7 +18,8 @@ class EventActions extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder<bool>(
+    return 
+    StreamBuilder<bool>(
         stream: FirestoreMethods().isJoinedEvent(model.eventId, user.uid),
         builder: (context, snapshot) {
           if (!snapshot.hasData) {
