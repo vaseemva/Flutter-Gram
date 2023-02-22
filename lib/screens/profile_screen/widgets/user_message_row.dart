@@ -1,15 +1,19 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gram/resources/firestore_methods.dart';
+import 'package:flutter_gram/screens/chat_screen/chat_detail_screen.dart';
 import 'package:flutter_gram/utils/utils.dart';
 
 class UserMessageRow extends StatelessWidget {
   const UserMessageRow({
     super.key,
-    required this.uid, required this.email,
+    required this.uid,
+    required this.email,
+    required this.username,
   });
   final String uid;
   final String email;
+  final String username;
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +31,7 @@ class UserMessageRow extends StatelessWidget {
             children: [
               IconButton(
                   onPressed: () {
-                   sendMail(email);
+                    sendMail(email);
                   },
                   icon: const Icon(
                     Icons.mail,
@@ -35,7 +39,12 @@ class UserMessageRow extends StatelessWidget {
                     color: Colors.blueGrey,
                   )),
               IconButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) =>
+                          ChatDetailScreen(chatWith: uid, username: username),
+                    ));
+                  },
                   icon: const Icon(
                     Icons.message,
                     size: 30,
@@ -46,7 +55,9 @@ class UserMessageRow extends StatelessWidget {
                     await FirestoreMethods().followUser(
                         FirebaseAuth.instance.currentUser!.uid, uid);
                   },
-                  icon:  Icon((snapshot.data!)?Icons.person_remove:Icons.person_add),
+                  icon: Icon((snapshot.data!)
+                      ? Icons.person_remove
+                      : Icons.person_add),
                   label: (snapshot.data!)
                       ? const Text('Unfollow')
                       : const Text('Follow'))

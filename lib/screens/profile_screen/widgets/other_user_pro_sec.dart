@@ -138,8 +138,10 @@ class OtherProfileSection extends StatelessWidget {
                                   onTap: () {
                                     Navigator.of(context)
                                         .push(MaterialPageRoute(
-                                      builder: (context) =>
-                                          FollowersPage(userId: snap['uid'],isFollowing: true,),
+                                      builder: (context) => FollowersPage(
+                                        userId: snap['uid'],
+                                        isFollowing: true,
+                                      ),
                                     ));
                                   },
                                   child: Column(
@@ -153,7 +155,11 @@ class OtherProfileSection extends StatelessWidget {
                                 ),
                               ],
                             ),
-                            UserMessageRow(uid: snap['uid'],email: snap['emailAddress'],)
+                            UserMessageRow(
+                              uid: snap['uid'],
+                              email: snap['emailAddress'],
+                              username: snap['username'],
+                            )
                           ],
                         ),
                       ),

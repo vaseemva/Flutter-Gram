@@ -15,7 +15,7 @@ class ChatScreen extends StatelessWidget {
         centerTitle: true,
       ),
       body: StreamBuilder<List<Map<String, dynamic>>>(
-          stream: ChatMethods().getMessages(currentUserUid!),
+          stream: ChatMethods().getMessagedUsers(currentUserUid!),
           builder: (context, snapshot) {
             if (!snapshot.hasData) {
               return const Center(child: CircularProgressIndicator());
@@ -39,6 +39,10 @@ class ChatScreen extends StatelessWidget {
                           ));
                         },
                         child: ListTile(
+                          leading: CircleAvatar(
+                            backgroundImage:
+                                NetworkImage(assnapshot.data!['profileImage']),
+                          ),
                           title: Text(assnapshot.data!['username']),
                         ),
                       );
