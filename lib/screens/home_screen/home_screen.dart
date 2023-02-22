@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gram/providers/bottomnav_provider.dart';
 import 'package:flutter_gram/providers/userprovider.dart';
 import 'package:flutter_gram/screens/add_screen/add_screen.dart';
+import 'package:flutter_gram/screens/chat_screen/chat_screen.dart';
 import 'package:flutter_gram/screens/eventscreen/event_screen.dart';
 import 'package:flutter_gram/screens/feedscreen/feedscreen.dart';
 import 'package:flutter_gram/screens/home_screen/widgets/customnavbar.dart';
@@ -25,6 +26,7 @@ class _HomeScreenState extends State<HomeScreen> {
     const SearchTemplate(),
     const AddScreen(),
     const EventScreen(),
+    const ChatScreen(),
     ProfileScreen(
       uid: FirebaseAuth.instance.currentUser!.uid,
     )

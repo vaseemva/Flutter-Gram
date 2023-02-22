@@ -1,14 +1,17 @@
 import 'dart:typed_data';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gram/models/event.dart';
+import 'package:flutter_gram/models/message.dart';
 import 'package:flutter_gram/models/post.dart';
 import 'package:flutter_gram/resources/storage_methods.dart';
 import 'package:uuid/uuid.dart';
 
 class FirestoreMethods {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  final FirebaseAuth _auth = FirebaseAuth.instance;
   Future<String> uploadPost(
     String title,
     String body,
@@ -77,6 +80,7 @@ class FirestoreMethods {
     }
     return res;
   }
+
   //edit event without image
   Future<String> editEvent(
     String title,
@@ -115,6 +119,7 @@ class FirestoreMethods {
     }
     return res;
   }
+
   //edit event with image
   Future<String> editEventWithImage(
     String title,
@@ -152,6 +157,7 @@ class FirestoreMethods {
     }
     return res;
   }
+
   //like post
   Future<void> likePost(String postId, String uid, List likes) async {
     try {
@@ -168,6 +174,7 @@ class FirestoreMethods {
       print(e.toString());
     }
   }
+
   //edit post without image
   Future<String> editPost(
     String title,
@@ -200,6 +207,7 @@ class FirestoreMethods {
     }
     return res;
   }
+
   //edit post with image
   Future<String> editPostWithImage(
     String title,
@@ -398,7 +406,7 @@ class FirestoreMethods {
   Stream<List<EventModel>> getEventsStream() {
     return _firestore
         .collection('events')
-        .orderBy('dateTime', descending: true) 
+        .orderBy('dateTime', descending: true)
         .snapshots()
         .map((snapshot) => snapshot.docs
             .map((doc) => EventModel.fromJson(doc.data()))
@@ -410,7 +418,7 @@ class FirestoreMethods {
     return _firestore
         .collection('events')
         .where('eventType', isEqualTo: eventType)
-        .orderBy('dateTime', descending: true)  
+        .orderBy('dateTime', descending: true)
         .snapshots()
         .map((snapshot) => snapshot.docs
             .map((doc) => EventModel.fromJson(doc.data()))
@@ -428,6 +436,7 @@ class FirestoreMethods {
             .map((doc) => EventModel.fromJson(doc.data()))
             .toList());
   }
+
   //join event
   Future<String> joinEvent(String eventId, String uid) async {
     String res = 'some error occured';
@@ -441,6 +450,7 @@ class FirestoreMethods {
     }
     return res;
   }
+
   //leave event
   Future<String> leaveEvent(String eventId, String uid) async {
     String res = 'some error occured';
@@ -454,6 +464,7 @@ class FirestoreMethods {
     }
     return res;
   }
+
   //get event participants
   Stream<List<String>> getEventParticipants(String eventId) {
     return FirebaseFirestore.instance
@@ -463,6 +474,7 @@ class FirestoreMethods {
         .map((documentSnapshot) =>
             List<String>.from(documentSnapshot.get('joinedUsers')));
   }
+
   //check if user joined event
   Stream<bool> isJoinedEvent(String eventId, String uid) {
     return FirebaseFirestore.instance
@@ -473,6 +485,7 @@ class FirestoreMethods {
             List<String>.from((snapshot.data()! as dynamic)['joinedUsers'])
                 .contains(uid));
   }
+
   //delete event
   Future<void> deleteEventFromFirestore(String eventId) async {
     try {
@@ -481,4 +494,7 @@ class FirestoreMethods {
       print(e.toString());
     }
   }
+
+  //send message to a user
+
 }

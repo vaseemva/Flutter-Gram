@@ -26,6 +26,7 @@ class CustomNavBar extends StatelessWidget {
           BottomNavigationBarItem(
               icon: Icon(Icons.add_box_outlined), label: ''),
           BottomNavigationBarItem(icon: Icon(Icons.event), label: ''),
+          BottomNavigationBarItem(icon: Icon(Icons.chat), label: ''),
           BottomNavigationBarItem(icon: Icon(Icons.person), label: '')
         ]);
   }
