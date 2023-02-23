@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gram/resources/chat_methods.dart';
+import 'package:flutter_gram/screens/chat_screen/widgets/chat_bubble.dart';
 import 'package:flutter_gram/utils/global.dart';
+
 
 class ChatDetailScreen extends StatelessWidget {
   ChatDetailScreen({Key? key, required this.chatWith, required this.username})
@@ -8,6 +10,7 @@ class ChatDetailScreen extends StatelessWidget {
   final String chatWith;
   final String username;
   final TextEditingController _chatController = TextEditingController();
+  final ScrollController _scrollController = ScrollController();
 
   @override
   Widget build(BuildContext context) {
@@ -24,26 +27,18 @@ class ChatDetailScreen extends StatelessWidget {
             if (snapshot.data!.isEmpty) {
               return const Center(child: Text('No Messages'));
             }
+            WidgetsBinding.instance.addPostFrameCallback((_) {
+            _scrollController.jumpTo(_scrollController.position.maxScrollExtent);
+          });
             return ListView.builder(
+              
+              controller: _scrollController,
               itemCount: snapshot.data!.length,
               itemBuilder: (context, index) {
                 bool isMe = snapshot.data![index]['sender'] == currentUserUid;
-                return Row(
-                  mainAxisAlignment:
-                      isMe ? MainAxisAlignment.end : MainAxisAlignment.start,
-                  children: [
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 10, vertical: 5),
-                      margin: const EdgeInsets.symmetric(
-                          horizontal: 10, vertical: 5),
-                      decoration: BoxDecoration(
-                        color: isMe ? Colors.blue[200] : Colors.grey[300],
-                        borderRadius: BorderRadius.circular(15),
-                      ),
-                      child: Text(snapshot.data![index]['message']),
-                    ),
-                  ],
+                return ChatBubble(
+                  isMe: isMe,
+                  message: snapshot.data![index],
                 );
               },
             );
@@ -57,17 +52,10 @@ class ChatDetailScreen extends StatelessWidget {
               padding: const EdgeInsets.only(left: 16, right: 8),
               child: Row(
                 children: [
-                  // CircleAvatar(
-                  //   radius: 16,
-                  //   backgroundImage: NetworkImage(user.profileImage),
-                  // ),
                   Expanded(
                     child: Padding(
                       padding: const EdgeInsets.only(left: 8),
-                      child:
-                          //  Consumer<FieldProvider>(
-                          //   builder: (context, value, child) =>
-                          TextField(
+                      child: TextField(
                         controller: _chatController,
                         decoration: const InputDecoration(
                           hintText: "Type a message",
@@ -76,15 +64,16 @@ class ChatDetailScreen extends StatelessWidget {
                       ),
                     ),
                   ),
-
                   const SizedBox(
                     width: 16,
                   ),
                   FloatingActionButton(
                     onPressed: () async {
-                    await  ChatMethods().sendMessage(
-                          currentUserUid!, chatWith, _chatController.text);
-                          _chatController.clear();
+                      if (_chatController.text.isNotEmpty) {
+                        await ChatMethods().sendMessage(
+                            currentUserUid!, chatWith, _chatController.text); 
+                        _chatController.clear();
+                      }
                     },
                     mini: true,
                     child: const Icon(Icons.send),
@@ -94,3 +83,4 @@ class ChatDetailScreen extends StatelessWidget {
     );
   }
 }
+
