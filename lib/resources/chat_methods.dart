@@ -62,6 +62,41 @@ class ChatMethods {
       }
     });
   }
+//delete message
+  Future<void> deleteMessage(
+      String currentUser, String receiver, String messageId) async {
+    try {
+      await _firestore
+          .collection('chats')
+          .doc(currentUser)
+          .collection(receiver)
+          .doc(messageId)
+          .delete();
+      await _firestore
+          .collection('chats')
+          .doc(receiver)
+          .collection(currentUser)
+          .doc(messageId)
+          .delete();
+    } catch (e) {
+      print(e.toString());
+    }
+  }
+  //delete message only for current user
+  Future<void> deleteMessageForCurrentUser(
+      String currentUser, String receiver, String messageId) async {
+    try {
+      await _firestore
+          .collection('chats')
+          .doc(currentUser)
+          .collection(receiver)
+          .doc(messageId)
+          .delete();
+    } catch (e) {
+      print(e.toString());
+    }
+  }
+    
 
   //stream of messages in the subcollection of the current user doc in chats collection
   Stream<List<Map<String, dynamic>>> getMessagesInChat(
@@ -76,9 +111,9 @@ class ChatMethods {
         .snapshots()
         .map((QuerySnapshot querySnapshot) {
       List<Map<String, dynamic>> messages = [];
-      querySnapshot.docs.forEach((doc) {
-        messages.add(doc.data() as Map<String, dynamic>);
-      });
+      for (var doc in querySnapshot.docs) {
+        messages.add(doc.data() as Map<String, dynamic>); 
+      }
       return messages;
     });
   }

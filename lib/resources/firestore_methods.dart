@@ -1,17 +1,13 @@
 import 'dart:typed_data';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gram/models/event.dart';
-import 'package:flutter_gram/models/message.dart';
 import 'package:flutter_gram/models/post.dart';
 import 'package:flutter_gram/resources/storage_methods.dart';
 import 'package:uuid/uuid.dart';
 
 class FirestoreMethods {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-  final FirebaseAuth _auth = FirebaseAuth.instance;
   Future<String> uploadPost(
     String title,
     String body,
@@ -266,6 +262,19 @@ class FirestoreMethods {
       print(e.toString());
     }
   }
+  //delete comment
+  Future<void> deleteComment(String postId, String commentId) async {
+    try {
+      _firestore
+          .collection('posts')
+          .doc(postId)
+          .collection('comments')
+          .doc(commentId)
+          .delete();
+    } catch (e) {
+      print(e.toString());
+    }
+  }
 
   //delete post if the user is the owner
   Future<void> deletePost(String postId) async {
@@ -496,5 +505,4 @@ class FirestoreMethods {
   }
 
   //send message to a user
-
 }

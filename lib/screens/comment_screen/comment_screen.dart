@@ -5,6 +5,7 @@ import 'package:flutter_gram/providers/userprovider.dart';
 import 'package:flutter_gram/resources/firestore_methods.dart';
 import 'package:flutter_gram/screens/comment_screen/widgets/comment_card.dart';
 import 'package:flutter_gram/utils/global.dart';
+import 'package:flutter_gram/utils/strings.dart';
 import 'package:provider/provider.dart';
 
 class CommentScreen extends StatelessWidget {
@@ -35,11 +36,17 @@ class CommentScreen extends StatelessWidget {
               child: CircularProgressIndicator(),
             );
           }
+          if (snapshot.data!.docs.isEmpty) {
+            return  Center(
+              child: Text(commentEmpty), 
+            );
+          }
           return ListView.builder(
             itemCount: snapshot.data!.docs.length,
             itemBuilder: (context, index) {
               return CommentCard(
                 snap: (snapshot.data! as dynamic).docs[index],
+                postId: snap['postId'],
               );
             },
           );

@@ -31,3 +31,8 @@ String intro3Image = 'assets/images/intro_3.png';
 //premium screen
 String premiumTagLine = 'Subscribe to Flutter Gram Premium to explore more features';
 String premiumTagLine2 = 'subscribe now for just\n       ₹99 per year';
+
+//comment screen
+String commentEmpty="Be the first to comment!";
+//event screen
+String onlineEventEmpty='No Online Events To Show';

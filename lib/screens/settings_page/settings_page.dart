@@ -1,9 +1,6 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_gram/models/message.dart';
 import 'package:flutter_gram/resources/chat_methods.dart';
-import 'package:flutter_gram/resources/firestore_methods.dart';
 import 'package:flutter_gram/utils/global.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
 
