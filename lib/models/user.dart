@@ -9,6 +9,7 @@ class UserModel {
   final List following;
   final String profileImage;
   final bool isPremium;
+  final List chattedUsers;
 
   UserModel(
       {required this.emailAddress,
@@ -17,7 +18,8 @@ class UserModel {
       required this.followers,
       required this.following,
       required this.profileImage,
-      this.isPremium=false});
+      this.isPremium=false,
+      required this.chattedUsers, });
 
   Map<String, dynamic> toJson() => {
         "emailAddress": emailAddress,
@@ -26,7 +28,8 @@ class UserModel {
         "followers": followers,
         "following": following,
         "profileImage": profileImage,
-        "isPremium": isPremium
+        "isPremium": isPremium,
+        "chattedUsers": chattedUsers,
       };
 
   static UserModel fromSnap(DocumentSnapshot snap) {
@@ -38,6 +41,7 @@ class UserModel {
         followers: snapshot['followers'],
         following: snapshot['following'],
         profileImage: snapshot['profileImage'],
-        isPremium: snapshot['isPremium']);
+        isPremium: snapshot['isPremium'],
+        chattedUsers: snapshot['chattedUsers']);
   }
 }

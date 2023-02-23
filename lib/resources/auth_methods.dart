@@ -20,7 +20,8 @@ class AuthMethods {
         username: snapshot["username"],
         followers: snapshot["followers"],
         following: snapshot["following"],
-        profileImage: snapshot["profileImage"]);
+        profileImage: snapshot["profileImage"],
+        chattedUsers: snapshot["chattedUsers"]);
   }
 
   //signing up user
@@ -42,7 +43,8 @@ class AuthMethods {
             followers: [],
             following: [],
             profileImage:
-                "https://www.seekpng.com/png/detail/966-9665493_my-profile-icon-blank-profile-image-circle.png");
+                "https://www.seekpng.com/png/detail/966-9665493_my-profile-icon-blank-profile-image-circle.png",
+                chattedUsers: []);
         await _firestore
             .collection('users')
             .doc(credential.user!.uid)
@@ -92,7 +94,8 @@ class AuthMethods {
                   followers: [],
                   following: [],
                   profileImage: userCredential.user!.photoURL!,
-                  isPremium: false);
+                  isPremium: false,
+                  chattedUsers: []);
               await _firestore
                   .collection('users')
                   .doc(userCredential.user!.uid)

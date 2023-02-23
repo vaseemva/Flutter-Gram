@@ -6,33 +6,10 @@ class ChatMethods {
   Future<void> sendMessage(
       String currentUser, String receiver, String message) async {
     try {
-      // await _firestore.collection('chats').doc(currentUser).update({
-      //   'lastMessage': message,
-      //   'lastMessageTime': DateTime.now(),
-      //   'lastMessageSender': currentUser,
-      //   'lastMessageReceiver': receiver,
-      //   //add an array of map which include users who have sent messages to the current user with time of last message
-      //   'users': FieldValue.arrayUnion([
-      //     {
-      //       'user': receiver,
-      //       'time': DateTime.now(),
-      //     }
-      //   ]), 
-      // },);
-      await updateUsersArray(currentUser, receiver); 
-      await _firestore.collection('chats').doc(receiver).set({
-        'lastMessage': message,
-        'lastMessageTime': DateTime.now(),
-        'lastMessageSender': currentUser,
-        'lastMessageReceiver': receiver,
-        'users': FieldValue.arrayUnion([
-          {
-            'user': currentUser,
-            'time': DateTime.now(),
-          }
-        ]),
+      await addOrUpdateCurrentUser(currentUser, receiver);
+      await _firestore.collection('chats').doc(currentUser).set({
+        "lastMessage": message,
       });
-
       String messageId = const Uuid().v1();
       await _firestore
           .collection('chats')
@@ -45,6 +22,10 @@ class ChatMethods {
         'receiver': receiver,
         'time': DateTime.now(),
         'messageId': messageId,
+      });
+      await addOrUpdateCurrentUser(receiver, currentUser);
+      await _firestore.collection('chats').doc(receiver).set({
+        "lastMessage": message,
       });
 
       await _firestore
@@ -65,15 +46,15 @@ class ChatMethods {
   }
 
   //stream of names of subcollections in the current user doc in chats collection
- Stream<List<Map<String, dynamic>>> getMessagedUsers(String currentUser) {
+  Stream<List<Map<String, dynamic>>> getMessagedUsers(String currentUser) {
     return _firestore
-        .collection('chats')
+        .collection('users')
         .doc(currentUser)
         .snapshots()
         .map((DocumentSnapshot documentSnapshot) {
       if (documentSnapshot.exists) {
         List<Map<String, dynamic>> messages =
-            List.from((documentSnapshot.data() as dynamic)['users']);
+            List.from((documentSnapshot.data() as dynamic)['chattedUsers']);
         messages.sort((a, b) => b['time'].compareTo(a['time']));
         return messages;
       } else {
@@ -89,7 +70,9 @@ class ChatMethods {
         .collection('chats')
         .doc(currentUser)
         .collection(receiver)
-        .orderBy('time',)
+        .orderBy(
+          'time',
+        )
         .snapshots()
         .map((QuerySnapshot querySnapshot) {
       List<Map<String, dynamic>> messages = [];
@@ -100,36 +83,36 @@ class ChatMethods {
     });
   }
 
-  Future<void> updateUsersArray(String currentUser, String receiver) async {
-  final docRef = _firestore.collection('chats').doc(currentUser);
-  final docSnapshot = await docRef.get();
-  final usersArray = docSnapshot.data()?['users'] as List<dynamic>?;
-  final currentTime = DateTime.now();
+  addOrUpdateCurrentUser(String uid, String recieverUid) async {
+    // Get a reference to the user's document
+    DocumentReference<Map<String, dynamic>> docRef = _firestore
+        .collection('users')
+        .doc(uid); // replace `userId` with the ID of the user's document
 
-  // Check if the receiver already exists in the users array
-  final receiverExists =
-      usersArray?.any((user) => user['user'] == receiver) ?? false;
+    // Get the current data of the user's document
+    DocumentSnapshot<Map<String, dynamic>> snapshot = await docRef.get();
 
-  if (receiverExists) {
-    // If the receiver exists, update the timestamp of the existing user
-    final updatedUsersArray = usersArray!
-        .map((user) => user['user'] == receiver
-            ? {'user': receiver, 'time': currentTime}
-            : user)
-        .toList();
-    await docRef.update({'users': updatedUsersArray});
-  } else {
-    // If the receiver does not exist, add a new user to the array
-    await docRef.set({
-      'lastMessage': '',
-      'lastMessageTime': Timestamp.now(),
-      'lastMessageSender': '',
-      'lastMessageReceiver': '',
-      'users': FieldValue.arrayUnion([
-        {'user': receiver, 'time': currentTime}
-      ])
-    }, SetOptions(merge: true));
+    // Check if the chattedUsers array field already contains a map with the specified username
+    List<dynamic> chattedUsers = snapshot.data()!['chattedUsers'];
+    int index = chattedUsers.indexWhere((user) => user['user'] == recieverUid);
+
+    if (index != -1) {
+      // If the chattedUsers array field contains a map with the specified username, update the time value of the existing map
+      Map<String, dynamic> userData = {
+        'user': recieverUid,
+        'time': Timestamp.now()
+      };
+      chattedUsers[index] = userData;
+      await docRef.update({'chattedUsers': chattedUsers});
+    } else {
+      // If the chattedUsers array field does not contain a map with the specified username, create a new map with the specified username and current time, and add it to the chattedUsers array field
+      Map<String, dynamic> userData = {
+        'user': recieverUid,
+        'time': Timestamp.now()
+      };
+      await docRef.update({
+        'chattedUsers': FieldValue.arrayUnion([userData])
+      });
+    }
   }
-}
-
 }
