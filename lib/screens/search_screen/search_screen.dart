@@ -15,7 +15,7 @@ class SearchScreen extends StatelessWidget {
         appBar: AppBar(
           automaticallyImplyLeading: false,
           title: TextFormField(
-            autofocus: true, 
+            autofocus: true,
             controller: _searchController,
             decoration: InputDecoration(
               icon: const Icon(Icons.search),
@@ -25,7 +25,9 @@ class SearchScreen extends StatelessWidget {
               border: InputBorder.none,
             ),
             onFieldSubmitted: (value) {
-              provider.setIsShowUsers = true;
+              if (_searchController.text.isNotEmpty) {
+                provider.setIsShowUsers = true;
+              }
             },
           ),
         ),

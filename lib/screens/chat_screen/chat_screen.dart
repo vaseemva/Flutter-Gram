@@ -13,6 +13,9 @@ class ChatScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Chats'),
         centerTitle: true,
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        foregroundColor: Colors.black,
       ),
       body: StreamBuilder<List<Map<String, dynamic>>>(
           stream: ChatMethods().getMessagedUsers(currentUserUid!),

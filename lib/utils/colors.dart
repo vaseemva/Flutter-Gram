@@ -1,17 +1,19 @@
 import 'package:flutter/material.dart';
 
-const signinloadingcolor=Colors.white;
-const bottomnavSelectedcolor=Colors.blue; 
-const bottomNavUnselectedcolor=Colors.grey;
+const signinloadingcolor = Colors.white;
+const bottomnavSelectedcolor = Colors.blue;
+const bottomNavUnselectedcolor = Colors.grey;
 
 //addPostScreen
-const sideBoxColor=Colors.blueGrey; 
-const postoptioncolor=Colors.blue;
-const curveIcon=Colors.white;
+const sideBoxColor = Colors.blueGrey;
+const postoptioncolor = Colors.blue;
+const curveIcon = Colors.white;
 
 //profile page
-const backgroundBoxcolor=Colors.blue;
+const backgroundBoxcolor = Colors.blue;
 //search page
-final templateTheme= Colors.grey[100];
+final templateTheme = Colors.grey[100];
 //event detail page
-const stepOutColor=Colors.blue;
+const stepOutColor = Colors.blue;
+//settings page
+final settingsTitleColor = Colors.blue[50]; 

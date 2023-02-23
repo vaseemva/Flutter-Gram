@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_gram/providers/add_event_provider.dart';
 import 'package:flutter_gram/providers/add_post_provider.dart';
 import 'package:flutter_gram/providers/bottomnav_provider.dart';
@@ -36,6 +37,9 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+     SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle( 
+      statusBarColor: Colors.blue, 
+    ));
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(
