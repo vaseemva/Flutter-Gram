@@ -3,12 +3,16 @@ import 'package:flutter_gram/resources/chat_methods.dart';
 import 'package:flutter_gram/screens/chat_screen/widgets/chat_bubble.dart';
 import 'package:flutter_gram/utils/global.dart';
 
-
 class ChatDetailScreen extends StatelessWidget {
-  ChatDetailScreen({Key? key, required this.chatWith, required this.username})
+  ChatDetailScreen(
+      {Key? key,
+      required this.chatWith,
+      required this.username,
+      required this.profileImage})
       : super(key: key);
   final String chatWith;
   final String username;
+  final String profileImage;
   final TextEditingController _chatController = TextEditingController();
   final ScrollController _scrollController = ScrollController();
 
@@ -16,7 +20,17 @@ class ChatDetailScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(username),
+        title: Row(
+          children: [
+            CircleAvatar(
+              backgroundImage: NetworkImage(profileImage),
+            ),
+            const SizedBox(
+              width: 10,
+            ),
+            Text(username),
+          ],
+        ),
       ),
       body: StreamBuilder<List<Map<String, dynamic>>>(
           stream: ChatMethods().getMessagesInChat(currentUserUid!, chatWith),
@@ -28,10 +42,10 @@ class ChatDetailScreen extends StatelessWidget {
               return const Center(child: Text('No Messages'));
             }
             WidgetsBinding.instance.addPostFrameCallback((_) {
-            _scrollController.jumpTo(_scrollController.position.maxScrollExtent);
-          });
+              _scrollController
+                  .jumpTo(_scrollController.position.maxScrollExtent);
+            });
             return ListView.builder(
-              
               controller: _scrollController,
               itemCount: snapshot.data!.length,
               itemBuilder: (context, index) {
@@ -70,8 +84,10 @@ class ChatDetailScreen extends StatelessWidget {
                   FloatingActionButton(
                     onPressed: () async {
                       if (_chatController.text.isNotEmpty) {
-                        await ChatMethods().sendMessage(
-                            currentUserUid!, chatWith, _chatController.text); 
+                        String message = _chatController.text;
+                        _chatController.clear();
+                        await ChatMethods()
+                            .sendMessage(currentUserUid!, chatWith, message);
                         _chatController.clear();
                       }
                     },
@@ -83,4 +99,3 @@ class ChatDetailScreen extends StatelessWidget {
     );
   }
 }
-

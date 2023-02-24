@@ -3,6 +3,8 @@ import 'package:flutter_gram/resources/chat_methods.dart';
 import 'package:flutter_gram/resources/firestore_methods.dart';
 import 'package:flutter_gram/screens/chat_screen/chat_detail_screen.dart';
 import 'package:flutter_gram/utils/global.dart';
+import 'package:flutter_gram/utils/strings.dart';
+import 'package:get_time_ago/get_time_ago.dart';
 
 class ChatScreen extends StatelessWidget {
   const ChatScreen({Key? key}) : super(key: key);
@@ -38,7 +40,9 @@ class ChatScreen extends StatelessWidget {
                           Navigator.of(context).push(MaterialPageRoute(
                             builder: (context) => ChatDetailScreen(
                                 chatWith: snapshot.data![index]['user'],
-                                username: assnapshot.data!['username']),
+                                username: assnapshot.data!['username'],
+                                profileImage:assnapshot.data!['profileImage'] ,),
+                                
                           ));
                         },
                         child: ListTile(
@@ -47,6 +51,8 @@ class ChatScreen extends StatelessWidget {
                                 NetworkImage(assnapshot.data!['profileImage']),
                           ),
                           title: Text(assnapshot.data!['username']),
+                          subtitle: Text(
+                              '${GetTimeAgo.parse(snapshot.data![index]['time'].toDate())} $lastMessageText'),
                         ),
                       );
                     });

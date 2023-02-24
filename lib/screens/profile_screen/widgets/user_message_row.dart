@@ -10,10 +10,12 @@ class UserMessageRow extends StatelessWidget {
     required this.uid,
     required this.email,
     required this.username,
+    required this.profileImage,
   });
   final String uid;
   final String email;
   final String username;
+  final String profileImage;
 
   @override
   Widget build(BuildContext context) {
@@ -41,8 +43,11 @@ class UserMessageRow extends StatelessWidget {
               IconButton(
                   onPressed: () {
                     Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) =>
-                          ChatDetailScreen(chatWith: uid, username: username),
+                      builder: (context) => ChatDetailScreen(
+                        chatWith: uid,
+                        username: username,
+                        profileImage: profileImage,
+                      ),
                     ));
                   },
                   icon: const Icon(
