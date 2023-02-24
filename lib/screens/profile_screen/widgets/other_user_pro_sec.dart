@@ -5,6 +5,7 @@ import 'package:flutter_gram/screens/followers_page/followers_page.dart';
 import 'package:flutter_gram/screens/profile_screen/widgets/count_text.dart';
 import 'package:flutter_gram/screens/profile_screen/widgets/title_text.dart';
 import 'package:flutter_gram/screens/profile_screen/widgets/user_message_row.dart';
+import 'package:flutter_gram/screens/profile_screen/widgets/user_name.dart';
 import 'package:flutter_gram/utils/colors.dart';
 
 class OtherProfileSection extends StatelessWidget {
@@ -91,13 +92,7 @@ class OtherProfileSection extends StatelessWidget {
                             SizedBox(
                               height: screensize.height * 0.005,
                             ),
-                            Text(
-                              snap['username'],
-                              style: const TextStyle(
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.black),
-                            ),
+                            UserName(snap: snap),
                             const Divider(
                               color: Colors.grey,
                               height: 25,
@@ -172,3 +167,4 @@ class OtherProfileSection extends StatelessWidget {
         });
   }
 }
+

@@ -174,7 +174,7 @@ class ProfileSection extends StatelessWidget {
                 child: IconButton(
                     onPressed: () {
                       Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) =>  SettingsPage(),
+                        builder: (context) =>  SettingsPage(isPremium: snap['isPremium']),
                       ));
                     },
                     icon: const Icon(Icons.settings,color: Colors.white,)), 

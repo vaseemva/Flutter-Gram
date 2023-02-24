@@ -55,7 +55,10 @@ class PostCard extends StatelessWidget {
                       ],
                     ),
                   )),
-                   MoreOptions(uid: snap['uid'],postId: snap['postId'],) 
+                  MoreOptions(
+                    uid: snap['uid'],
+                    postId: snap['postId'],
+                  )
                 ],
               ),
             ),

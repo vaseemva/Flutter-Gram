@@ -51,19 +51,21 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   void initState() {
-    FirebaseAuth.instance.authStateChanges().listen((User? user) async {
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        final provider = Provider.of<UserProvider>(context, listen: false);
-        provider.refreshUser();
-      });
+    if (mounted) {
+      FirebaseAuth.instance.authStateChanges().listen((User? user) async {
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          final provider = Provider.of<UserProvider>(context, listen: false);
+          provider.refreshUser();
+        });
 
-      if (user == null) {
-        print('User is currently signed out!');
-      } else {
-        print('User is signed in!');
-        getname(user);
-      }
-    });
+        if (user == null) {
+          print('User is currently signed out!');
+        } else {
+          print('User is signed in!');
+          getname(user);
+        }
+      });
+    }
 
     super.initState();
   }

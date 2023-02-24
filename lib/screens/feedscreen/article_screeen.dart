@@ -4,10 +4,12 @@ import 'package:flutter_gram/models/user.dart';
 import 'package:flutter_gram/providers/userprovider.dart';
 import 'package:flutter_gram/resources/firestore_methods.dart';
 import 'package:flutter_gram/screens/edit_post_screen/edit_post_screen.dart';
+import 'package:flutter_gram/screens/feedscreen/widgets.dart/article_title.dart';
 import 'package:flutter_gram/screens/feedscreen/widgets.dart/body_text.dart';
 import 'package:flutter_gram/screens/feedscreen/widgets.dart/name_and_date.dart';
 import 'package:flutter_gram/screens/feedscreen/widgets.dart/post_action_row.dart';
 import 'package:flutter_gram/screens/feedscreen/widgets.dart/thumbnail_widget.dart';
+import 'package:flutter_gram/screens/profile_screen/profile_screen.dart';
 import 'package:provider/provider.dart';
 
 class ArticleScreeen extends StatelessWidget {
@@ -42,9 +44,17 @@ class ArticleScreeen extends StatelessWidget {
                       SizedBox(
                         width: size.width * 0.03,
                       ),
-                      CircleAvatar(
-                        backgroundImage: NetworkImage(
-                          snap['profileImage'],
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) =>
+                                ProfileScreen(uid: snap['uid']),
+                          ));
+                        },
+                        child: CircleAvatar(
+                          backgroundImage: NetworkImage(
+                            snap['profileImage'],
+                          ),
                         ),
                       ),
                       SizedBox(
@@ -62,9 +72,6 @@ class ArticleScreeen extends StatelessWidget {
                                     deletePost(context);
                                     break;
                                   case 'option2':
-                                    // final provider =
-                                    //     Provider.of<EditPostProvider>(context,listen: false) ;
-                                    //        provider.setImage = snap['postUrl'];
                                     Navigator.of(context)
                                         .push(MaterialPageRoute(
                                       builder: (context) => EditPostScreen(
@@ -92,14 +99,7 @@ class ArticleScreeen extends StatelessWidget {
                     height: size.height * 0.03,
                   ),
                   PostActionRow(size: size, snap: snapshot.data),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 8.0, right: 8.0),
-                    child: Text(
-                      snap['title'],
-                      style: const TextStyle(
-                          fontWeight: FontWeight.bold, fontSize: 20),
-                    ),
-                  ),
+                  ArticleTitle(snap: snap),
                   SizedBox(
                     height: size.height * 0.03,
                   ),
@@ -143,3 +143,4 @@ class ArticleScreeen extends StatelessWidget {
     );
   }
 }
+
