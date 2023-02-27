@@ -1,4 +1,6 @@
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -28,12 +30,16 @@ main() async {
   } else {
     await Firebase.initializeApp();
   }
+  FirebaseAnalytics analytics = FirebaseAnalytics.instance;
+  final fcm=await FirebaseMessaging.instance.getToken();
+  print(fcm);
 
-  runApp(const MyApp());
+  runApp( MyApp(analytics: analytics));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  const MyApp({super.key, required this.analytics});
+  final FirebaseAnalytics analytics; 
 
   @override
   Widget build(BuildContext context) {

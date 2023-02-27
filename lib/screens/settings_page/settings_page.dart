@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gram/screens/settings_page/widgets/about_us.dart';
 import 'package:flutter_gram/screens/settings_page/widgets/buy_premium.dart';
+import 'package:flutter_gram/screens/settings_page/widgets/change_password.dart';
 import 'package:flutter_gram/screens/settings_page/widgets/privacy_policy.dart';
 import 'package:flutter_gram/screens/settings_page/widgets/send_feedback.dart';
 import 'package:flutter_gram/screens/settings_page/widgets/settings_subtitle.dart';
@@ -41,11 +42,7 @@ class SettingsPage extends StatelessWidget {
                   subtitle: tileSubTitle1,
                   icon: Icons.person,
                 ),
-                SettingsTile(
-                  title: tileTitle2,
-                  subtitle: tileSubTitle2,
-                  icon: Icons.lock,
-                ),
+               const ChangePassword(),
                 BuyPremium(isPremium: isPremium)
               ],
             ),
@@ -60,5 +57,4 @@ class SettingsPage extends StatelessWidget {
     );
   }
 }
-
 

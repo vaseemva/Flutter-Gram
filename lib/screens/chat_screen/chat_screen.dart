@@ -25,6 +25,9 @@ class ChatScreen extends StatelessWidget {
             if (!snapshot.hasData) {
               return const Center(child: CircularProgressIndicator());
             }
+            if (snapshot.data!.isEmpty) {
+              return const Center(child: Text('No Messages'));
+            }
             return ListView.builder(
               itemCount: snapshot.data!.length,
               itemBuilder: (context, index) {

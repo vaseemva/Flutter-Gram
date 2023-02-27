@@ -61,9 +61,12 @@ class AuthMethods {
     return res;
   }
 
-  Future<void> signInWithGoogle(BuildContext context) async {
+  Future<String> signInWithGoogle(BuildContext context) async {
+    String res = 'some error occured';
     try {
+      
       if (kIsWeb) {
+
         GoogleAuthProvider googleProvider = GoogleAuthProvider();
 
         googleProvider
@@ -103,13 +106,16 @@ class AuthMethods {
             }
           }
         }
+        res = 'success';
       }
     } on FirebaseAuthException catch (e) {
+      res = e.toString();
       ScaffoldMessenger.of(context)
           .showSnackBar(SnackBar(content: Text(e.toString())));
       print(e.toString());
       // Displaying the error message
     }
+    return res;
   }
 
   //signin user
@@ -129,4 +135,23 @@ class AuthMethods {
     }
     return res;
   }
+  //change password
+  Future<String> changePassword(
+      {required String email}) async {
+    String res = 'some error occured';
+    try {
+      if (email.isNotEmpty) {
+        await _auth.sendPasswordResetEmail(email: email);
+        res = 'success';
+      } else {
+        res = 'please enter all the fields';
+      }
+    } catch (err) {
+      res = err.toString();
+    }
+    return res;
+  }
+  
+
+
 }
