@@ -3,6 +3,7 @@ import 'dart:typed_data';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gram/resources/firestore_methods.dart';
+import 'package:flutter_gram/screens/edit_profile_screen/edit_profile_screen.dart';
 import 'package:flutter_gram/screens/followers_page/followers_page.dart';
 import 'package:flutter_gram/screens/profile_screen/widgets/count_text.dart';
 import 'package:flutter_gram/screens/profile_screen/widgets/title_text.dart';
@@ -11,7 +12,6 @@ import 'package:flutter_gram/screens/settings_page/settings_page.dart';
 import 'package:flutter_gram/utils/colors.dart';
 import 'package:flutter_gram/utils/utils.dart';
 import 'package:image_picker/image_picker.dart';
-
 
 // ignore: must_be_immutable
 class ProfileSection extends StatelessWidget {
@@ -155,7 +155,12 @@ class ProfileSection extends StatelessWidget {
                         ],
                       ),
                       ElevatedButton(
-                          onPressed: () {}, child: const Text("Edit Profile"))
+                          onPressed: () {
+                            Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) =>const EditProfileScreen(), 
+                            ));
+                          },
+                          child: const Text("Edit Profile"))
                     ],
                   ),
                 ),
@@ -170,46 +175,55 @@ class ProfileSection extends StatelessWidget {
                     icon: const Icon(Icons.add_a_photo)),
               ),
               Positioned(
-                top: screensize.height * 0.010, 
+                top: screensize.height * 0.010,
                 left: screensize.width * 0.80,
                 child: IconButton(
                     onPressed: () {
                       Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) =>  SettingsPage(isPremium: snap['isPremium']),
+                        builder: (context) =>
+                            SettingsPage(isPremium: snap['isPremium']),
                       ));
                     },
-                    icon: const Icon(Icons.settings,color: Colors.white,)), 
+                    icon: const Icon(
+                      Icons.settings,
+                      color: Colors.white,
+                    )),
               ),
               Positioned(
-                top: screensize.height * 0.010, 
-                left: screensize.width * 0.70, 
+                top: screensize.height * 0.010,
+                left: screensize.width * 0.70,
                 child: IconButton(
                     onPressed: () {
                       Navigator.of(context).push(MaterialPageRoute(
                         builder: (context) => const SavedScreen(),
                       ));
                     },
-                    icon: const Icon(Icons.bookmarks_outlined,color: Colors.white,)),  
+                    icon: const Icon(
+                      Icons.bookmarks_outlined,
+                      color: Colors.white,
+                    )),
               )
             ],
           );
         });
   }
-changeProfile (BuildContext context) async {
-                      await selectImage(context);
-                      if (profilePic != null) {
-                      String res=await  FirestoreMethods()
-                            .changeProfileImage(snap['uid'], profilePic!);
-                            if(res=="success"){
-                              // ignore: use_build_context_synchronously
-                              ScaffoldMessenger.of(context).showSnackBar(
-                              const  SnackBar(
-                                  content:  Text("Profile Image Changed"),
-                                ),
-                              );
-                            }
-                      }
-                    }
+
+  changeProfile(BuildContext context) async {
+    await selectImage(context);
+    if (profilePic != null) {
+      String res =
+          await FirestoreMethods().changeProfileImage(snap['uid'], profilePic!);
+      if (res == "success") {
+        // ignore: use_build_context_synchronously
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text("Profile Image Changed"),
+          ),
+        );
+      }
+    }
+  }
+
   selectImage(BuildContext parentContext) async {
     return showDialog(
       context: parentContext,

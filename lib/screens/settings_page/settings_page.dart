@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gram/screens/settings_page/widgets/about_us.dart';
 import 'package:flutter_gram/screens/settings_page/widgets/buy_premium.dart';
 import 'package:flutter_gram/screens/settings_page/widgets/change_password.dart';
+import 'package:flutter_gram/screens/settings_page/widgets/edit_profile.dart';
 import 'package:flutter_gram/screens/settings_page/widgets/privacy_policy.dart';
 import 'package:flutter_gram/screens/settings_page/widgets/send_feedback.dart';
 import 'package:flutter_gram/screens/settings_page/widgets/settings_subtitle.dart';
-import 'package:flutter_gram/screens/settings_page/widgets/settings_tile.dart';
 import 'package:flutter_gram/screens/settings_page/widgets/settings_title.dart';
 import 'package:flutter_gram/screens/settings_page/widgets/signout_tile.dart';
 import 'package:flutter_gram/utils/strings.dart';
@@ -37,12 +37,8 @@ class SettingsPage extends StatelessWidget {
           SizedBox(
             child: Column(
               children: [
-                SettingsTile(
-                  title: tileTitle1,
-                  subtitle: tileSubTitle1,
-                  icon: Icons.person,
-                ),
-               const ChangePassword(),
+               const EditProfile(),
+                const ChangePassword(),
                 BuyPremium(isPremium: isPremium)
               ],
             ),

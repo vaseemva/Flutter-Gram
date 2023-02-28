@@ -63,9 +63,12 @@ class PostCard extends StatelessWidget {
               ),
             ),
             //title section
-            Text(
-              snap['title'],
-              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+            Padding(
+              padding: const EdgeInsets.only(left: 16, right: 16,),
+              child: Text(
+                snap['title'],
+                style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+              ),
             ),
             //Thumbnail section
             Padding(

@@ -9,6 +9,7 @@ import 'package:flutter_gram/providers/add_post_provider.dart';
 import 'package:flutter_gram/providers/bottomnav_provider.dart';
 import 'package:flutter_gram/providers/edit_event_provider.dart';
 import 'package:flutter_gram/providers/edit_post_provider.dart';
+import 'package:flutter_gram/providers/edit_profile_provider.dart';
 import 'package:flutter_gram/providers/field_provider.dart';
 import 'package:flutter_gram/providers/password_provider.dart';
 import 'package:flutter_gram/providers/signin_provider.dart';
@@ -66,7 +67,8 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => EditPostProvider()),
         ChangeNotifierProvider(
           create: (_) => EditEventProvider(),
-        )
+        ),
+        ChangeNotifierProvider(create: (_) => EditProfileProvider(),)
       ],
       child: MaterialApp(
           title: 'Flutter Demo',

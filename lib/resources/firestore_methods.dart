@@ -38,6 +38,24 @@ class FirestoreMethods {
     }
     return res;
   }
+  //update username and bio
+  Future<String> updateUsernameAndBio(
+    String username,
+    String bio,
+    String uid,
+  ) async {
+    String res = 'some error occured';
+    try {
+      _firestore.collection('users').doc(uid).update({
+        'username': username,
+        'bio': bio,
+      });
+      res = 'success';
+    } catch (e) {
+      res = e.toString(); 
+    }
+    return res;
+  }
 
   //add event
   Future<String> uploadEvent(
