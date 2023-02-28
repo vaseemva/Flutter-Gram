@@ -18,17 +18,15 @@ class EventActions extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return 
-    StreamBuilder<bool>(
+    return StreamBuilder<bool>(
         stream: FirestoreMethods().isJoinedEvent(model.eventId, user.uid),
         builder: (context, snapshot) {
           if (!snapshot.hasData) {
             return const SizedBox();
           }
-          return Container(
+          return SizedBox(
             height: screenSize.height * 0.075,
             width: screenSize.width,
-            color: Colors.grey[100],
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
@@ -56,8 +54,7 @@ class EventActions extends StatelessWidget {
                           ),
                         ),
                         onPressed: () {
-                          FirestoreMethods()
-                              .joinEvent(model.eventId, user.uid);
+                          FirestoreMethods().joinEvent(model.eventId, user.uid);
                         },
                         child: const Text('Join Event'),
                       ),
@@ -83,4 +80,3 @@ class EventActions extends StatelessWidget {
         });
   }
 }
-

@@ -178,6 +178,17 @@ class ProfileSection extends StatelessWidget {
                       ));
                     },
                     icon: const Icon(Icons.settings,color: Colors.white,)), 
+              ),
+              Positioned(
+                top: screensize.height * 0.010, 
+                left: screensize.width * 0.70, 
+                child: IconButton(
+                    onPressed: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) =>  SettingsPage(isPremium: snap['isPremium']),
+                      ));
+                    },
+                    icon: const Icon(Icons.bookmarks_outlined,color: Colors.white,)),  
               )
             ],
           );

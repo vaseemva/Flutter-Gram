@@ -2,11 +2,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gram/models/user.dart';
 import 'package:flutter_gram/providers/userprovider.dart';
-import 'package:flutter_gram/resources/firestore_methods.dart';
-import 'package:flutter_gram/screens/edit_post_screen/edit_post_screen.dart';
 import 'package:flutter_gram/screens/feedscreen/widgets.dart/article_title.dart';
 import 'package:flutter_gram/screens/feedscreen/widgets.dart/body_text.dart';
 import 'package:flutter_gram/screens/feedscreen/widgets.dart/name_and_date.dart';
+import 'package:flutter_gram/screens/feedscreen/widgets.dart/popup_for_article.dart';
 import 'package:flutter_gram/screens/feedscreen/widgets.dart/post_action_row.dart';
 import 'package:flutter_gram/screens/feedscreen/widgets.dart/thumbnail_widget.dart';
 import 'package:flutter_gram/screens/profile_screen/profile_screen.dart';
@@ -63,35 +62,7 @@ class ArticleScreeen extends StatelessWidget {
                       NameandDate(snap: snap),
                       const Expanded(child: SizedBox()),
                       snap['uid'] == (user.uid)
-                          ? PopupMenuButton<String>(
-                              onSelected: (value) {
-                                // handle the selected option
-                                switch (value) {
-                                  case 'option1':
-                                    // do something for option 1
-                                    deletePost(context);
-                                    break;
-                                  case 'option2':
-                                    Navigator.of(context)
-                                        .push(MaterialPageRoute(
-                                      builder: (context) => EditPostScreen(
-                                        snap: snap,
-                                      ),
-                                    ));
-                                    break;
-                                }
-                              },
-                              itemBuilder: (context) => [
-                                const PopupMenuItem(
-                                  value: 'option1',
-                                  child: Text('Delete Post'),
-                                ),
-                                const PopupMenuItem(
-                                  value: 'option2',
-                                  child: Text('Edit Post'),
-                                ),
-                              ],
-                            )
+                          ? PopUpForArticle(snap: snap) //if the user is the owner of the post, show the popup menu
                           : Container(),
                     ],
                   ),
@@ -112,35 +83,4 @@ class ArticleScreeen extends StatelessWidget {
               );
             }));
   }
-
-  Future<dynamic> deletePost(BuildContext context) {
-    return showDialog(
-      context: context,
-      builder: (context) => Dialog(
-        child: ListView(
-          shrinkWrap: true,
-          padding: const EdgeInsets.symmetric(vertical: 16),
-          children: [
-            const Padding(
-              padding: EdgeInsets.all(8.0),
-              child: Text('Are you sure you want to delete this event?'),
-            ),
-            TextButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                  FirestoreMethods().deletePost(snap['postId']);
-                  Navigator.of(context).pop();
-                },
-                child: const Text('Yes')),
-            TextButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                child: const Text('No')),
-          ],
-        ),
-      ),
-    );
-  }
 }
-

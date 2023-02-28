@@ -39,6 +39,8 @@ String premiumTagLine2 = 'subscribe now for just\n       ₹99 per year';
 String commentEmpty = "Be the first to comment!";
 //event screen
 String onlineEventEmpty = 'No Online Events To Show';
+//event details screen
+String hostingText='  is hosting this event';
 //chat screen
 String lastMessageText = 'since last message';
 //settings screen

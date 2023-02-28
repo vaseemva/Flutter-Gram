@@ -3,9 +3,11 @@ import 'package:animated_snack_bar/animated_snack_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gram/models/user.dart';
 import 'package:flutter_gram/providers/add_event_provider.dart';
+import 'package:flutter_gram/providers/bottomnav_provider.dart';
 import 'package:flutter_gram/providers/userprovider.dart';
 import 'package:flutter_gram/resources/firestore_methods.dart';
 import 'package:flutter_gram/screens/add_screen/widgets/steps.dart';
+import 'package:flutter_gram/screens/home_screen/home_screen.dart';
 import 'package:flutter_gram/utils/constants.dart';
 import 'package:flutter_gram/utils/utils.dart';
 import 'package:provider/provider.dart';
@@ -73,7 +75,9 @@ class AddEventScreen extends StatelessWidget {
                                           user.uid);
                                     },
                                     child: provider.loading == 'yes'
-                                        ? const CircularProgressIndicator()
+                                        ? const CircularProgressIndicator(
+                                            color: Colors.white,
+                                          )
                                         : const Text('Create'))
                                 : ElevatedButton(
                                     onPressed: () {
@@ -121,7 +125,13 @@ class AddEventScreen extends StatelessWidget {
           provider.loading = 'no';
           provider.currentStep = 0;
           provider.isLaststep = false;
-
+          // ignore: use_build_context_synchronously
+          Provider.of<BottomNavProvider>(context, listen: false).changeIndex =
+              3;
+          // ignore: use_build_context_synchronously
+          Navigator.of(context).pushReplacement(MaterialPageRoute(
+            builder: (context) => const HomeScreen(),
+          ));
           // ignore: use_build_context_synchronously
           showSnackBar("Event Created", context);
         } else {

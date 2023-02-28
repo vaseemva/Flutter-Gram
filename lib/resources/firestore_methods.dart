@@ -284,6 +284,27 @@ class FirestoreMethods {
       print(e.toString());
     }
   }
+  //save post
+   Future<String>savePost(String postId,String uid)async{
+    String res='some error occured';
+    try{
+      DocumentSnapshot snap=await _firestore.collection('users').doc(uid).get();
+      List savedPosts=(snap.data()! as dynamic)['savedPosts'];
+      if(savedPosts.contains(postId)){
+        await _firestore.collection('users').doc(uid).update({
+          'savedPosts':FieldValue.arrayRemove([postId])
+        });
+      }else{
+        await _firestore.collection('users').doc(uid).update({
+          'savedPosts':FieldValue.arrayUnion([postId])
+        });
+      }
+      res='success';
+    }catch(e){
+      res=e.toString();
+    }
+    return res;
+   }
 
   //change profile image
   Future<String> changeProfileImage(String uid, Uint8List file) async {

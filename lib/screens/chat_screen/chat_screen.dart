@@ -42,10 +42,10 @@ class ChatScreen extends StatelessWidget {
                         onTap: () {
                           Navigator.of(context).push(MaterialPageRoute(
                             builder: (context) => ChatDetailScreen(
-                                chatWith: snapshot.data![index]['user'],
-                                username: assnapshot.data!['username'],
-                                profileImage:assnapshot.data!['profileImage'] ,),
-                                
+                              chatWith: snapshot.data![index]['user'],
+                              username: assnapshot.data!['username'],
+                              profileImage: assnapshot.data!['profileImage'],
+                            ),
                           ));
                         },
                         child: ListTile(
