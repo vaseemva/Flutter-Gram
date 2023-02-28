@@ -12,13 +12,7 @@ class ChatScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Chats'),
-        centerTitle: true,
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        foregroundColor: Colors.black,
-      ),
+      appBar: whiteAppBar("Chats",centerTitle: true), 
       body: StreamBuilder<List<Map<String, dynamic>>>(
           stream: ChatMethods().getMessagedUsers(currentUserUid!),
           builder: (context, snapshot) {

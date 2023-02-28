@@ -6,6 +6,7 @@ import 'package:flutter_gram/resources/firestore_methods.dart';
 import 'package:flutter_gram/screens/followers_page/followers_page.dart';
 import 'package:flutter_gram/screens/profile_screen/widgets/count_text.dart';
 import 'package:flutter_gram/screens/profile_screen/widgets/title_text.dart';
+import 'package:flutter_gram/screens/saved_screen/saved_screen.dart';
 import 'package:flutter_gram/screens/settings_page/settings_page.dart';
 import 'package:flutter_gram/utils/colors.dart';
 import 'package:flutter_gram/utils/utils.dart';
@@ -185,7 +186,7 @@ class ProfileSection extends StatelessWidget {
                 child: IconButton(
                     onPressed: () {
                       Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) =>  SettingsPage(isPremium: snap['isPremium']),
+                        builder: (context) => const SavedScreen(),
                       ));
                     },
                     icon: const Icon(Icons.bookmarks_outlined,color: Colors.white,)),  

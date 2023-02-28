@@ -236,6 +236,11 @@ class FirestoreMethods {
     return res;
   }
 
+  //get posts by post id
+  Future getPostById(String postId) {
+    return _firestore.collection('posts').doc(postId).get();
+  }
+
   //post comments
   Future<void> postComment(String postId, String uid, String name,
       String profileImage, String comment) async {
@@ -262,6 +267,7 @@ class FirestoreMethods {
       print(e.toString());
     }
   }
+
   //delete comment
   Future<void> deleteComment(String postId, String commentId) async {
     try {
@@ -284,27 +290,54 @@ class FirestoreMethods {
       print(e.toString());
     }
   }
+
   //save post
-   Future<String>savePost(String postId,String uid)async{
-    String res='some error occured';
-    try{
-      DocumentSnapshot snap=await _firestore.collection('users').doc(uid).get();
-      List savedPosts=(snap.data()! as dynamic)['savedPosts'];
-      if(savedPosts.contains(postId)){
+  Future<String> saveePost(String postId, String uid) async {
+    String res = 'some error occured';
+    try {
+      DocumentSnapshot snap =
+          await _firestore.collection('users').doc(uid).get();
+      List savedPosts = (snap.data()! as dynamic)['savedPosts'];
+      if (savedPosts.contains(postId)) {
         await _firestore.collection('users').doc(uid).update({
-          'savedPosts':FieldValue.arrayRemove([postId])
+          'savedPosts': FieldValue.arrayRemove([postId])
         });
-      }else{
+        res = 'removed';
+      } else {
         await _firestore.collection('users').doc(uid).update({
-          'savedPosts':FieldValue.arrayUnion([postId])
+          'savedPosts': FieldValue.arrayUnion([postId])
         });
+        res = 'added';
       }
-      res='success';
-    }catch(e){
-      res=e.toString();
+
+      print('success save post');
+    } catch (e) {
+      res = e.toString();
     }
     return res;
-   }
+  }
+
+  //stream of check if post is saved
+  Stream<bool> checkIfPostIsSaved(String postId, String uid) {
+    return _firestore.collection('users').doc(uid).snapshots().map((event) {
+      List savedPosts = (event.data()! as dynamic)['savedPosts'];
+      if (savedPosts.contains(postId)) {
+        return true;
+      } else {
+        return false;
+      }
+    });
+  }
+
+  //stream of saved
+  Stream<List<String>> getSavedPosts(String userId) {
+    return FirebaseFirestore.instance
+        .collection('users')
+        .doc(userId)
+        .snapshots()
+        .map((snapshot) =>
+            List<String>.from((snapshot.data()! as dynamic)['savedPosts']));
+  }
 
   //change profile image
   Future<String> changeProfileImage(String uid, Uint8List file) async {

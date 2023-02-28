@@ -26,7 +26,7 @@ class MoreOptions extends StatelessWidget {
                           shrinkWrap: true,
                           children: [
                         uid == currentUid
-                            ? InkWell(
+                            ? InkWell( 
                                 onTap: () {
                                   Navigator.of(context).pop();
                                   deletePost(postId, context, isArticle);
@@ -38,13 +38,46 @@ class MoreOptions extends StatelessWidget {
                                 ),
                               )
                             : const SizedBox(),
-                        InkWell(
-                          onTap: () {},
-                          child: Container(
-                            padding: const EdgeInsets.symmetric(
-                                vertical: 12, horizontal: 16),
-                            child: const Text('Save'),
-                          ),
+                            
+                        GestureDetector(
+                          onTap: () async {
+                            String res =
+                                await FirestoreMethods().saveePost(postId, currentUid); 
+                            if (res == 'added') {
+                              Navigator.of(context).pop();
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  content: Text('Post saved'),
+                                ),
+                              );
+                            }
+                            if (res == 'removed') {
+                              Navigator.of(context).pop();
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  content: Text('Removed from saved'),
+                                ),
+                              );
+                            }
+                          },
+                          child: 
+                          StreamBuilder(
+                              stream: FirestoreMethods()
+                                  .checkIfPostIsSaved(postId, currentUid), 
+                              builder: (context, snapshot) {
+                                if (!snapshot.hasData) {
+                                  return const SizedBox();
+                                }
+                                return Container(
+                                  padding: const EdgeInsets.symmetric(
+                                      vertical: 12, horizontal: 16),
+                                  child:
+                                   (snapshot.data!)
+                                      ? const Text('Remove from saved') 
+                                      : 
+                                      const Text('Save'),
+                                );
+                              }),
                         ),
                       ])));
         },
