@@ -44,7 +44,9 @@ class MoreOptions extends StatelessWidget {
                             String res =
                                 await FirestoreMethods().saveePost(postId, currentUid); 
                             if (res == 'added') {
+                              // ignore: use_build_context_synchronously
                               Navigator.of(context).pop();
+                              // ignore: use_build_context_synchronously
                               ScaffoldMessenger.of(context).showSnackBar(
                                 const SnackBar(
                                   content: Text('Post saved'),
@@ -52,7 +54,9 @@ class MoreOptions extends StatelessWidget {
                               );
                             }
                             if (res == 'removed') {
+                              // ignore: use_build_context_synchronously
                               Navigator.of(context).pop();
+                              // ignore: use_build_context_synchronously
                               ScaffoldMessenger.of(context).showSnackBar(
                                 const SnackBar(
                                   content: Text('Removed from saved'),

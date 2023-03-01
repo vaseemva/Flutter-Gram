@@ -103,7 +103,6 @@ class AddPostScreen extends StatelessWidget {
         }
       } catch (e) {
         provider.setLoading = 'No';
-        print(e.toString());
       }
     } else {
       showSnackBar('Please fill all the field', context);

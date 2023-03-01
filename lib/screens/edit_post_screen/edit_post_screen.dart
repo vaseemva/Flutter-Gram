@@ -144,7 +144,6 @@ class _EditPostScreenState extends State<EditPostScreen> {
         }
       } catch (e) {
         provider.setLoading = 'No';
-        print(e.toString());
       }
     } else {
       showSnackBar('Please fill all the field', context);
@@ -181,7 +180,6 @@ class _EditPostScreenState extends State<EditPostScreen> {
           provider.isImageChanged = false;
         }
       } catch (e) {
-        print(e.toString());
         provider.setLoading = 'No';
         provider.isImageChanged = false;
       }

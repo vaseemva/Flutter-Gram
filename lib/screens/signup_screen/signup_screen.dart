@@ -127,7 +127,7 @@ class SignupScreen extends StatelessWidget {
           username: _nameController.text.trim(),
           emailAddress: _emailController.text.trim(),
           password: _passwordController.text.trim());
-      print(res);
+
       if (res == 'success') {
         provider.changeisLoading = false;
         // ignore: use_build_context_synchronously
@@ -138,7 +138,6 @@ class SignupScreen extends StatelessWidget {
           builder: (context) => SigninScreen(),
         ));
       } else {
-        print(res);
         provider.changeisLoading = false;
       }
     }

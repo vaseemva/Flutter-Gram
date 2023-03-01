@@ -37,7 +37,6 @@ class SigninScreen extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.center,
-            
               children: [
                 SigningTitles(
                   title: 'Sign In',
@@ -117,7 +116,6 @@ class SigninScreen extends StatelessWidget {
                 type: AnimatedSnackBarType.error,
                 duration: const Duration(seconds: 4))
             .show(context);
-        print(res);
       }
     }
   }

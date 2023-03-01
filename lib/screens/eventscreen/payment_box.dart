@@ -106,7 +106,7 @@ class PaymentBox extends StatelessWidget {
       razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, _handleExternalWallet);
       razorpay.open(options);
     } catch (e) {
-      print(e.toString());
+     //
     }
   }
 
@@ -119,6 +119,6 @@ class PaymentBox extends StatelessWidget {
   }
 
   _handleExternalWallet() {
-    print("External Wallet");
+    //
   }
 }

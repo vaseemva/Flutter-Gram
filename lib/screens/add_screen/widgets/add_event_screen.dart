@@ -141,7 +141,7 @@ class AddEventScreen extends StatelessWidget {
           showSnackBar(res, context);
         }
       } catch (e) {
-        print(e.toString());
+        //
       }
     } else {
       AnimatedSnackBar.material(

@@ -46,9 +46,9 @@ class AuthMethods {
             following: [],
             profileImage:
                 "https://www.seekpng.com/png/detail/966-9665493_my-profile-icon-blank-profile-image-circle.png",
-                chattedUsers: [],
-                savedPosts: [],
-                bio: "Flutter beyond limits...");
+            chattedUsers: [],
+            savedPosts: [],
+            bio: "Flutter beyond limits...");
         await _firestore
             .collection('users')
             .doc(credential.user!.uid)
@@ -68,9 +68,7 @@ class AuthMethods {
   Future<String> signInWithGoogle(BuildContext context) async {
     String res = 'some error occured';
     try {
-      
       if (kIsWeb) {
-
         GoogleAuthProvider googleProvider = GoogleAuthProvider();
 
         googleProvider
@@ -118,7 +116,7 @@ class AuthMethods {
       res = e.toString();
       ScaffoldMessenger.of(context)
           .showSnackBar(SnackBar(content: Text(e.toString())));
-      print(e.toString());
+
       // Displaying the error message
     }
     return res;
@@ -141,9 +139,9 @@ class AuthMethods {
     }
     return res;
   }
+
   //change password
-  Future<String> changePassword(
-      {required String email}) async {
+  Future<String> changePassword({required String email}) async {
     String res = 'some error occured';
     try {
       if (email.isNotEmpty) {
@@ -157,7 +155,4 @@ class AuthMethods {
     }
     return res;
   }
-  
-
-
 }

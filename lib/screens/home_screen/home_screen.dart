@@ -42,8 +42,6 @@ class _HomeScreenState extends State<HomeScreen> {
     DocumentSnapshot snapshot =
         await firestore.collection('users').doc(user.uid).get();
 
-    print(snapshot.data());
-
     currentUserName = (snapshot.data() as Map<String, dynamic>)["username"];
     currentUserEmail = (snapshot.data() as Map<String, dynamic>)["email"];
     currentUserUid = (snapshot.data() as Map<String, dynamic>)["uid"];
@@ -59,9 +57,7 @@ class _HomeScreenState extends State<HomeScreen> {
         });
 
         if (user == null) {
-          print('User is currently signed out!');
         } else {
-          print('User is signed in!');
           getname(user);
         }
       });

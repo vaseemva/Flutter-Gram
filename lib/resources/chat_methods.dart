@@ -41,7 +41,7 @@ class ChatMethods {
         'messageId': messageId,
       });
     } catch (e) {
-      print(e.toString());
+      //
     }
   }
 
@@ -79,7 +79,7 @@ class ChatMethods {
           .doc(messageId)
           .delete();
     } catch (e) {
-      print(e.toString());
+      //
     }
   }
   //delete message only for current user
@@ -93,7 +93,7 @@ class ChatMethods {
           .doc(messageId)
           .delete();
     } catch (e) {
-      print(e.toString());
+      //
     }
   }
     

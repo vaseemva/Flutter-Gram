@@ -264,7 +264,7 @@ class ProfileSection extends StatelessWidget {
                     // ignore: use_build_context_synchronously
                     Navigator.of(context).pop();
                   } catch (e) {
-                    print(e.toString());
+                    //
                   }
                 }),
             SimpleDialogOption(

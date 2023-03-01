@@ -1,6 +1,5 @@
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -32,20 +31,18 @@ main() async {
     await Firebase.initializeApp();
   }
   FirebaseAnalytics analytics = FirebaseAnalytics.instance;
-  final fcm=await FirebaseMessaging.instance.getToken();
-  print(fcm);
 
-  runApp( MyApp(analytics: analytics));
+  runApp(MyApp(analytics: analytics));
 }
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key, required this.analytics});
-  final FirebaseAnalytics analytics; 
+  final FirebaseAnalytics analytics;
 
   @override
   Widget build(BuildContext context) {
-     SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle( 
-      statusBarColor: Colors.blue, 
+    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+      statusBarColor: Colors.blue,
     ));
     return MultiProvider(
       providers: [
@@ -68,7 +65,9 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (_) => EditEventProvider(),
         ),
-        ChangeNotifierProvider(create: (_) => EditProfileProvider(),)
+        ChangeNotifierProvider(
+          create: (_) => EditProfileProvider(),
+        )
       ],
       child: MaterialApp(
           title: 'Flutter Demo',

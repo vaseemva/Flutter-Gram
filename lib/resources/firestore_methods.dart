@@ -185,7 +185,7 @@ class FirestoreMethods {
         });
       }
     } catch (e) {
-      print(e.toString());
+      //
     }
   }
 
@@ -279,10 +279,10 @@ class FirestoreMethods {
           'datePublished': DateTime.now()
         });
       } else {
-        print('comment is empty');
+        
       }
     } catch (e) {
-      print(e.toString());
+      //
     }
   }
 
@@ -296,7 +296,7 @@ class FirestoreMethods {
           .doc(commentId)
           .delete();
     } catch (e) {
-      print(e.toString());
+     //
     }
   }
 
@@ -305,7 +305,7 @@ class FirestoreMethods {
     try {
       _firestore.collection('posts').doc(postId).delete();
     } catch (e) {
-      print(e.toString());
+      //
     }
   }
 
@@ -328,7 +328,7 @@ class FirestoreMethods {
         res = 'added';
       }
 
-      print('success save post');
+    
     } catch (e) {
       res = e.toString();
     }
@@ -369,7 +369,7 @@ class FirestoreMethods {
       res = 'success';
     } catch (e) {
       res = e.toString();
-      print(e.toString());
+      //
     }
     return res;
   }
@@ -396,7 +396,7 @@ class FirestoreMethods {
         });
       }
     } catch (e) {
-      print(e.toString());
+      //
     }
   }
 
@@ -455,7 +455,7 @@ class FirestoreMethods {
     try {
       await _firestore.collection('posts').doc(postId).delete();
     } catch (e) {
-      print(e.toString());
+      //
     }
   }
 
@@ -467,7 +467,7 @@ class FirestoreMethods {
           await _firestore.collection('users').doc(uid).get();
       userData = snap.data()! as dynamic;
     } catch (e) {
-      print(e.toString());
+      //
     }
     return userData;
   }
@@ -479,7 +479,7 @@ class FirestoreMethods {
         'isPremium': true,
       });
     } catch (e) {
-      print(e.toString());
+      //
     }
   }
 
@@ -527,7 +527,7 @@ class FirestoreMethods {
       });
       res = 'success';
     } catch (e) {
-      print(e.toString());
+      //
     }
     return res;
   }
@@ -541,7 +541,7 @@ class FirestoreMethods {
       });
       res = 'success';
     } catch (e) {
-      print(e.toString());
+      //
     }
     return res;
   }
@@ -572,7 +572,7 @@ class FirestoreMethods {
     try {
       await _firestore.collection('events').doc(eventId).delete();
     } catch (e) {
-      print(e.toString());
+      //
     }
   }
 
