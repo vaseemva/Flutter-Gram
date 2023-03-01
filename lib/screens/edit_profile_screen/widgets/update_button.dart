@@ -86,7 +86,9 @@ class UpdateButton extends StatelessWidget {
         // ignore: use_build_context_synchronously
         showSnackBar("Updated successfully", context);
         // ignore: use_build_context_synchronously
-        Provider.of<UserProvider>(context, listen: false).refreshUser();
+         provider.isNameBioUpdated=false;
+      // ignore: use_build_context_synchronously
+      await  Provider.of<UserProvider>(context, listen: false).refreshUser();
       } else {
         // ignore: use_build_context_synchronously
         AnimatedSnackBar.material("Please fill empty fields",
