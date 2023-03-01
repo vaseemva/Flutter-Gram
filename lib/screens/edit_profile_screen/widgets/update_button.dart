@@ -1,5 +1,4 @@
 import 'dart:typed_data';
-
 import 'package:animated_snack_bar/animated_snack_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gram/providers/edit_profile_provider.dart';

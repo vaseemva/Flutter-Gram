@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 
 const signinloadingcolor = Colors.white;
-const bottomnavSelectedcolor = Colors.blue;
-const bottomNavUnselectedcolor = Colors.grey;
+const bottomnavbackgroundColor= Colors.transparent;
+const bottombuttonBackgroundColor= Colors.blue;
+const bottomNavSelectedColor= Colors.white;
+const bottomNavUnselectedColor= Colors.black;
 
 //addPostScreen
 const sideBoxColor = Colors.blueGrey;

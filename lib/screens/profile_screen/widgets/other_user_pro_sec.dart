@@ -7,6 +7,7 @@ import 'package:flutter_gram/screens/profile_screen/widgets/title_text.dart';
 import 'package:flutter_gram/screens/profile_screen/widgets/user_message_row.dart';
 import 'package:flutter_gram/screens/profile_screen/widgets/user_name.dart';
 import 'package:flutter_gram/utils/colors.dart';
+import 'package:flutter_gram/utils/constants.dart';
 
 class OtherProfileSection extends StatelessWidget {
   const OtherProfileSection({
@@ -60,7 +61,7 @@ class OtherProfileSection extends StatelessWidget {
                       left: screensize.width / 2 / 2 / 1.45,
                       top: screensize.height * 0.07,
                       child: Container(
-                        height: screensize.height * 0.290,
+                        height: screensize.height * 0.330,
                         width: screensize.width * 0.7,
                         decoration: BoxDecoration(
                             color: Colors.white,
@@ -93,6 +94,16 @@ class OtherProfileSection extends StatelessWidget {
                               height: screensize.height * 0.005,
                             ),
                             UserName(snap: snap),
+                            kHeight10,
+                            Padding(
+                              padding:
+                                  const EdgeInsets.only(left: 15, right: 15),
+                              child: Text(
+                                snap['bio'],
+                                style: const TextStyle(
+                                    fontSize: 12, color: Colors.black),
+                              ),
+                            ),
                             const Divider(
                               color: Colors.grey,
                               height: 25,
@@ -153,9 +164,8 @@ class OtherProfileSection extends StatelessWidget {
                             UserMessageRow(
                               uid: snap['uid'],
                               email: snap['emailAddress'],
-                              username: snap['username'], 
+                              username: snap['username'],
                               profileImage: snap['profileImage'],
-
                             )
                           ],
                         ),
@@ -167,4 +177,3 @@ class OtherProfileSection extends StatelessWidget {
         });
   }
 }
-

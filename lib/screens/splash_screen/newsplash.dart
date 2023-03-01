@@ -10,7 +10,7 @@ class NewSplashScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: Future.delayed(const Duration(seconds: 1 )),   
+      future: Future.delayed(const Duration(seconds: 1)),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
           return _handleAuthState(context);
@@ -26,19 +26,20 @@ Widget _handleAuthState(BuildContext context) {
   return StreamBuilder(
     stream: FirebaseAuth.instance.authStateChanges(),
     builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.active) {
-                if (snapshot.hasData) {
-                  return const HomeScreen();
-                } else if (snapshot.hasError) {
-                  Center(
-                    child: Text('${snapshot.error}'),
-                  );
-                }
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const CircularProgressIndicator();
-                }
-              }
-              return SigninScreen();
-            },
+      if (!snapshot.hasData) return const SplashScreen();
+      if (snapshot.connectionState == ConnectionState.active) {
+        if (snapshot.hasData) {
+          return const HomeScreen();
+        } else if (snapshot.hasError) {
+          Center(
+            child: Text('${snapshot.error}'),
+          );
+        }
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const CircularProgressIndicator();
+        }
+      }
+      return SigninScreen();
+    },
   );
 }

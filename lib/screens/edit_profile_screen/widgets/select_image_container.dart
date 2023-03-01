@@ -1,5 +1,6 @@
 import 'dart:typed_data';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gram/models/user.dart';
 import 'package:flutter_gram/providers/edit_profile_provider.dart';
@@ -74,7 +75,9 @@ class SelectImageContainer extends StatelessWidget {
                     // ignore: use_build_context_synchronously
                     Navigator.of(context).pop();
                   } catch (e) {
-                    print(e.toString());
+                    if (kDebugMode) {
+                      print(e.toString());
+                    }
                   }
                 }),
             SimpleDialogOption(

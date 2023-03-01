@@ -30,8 +30,10 @@ class ChangeBio extends StatelessWidget {
           width: screenSize.width * 0.7,
           height: screenSize.height * 0.05,
           child: TextFormField(
+            maxLength: 50, 
             initialValue: user.bio,
             decoration: const InputDecoration(
+              counterText: '',
                 hintText: 'Bio',
                 border: OutlineInputBorder(),
                 contentPadding: EdgeInsets.all(8)),

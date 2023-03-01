@@ -2,6 +2,7 @@ import 'dart:typed_data';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gram/providers/userprovider.dart';
 import 'package:flutter_gram/resources/firestore_methods.dart';
 import 'package:flutter_gram/screens/edit_profile_screen/edit_profile_screen.dart';
 import 'package:flutter_gram/screens/followers_page/followers_page.dart';
@@ -10,8 +11,10 @@ import 'package:flutter_gram/screens/profile_screen/widgets/title_text.dart';
 import 'package:flutter_gram/screens/saved_screen/saved_screen.dart';
 import 'package:flutter_gram/screens/settings_page/settings_page.dart';
 import 'package:flutter_gram/utils/colors.dart';
+import 'package:flutter_gram/utils/constants.dart';
 import 'package:flutter_gram/utils/utils.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:provider/provider.dart';
 
 // ignore: must_be_immutable
 class ProfileSection extends StatelessWidget {
@@ -59,7 +62,7 @@ class ProfileSection extends StatelessWidget {
                 left: screensize.width / 2 / 2 / 1.45,
                 top: screensize.height * 0.07,
                 child: Container(
-                  height: screensize.height * 0.290,
+                  height: screensize.height * 0.330,
                   width: screensize.width * 0.7,
                   decoration: BoxDecoration(
                       color: Colors.white,
@@ -99,6 +102,15 @@ class ProfileSection extends StatelessWidget {
                                 )
                               : Container(),
                         ],
+                      ),
+                      kHeight10,
+                      Padding(
+                        padding: const EdgeInsets.only(left: 15, right: 15),
+                        child: Text(
+                          snap['bio'],
+                          style: const TextStyle(
+                              fontSize: 12, color: Colors.black),
+                        ),
                       ),
                       const Divider(
                         color: Colors.grey,
@@ -157,7 +169,7 @@ class ProfileSection extends StatelessWidget {
                       ElevatedButton(
                           onPressed: () {
                             Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) =>const EditProfileScreen(), 
+                              builder: (context) => const EditProfileScreen(),
                             ));
                           },
                           child: const Text("Edit Profile"))
@@ -214,6 +226,8 @@ class ProfileSection extends StatelessWidget {
       String res =
           await FirestoreMethods().changeProfileImage(snap['uid'], profilePic!);
       if (res == "success") {
+        // ignore: use_build_context_synchronously
+        await Provider.of<UserProvider>(context).refreshUser();
         // ignore: use_build_context_synchronously
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
