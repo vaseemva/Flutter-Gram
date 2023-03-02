@@ -11,6 +11,7 @@ import 'package:flutter_gram/screens/add_post_screen/widgets/post_image_containe
 import 'package:flutter_gram/screens/add_post_screen/widgets/side_box.dart';
 import 'package:flutter_gram/screens/add_post_screen/widgets/title_text_field.dart';
 import 'package:flutter_gram/utils/constants.dart';
+import 'package:flutter_gram/utils/global.dart';
 import 'package:flutter_gram/utils/utils.dart';
 import 'package:provider/provider.dart';
 
@@ -25,9 +26,7 @@ class AddPostScreen extends StatelessWidget {
     final size = MediaQuery.of(context).size;
     UserModel user = Provider.of<UserProvider>(context).getUser;
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Post an Article"),
-      ),
+      appBar: whiteAppBar("Post an Article"),
       body: Consumer<AddPostProvider>(
         builder: (context, provider, child) => ListView(
           children: [

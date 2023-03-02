@@ -9,6 +9,7 @@ import 'package:flutter_gram/resources/firestore_methods.dart';
 import 'package:flutter_gram/screens/add_screen/widgets/steps.dart';
 import 'package:flutter_gram/screens/home_screen/home_screen.dart';
 import 'package:flutter_gram/utils/constants.dart';
+import 'package:flutter_gram/utils/global.dart';
 import 'package:flutter_gram/utils/utils.dart';
 import 'package:provider/provider.dart';
 
@@ -24,9 +25,7 @@ class AddEventScreen extends StatelessWidget {
     UserModel user = Provider.of<UserProvider>(context).getUser;
 
     return Scaffold(
-        appBar: AppBar(
-          title: const Text("Add an Event"),
-        ),
+        appBar: whiteAppBar('Add Event'),
         body: Consumer<AddEventProvider>(
             builder: (context, provider, child) => Stepper(
                   currentStep: provider.currentStep,

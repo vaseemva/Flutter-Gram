@@ -1,33 +1,41 @@
 {
   "project_info": {
-    "project_number": "62570990152",
-    "project_id": "flutter-gram-a1176",
-    "storage_bucket": "flutter-gram-a1176.appspot.com"
+    "project_number": "293527586605",
+    "project_id": "fluttergram-9909f",
+    "storage_bucket": "fluttergram-9909f.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:62570990152:android:ec7fa554cff269c74de67d",
+        "mobilesdk_app_id": "1:293527586605:android:bce4e78042d93582e4f5a4",
         "android_client_info": {
-          "package_name": "com.example.flutter_gram"
+          "package_name": "com.vaseemva.fluttergram"
         }
       },
       "oauth_client": [
         {
-          "client_id": "62570990152-4kl3isfv6kh1o8l8jcsbhfquttv1ans8.apps.googleusercontent.com",
+          "client_id": "293527586605-ik02gjkv524ijm3be2fhpisheb3umskk.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.vaseemva.fluttergram",
+            "certificate_hash": "cd2c0d711001f1a53d7f3b700897ca76092449f7"
+          }
+        },
+        {
+          "client_id": "293527586605-mrhvjtg04a1h4j86rn7rs3fltg2rhep4.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDwWJV6Xuik2WKnutQj22ckiJsNV1zCdf8"
+          "current_key": "AIzaSyA3UybJvQT-zmp6VAhip5pRMeJMlsZWQ_M"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "62570990152-0s2nnekr20oqlvg33u4655k1ovie0gi4.apps.googleusercontent.com",
+              "client_id": "293527586605-mrhvjtg04a1h4j86rn7rs3fltg2rhep4.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
