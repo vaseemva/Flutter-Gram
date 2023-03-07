@@ -70,7 +70,7 @@ class MyApp extends StatelessWidget {
         )
       ],
       child: MaterialApp(
-          title: 'Flutter Demo',
+          title: 'Flutter Gram',
           debugShowCheckedModeBanner: false,
           theme: ThemeData(
             textTheme: GoogleFonts.aBeeZeeTextTheme(),

@@ -26,7 +26,7 @@ Widget _handleAuthState(BuildContext context) {
   return StreamBuilder(
     stream: FirebaseAuth.instance.authStateChanges(),
     builder: (context, snapshot) {
-      if (!snapshot.hasData) return const SplashScreen();
+      // if (!snapshot.hasData) return const SplashScreen();
       if (snapshot.connectionState == ConnectionState.active) {
         if (snapshot.hasData) {
           return const HomeScreen();
